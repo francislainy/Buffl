@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "509087404588",
+    "firebase_url": "https://buffl-e110f.firebaseio.com",
+    "project_id": "buffl-e110f",
+    "storage_bucket": "buffl-e110f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:509087404588:android:9d163d731935cba7",
+        "android_client_info": {
+          "package_name": "com.francislainy.buffl"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "509087404588-tme55gpmi48rhesct6ntqs7hdg0olucn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.francislainy.buffl",
+            "certificate_hash": "f200b5de0b7abc242f9222ece5abb52292518b09"
+          }
+        },
+        {
+          "client_id": "509087404588-i68ahk950cdhv956s04ojsgedptsha7s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.francislainy.buffl",
+            "certificate_hash": "9a4481a5ea59e9bfa0063dadc4b7a838b5597d7d"
+          }
+        },
+        {
+          "client_id": "509087404588-agr8vpmhns38dmpskreo9n3vaj6nb589.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVdpxkuk2CM8TJnDs5Zu9Q0qjJq6uqKD8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "509087404588-agr8vpmhns38dmpskreo9n3vaj6nb589.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
