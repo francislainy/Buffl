@@ -52,10 +52,22 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="40dp"
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
             android:text="Have an account? Login now"
+            android:textColor="#FFFFFF" />
+
+    <com.google.android.gms.common.SignInButton
+            android:id="@+id/btnSignInGoogle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
             android:textColor="#FFFFFF" />
 
 </LinearLayout>

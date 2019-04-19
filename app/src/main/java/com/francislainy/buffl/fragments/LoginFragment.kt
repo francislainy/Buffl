@@ -30,15 +30,20 @@ class LoginFragment : Fragment() {
 
         mAuth = FirebaseAuth.getInstance()
 
-        tvBackToLogin.setOnClickListener {
+        tvGoToSignUp.setOnClickListener {
 
             activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.container_body, RegisterFragment())
-                ?.commit()
+                ?.commit() //todo: make it smaller and more readable
         }
 
-        btnRegister.setOnClickListener {
+        btnLogin.setOnClickListener {
 
             signIn(etEmail.text.toString(), etPassword.text.toString())
+        }
+
+        btnSignInGoogle.setOnClickListener {
+
+            //todo: copy code from registration
         }
     }
 

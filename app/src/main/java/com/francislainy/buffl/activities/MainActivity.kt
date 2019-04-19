@@ -16,16 +16,14 @@ class MainActivity : AppCompatActivity() {
 
         tvLogout.setOnClickListener {
 
-            // FirebaseAuth.getInstance().signOut()
-
             AuthUI.getInstance().signOut(this)
                 .addOnCompleteListener {
                     // user is now signed out
                     startActivity(Intent(this, LoginActivity::class.java))
                     finish()
                 }
-
         }
+
     }
 
 }

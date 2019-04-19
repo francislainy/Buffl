@@ -37,7 +37,7 @@
             android:textColorHint="#DDDDDD" />
 
     <Button
-            android:id="@+id/btnRegister"
+            android:id="@+id/btnLogin"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginStart="8dp"
@@ -46,7 +46,20 @@
             android:text="Login" />
 
     <TextView
-            android:id="@+id/tvBackToLogin"
+            android:id="@+id/tvGoToSignUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="40dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:text="New here? Sign up now"
+            android:textColor="#FFFFFF" />
+
+    <com.google.android.gms.common.SignInButton
+            android:id="@+id/btnSignInGoogle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -55,7 +68,6 @@
             android:layout_marginBottom="8dp"
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
-            android:text="New here? Sign up now"
             android:textColor="#FFFFFF" />
 
 </LinearLayout>
