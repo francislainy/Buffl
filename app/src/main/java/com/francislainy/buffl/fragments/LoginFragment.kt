@@ -9,7 +9,6 @@ import com.francislainy.buffl.activities.LoginActivity
 import com.francislainy.buffl.utils.replaceFragment
 import kotlinx.android.synthetic.main.fragment_login.*
 
-
 class LoginFragment : GoogleSignInParentFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -24,14 +23,8 @@ class LoginFragment : GoogleSignInParentFragment() {
             (activity as LoginActivity).replaceFragment(RegisterFragment(), R.id.container_body)
         }
 
-        btnLogin.setOnClickListener {
+        btnLogin.setOnClickListener { signInFirebase(etEmail.text.toString(), etPassword.text.toString()) }
 
-            signInFirebase(etEmail.text.toString(), etPassword.text.toString())
-        }
-
-        btnSignInGoogle.setOnClickListener {
-
-            signInGoogle()
-        }
+        btnSignInGoogle.setOnClickListener { signInGoogle() }
     }
 }

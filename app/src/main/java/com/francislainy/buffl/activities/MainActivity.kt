@@ -1,12 +1,10 @@
 package com.francislainy.buffl.activities
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.firebase.ui.auth.AuthUI
 import com.francislainy.buffl.R
-import kotlinx.android.synthetic.main.activity_main.*
-
+import com.francislainy.buffl.fragments.CoursesListFragment
+import com.francislainy.buffl.utils.addFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -14,16 +12,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        tvLogout.setOnClickListener {
-
-            AuthUI.getInstance().signOut(this)
-                .addOnCompleteListener {
-                    // user is now signed out
-                    startActivity(Intent(this, LoginActivity::class.java))
-                    finish()
-                }
-        }
-
+        addFragment(CoursesListFragment(), R.id.container_body_main)
     }
-
 }
