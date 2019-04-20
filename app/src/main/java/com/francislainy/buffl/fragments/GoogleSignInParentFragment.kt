@@ -131,7 +131,7 @@ open class GoogleSignInParentFragment : Fragment(), GoogleApiClient.OnConnection
             }
     }
 
-    fun signIn() {
+    fun signInGoogle() {
 
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
@@ -149,4 +149,30 @@ open class GoogleSignInParentFragment : Fragment(), GoogleApiClient.OnConnection
         startActivityForResult(signInIntent, RC_SIGN_IN)
     }
 
+    fun signInFirebase(email: String?, password: String?) {
+
+        if (email.isNullOrEmpty() || password.isNullOrEmpty()) {
+            return
+        }
+
+        mAuth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener(activity as LoginActivity) { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Timber.d("signInWithEmail:success")
+
+                    Toast.makeText(activity as LoginActivity, "Logged in!!", Toast.LENGTH_SHORT).show()
+
+                    val user = mAuth.currentUser
+                    updateUI(user)
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Timber.w("signInWithEmail:failure ${task.exception}")
+                    Toast.makeText(activity as LoginActivity, "Authentication failed.", Toast.LENGTH_SHORT).show()
+                    updateUI(null)
+                }
+
+                // ...
+            }
+    }
 }

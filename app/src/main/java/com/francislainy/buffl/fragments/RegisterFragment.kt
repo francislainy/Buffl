@@ -7,17 +7,9 @@ import android.view.ViewGroup
 import com.francislainy.buffl.R
 import com.francislainy.buffl.activities.LoginActivity
 import com.francislainy.buffl.utils.replaceFragment
-import com.google.android.gms.common.ConnectionResult
-import com.google.android.gms.common.api.GoogleApiClient
-import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_register.*
 
-class RegisterFragment : GoogleSignInParentFragment(), GoogleApiClient.OnConnectionFailedListener {
-
-    override fun onConnectionFailed(p0: ConnectionResult) {
-    }
-
-    private lateinit var mAuth: FirebaseAuth
+class RegisterFragment : GoogleSignInParentFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_register, container, false)
@@ -25,8 +17,6 @@ class RegisterFragment : GoogleSignInParentFragment(), GoogleApiClient.OnConnect
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        mAuth = FirebaseAuth.getInstance()
 
         btnRegister.setOnClickListener {
 
@@ -40,7 +30,7 @@ class RegisterFragment : GoogleSignInParentFragment(), GoogleApiClient.OnConnect
 
         btnSignInGoogle.setOnClickListener {
 
-            signIn()
+            signInGoogle()
         }
     }
 
