@@ -2,6 +2,7 @@ package com.francislainy.buffl
 
 import android.app.Application
 import android.content.Context
+import com.francislainy.buffl.utils.Utils
 import timber.log.Timber
 
 class App : Application() {

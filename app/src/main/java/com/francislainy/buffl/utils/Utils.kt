@@ -1,4 +1,4 @@
-package com.francislainy.buffl
+package com.francislainy.buffl.utils
 
 import timber.log.Timber
 

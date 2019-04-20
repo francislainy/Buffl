@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import com.francislainy.buffl.R
 import com.francislainy.buffl.activities.LoginActivity
 import com.francislainy.buffl.activities.MainActivity
+import com.francislainy.buffl.utils.replaceFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.fragment_login.*
@@ -32,8 +33,7 @@ class LoginFragment : Fragment() {
 
         tvGoToSignUp.setOnClickListener {
 
-            activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.container_body, RegisterFragment())
-                ?.commit() //todo: make it smaller and more readable
+            (activity as LoginActivity).replaceFragment(RegisterFragment(), R.id.container_body)
         }
 
         btnLogin.setOnClickListener {

@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import com.francislainy.buffl.R
 import com.francislainy.buffl.activities.LoginActivity
 import com.francislainy.buffl.activities.MainActivity
+import com.francislainy.buffl.utils.replaceFragment
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -48,9 +49,7 @@ class RegisterFragment : Fragment(), GoogleApiClient.OnConnectionFailedListener 
 
         tvBackToLogin.setOnClickListener {
 
-            activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.container_body, LoginFragment())
-                ?.commit()
-            //todo: make it smaller and more readable
+            (activity as LoginActivity).replaceFragment(LoginFragment(), R.id.container_body)
         }
 
         btnSignInGoogle.setOnClickListener {
