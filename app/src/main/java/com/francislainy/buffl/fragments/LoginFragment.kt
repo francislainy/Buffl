@@ -1,24 +1,19 @@
 package com.francislainy.buffl.fragments
 
-
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import com.francislainy.buffl.R
 import com.francislainy.buffl.activities.LoginActivity
-import com.francislainy.buffl.activities.MainActivity
 import com.francislainy.buffl.utils.replaceFragment
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.fragment_login.*
 import timber.log.Timber
 
 
-class LoginFragment : Fragment() {
+class LoginFragment : GoogleSignInParentFragment() {
 
     private lateinit var mAuth: FirebaseAuth
 
@@ -38,23 +33,16 @@ class LoginFragment : Fragment() {
 
         btnLogin.setOnClickListener {
 
-            signIn(etEmail.text.toString(), etPassword.text.toString())
+            signInFirebase(etEmail.text.toString(), etPassword.text.toString())
         }
 
         btnSignInGoogle.setOnClickListener {
 
-            //todo: copy code from registration
+            signIn()
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        // Check if user is signed in (non-null) and update UI accordingly.
-        val currentUser = mAuth.currentUser
-        updateUI(currentUser)
-    }
-
-    private fun signIn(email: String?, password: String?) {
+    private fun signInFirebase(email: String?, password: String?) {
 
         if (email.isNullOrEmpty() || password.isNullOrEmpty()) {
             return
@@ -79,20 +67,5 @@ class LoginFragment : Fragment() {
 
                 // ...
             }
-    }
-
-    private fun updateUI(user: FirebaseUser?) {
-
-        if (user == null) { // Not logged in
-
-            Toast.makeText(activity as LoginActivity, "Not signed in", Toast.LENGTH_SHORT).show()
-
-        } else {
-
-            val intent = Intent(activity as LoginActivity, MainActivity::class.java)
-            startActivity(intent)
-
-            Toast.makeText(activity as LoginActivity, "Signed in", Toast.LENGTH_SHORT).show()
-        }
     }
 }
