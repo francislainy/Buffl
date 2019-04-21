@@ -1,10 +1,14 @@
 package com.francislainy.buffl.activities
 
+import android.app.Dialog
 import android.os.Bundle
 import android.os.Handler
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.Window
+import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -76,9 +80,9 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener 
     private fun setUpDrawer() {
         drawerFragment = supportFragmentManager.findFragmentById(R.id.fragment_drawer) as FragmentDrawer
         drawerFragment!!.setUp(
-            R.id.fragment_drawer,
-            findViewById(R.id.drawer_layout),
-            toolbar as Toolbar
+                R.id.fragment_drawer,
+                findViewById(R.id.drawer_layout),
+                toolbar as Toolbar
         )
         drawerFragment!!.setDrawerListener(this)
     }
@@ -91,12 +95,31 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener 
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.menu_main_plus -> Toast.makeText(this, "This is the option help", Toast.LENGTH_LONG).show()
-            else -> {
-            }
+            R.id.menu_main_plus -> showDialog()
         }
         return true
     }
+
+    private fun showDialog() {
+        val dialogs = Dialog(this)
+        dialogs.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialogs.setCancelable(true)
+        dialogs.setContentView(R.layout.custom_add_dialog)
+
+//        val body = dialogs.findViewById(R.id.body) as TextView
+//        body.text = title
+//
+//        val yesBtn = dialogs.findViewById(R.id.yesBtn) as Button
+//        val noBtn = dialogs.findViewById(R.id.noBtn) as TextView
+//
+//        yesBtn.setOnClickListener {
+//            dialogs.dismiss()
+//        }
+//        noBtn.setOnClickListener { dialogs.dismiss() }
+        dialogs.show()
+
+    }
+
 
 //    fun displayView(pos: Int) {
 //        ToolbarAndNavController(this@MainActivity).replaceFragment(pos)

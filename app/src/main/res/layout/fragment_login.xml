@@ -16,7 +16,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:background="@drawable/shape_edit_text_white_rectangle"
-            android:hint="Email"
+            android:hint="@string/fragment_login_et_email"
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
             android:textColor="#BBBBBB"
@@ -30,7 +30,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="32dp"
             android:background="@drawable/shape_edit_text_white_rectangle"
-            android:hint="Password"
+            android:hint="@string/fragment_login_et_password"
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
             android:textColor="#BBBBBB"
@@ -43,7 +43,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="24dp"
-            android:text="Login" />
+            android:text="@string/fragment_login_btn_login" />
 
     <TextView
             android:id="@+id/tvGoToSignUp"
@@ -55,8 +55,8 @@
             android:layout_marginBottom="40dp"
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
-            android:text="New here? Sign up now"
-            android:textColor="#FFFFFF" />
+            android:text="@string/fragment_login_tv_sign_up"
+            android:textColor="@color/white" />
 
     <com.google.android.gms.common.SignInButton
             android:id="@+id/btnSignInGoogle"
@@ -68,6 +68,6 @@
             android:layout_marginBottom="8dp"
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
-            android:textColor="#FFFFFF" />
+            android:textColor="@color/white" />
 
 </LinearLayout>
