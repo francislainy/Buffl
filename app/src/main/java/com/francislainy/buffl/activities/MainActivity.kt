@@ -1,7 +1,11 @@
 package com.francislainy.buffl.activities
 
 import android.os.Bundle
+import android.os.Handler
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.francislainy.buffl.R
@@ -14,6 +18,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener {
 
     private var drawerFragment: FragmentDrawer? = null
+    private var exit: Boolean? = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +37,28 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener 
             setDisplayHomeAsUpEnabled(true)
             title = null
             setHomeAsUpIndicator(R.drawable.ic_action_menu) // set Hamburger default back to the Actionbar ;)
+        }
+    }
+
+    override fun onBackPressed() {
+
+        val count = supportFragmentManager.backStackEntryCount
+
+        when (count) {
+            0 -> pressAgainToExit()
+            else -> supportFragmentManager.popBackStack()
+        }
+    }
+
+    private fun pressAgainToExit() {
+
+        if (exit!!) {
+            finish() // finish activity
+        } else {
+            Toast.makeText(this, "Press Back again to Exit.", Toast.LENGTH_SHORT).show()
+
+            exit = true
+            Handler().postDelayed({ exit = false }, (3 * 1000).toLong())
         }
     }
 
@@ -54,6 +81,21 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener 
             toolbar as Toolbar
         )
         drawerFragment!!.setDrawerListener(this)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.menu_main_plus -> Toast.makeText(this, "This is the option help", Toast.LENGTH_LONG).show()
+            else -> {
+            }
+        }
+        return true
     }
 
 //    fun displayView(pos: Int) {
