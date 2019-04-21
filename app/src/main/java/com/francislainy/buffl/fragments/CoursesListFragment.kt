@@ -18,6 +18,12 @@ import kotlinx.android.synthetic.main.fragment_courses_list.*
 
 class CoursesListFragment : Fragment() {
 
+    override fun onResume() {
+        super.onResume()
+
+        (activity as MainActivity).displayToolbar(1) //todo: dynamic pos -21/04/19
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_courses_list, container, false)
     }
