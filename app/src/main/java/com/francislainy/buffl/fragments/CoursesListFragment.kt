@@ -11,17 +11,25 @@ import com.firebase.ui.auth.AuthUI
 import com.francislainy.buffl.R
 import com.francislainy.buffl.activities.LoginActivity
 import com.francislainy.buffl.activities.MainActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
+import kotlinx.android.synthetic.main.custom_add_dialog.*
 import kotlinx.android.synthetic.main.fragment_courses_list.*
+import kotlinx.android.synthetic.main.row_courses_item.view.*
+import timber.log.Timber
 
 class CoursesListFragment : Fragment() {
+
+    private lateinit var myRef: DatabaseReference
+    private lateinit var database: FirebaseDatabase
 
     override fun onResume() {
         super.onResume()
 
-        (activity as MainActivity).displayToolbar(1) //todo: dynamic pos -21/04/19
+        (activity as MainActivity).displayToolbar(1) //todo: have dynamic position -21/04/19
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -32,14 +40,30 @@ class CoursesListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val adapter = GroupAdapter<ViewHolder>()
-        adapter.add(UserItem(""))
-        adapter.add(UserItem(""))
-        adapter.add(UserItem(""))
-        adapter.add(UserItem(""))
-        adapter.add(UserItem(""))
         rvCourseCards.adapter = adapter
 
         tvLogout.setOnClickListener { logout() }
+
+        database = FirebaseDatabase.getInstance()
+        myRef = database.getReference("courses")
+
+        // Read from the database
+        myRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+                adapter.clear()
+
+                for (ds in dataSnapshot.children) {
+                    Timber.d("value is: $ds.value")
+                    adapter.add(UserItem("${ds.value}"))
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // Failed to read value
+                Timber.w("Failed to read value. + ${error.toException()}")
+            }
+        })
     }
 
     private fun logout() {
@@ -57,8 +81,7 @@ class CoursesListFragment : Fragment() {
 
             with(viewHolder.itemView) {
 
-//                tvCollectionTitle.text = "Test"
-//                tvUsername.text = user?.username
+                tvCollectionTitle.text = text
             }
         }
 

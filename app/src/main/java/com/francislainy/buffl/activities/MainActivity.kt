@@ -40,7 +40,6 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener 
 
         addFragment(CoursesListFragment(), R.id.container_body_main)
 
-        // Write a message to the database
         database = FirebaseDatabase.getInstance()
         myRef = database.getReference("courses")
     }
@@ -120,28 +119,11 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener 
 
             btnSave.setOnClickListener {
 
-                if (etNewCourseTitle.text.toString().isNullOrEmpty()) {
+                if (etNewCourseTitle.text.toString().isEmpty()) {
                     return@setOnClickListener
                 }
 
                 myRef.push().setValue(etNewCourseTitle.text.toString())
-
-                // Read from the database
-                myRef.addValueEventListener(object : ValueEventListener {
-                    override fun onDataChange(dataSnapshot: DataSnapshot) {
-
-                        // This method is called once with the initial value and again
-                        // whenever data at this location is updated.
-                        for (ds in dataSnapshot.children) {
-                            Timber.d("value is: $ds.value")
-                        }
-                    }
-
-                    override fun onCancelled(error: DatabaseError) {
-                        // Failed to read value
-                        Timber.w("Failed to read value. + ${error.toException()}")
-                    }
-                })
 
                 dismiss()
             }
