@@ -7,8 +7,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.Window
-import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -17,11 +15,10 @@ import com.francislainy.buffl.fragments.CoursesListFragment
 import com.francislainy.buffl.fragments.FragmentDrawer
 import com.francislainy.buffl.utils.ToolbarAndNavController
 import com.francislainy.buffl.utils.addFragment
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.custom_add_dialog.*
-import timber.log.Timber
-import com.google.firebase.database.DataSnapshot
 
 class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener {
 
@@ -123,7 +120,11 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener 
                     return@setOnClickListener
                 }
 
-                myRef.push().setValue(etNewCourseTitle.text.toString())
+                val user = FirebaseAuth.getInstance().currentUser
+                val userId = user?.uid
+                myRef.child(userId!!).child("courses").push().setValue(etNewCourseTitle.text.toString())
+
+//                myRef.push().setValue(etNewCourseTitle.text.toString())
 
                 dismiss()
             }

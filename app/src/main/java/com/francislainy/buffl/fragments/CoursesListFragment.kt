@@ -21,6 +21,7 @@ import kotlinx.android.synthetic.main.fragment_courses_list.*
 import kotlinx.android.synthetic.main.row_courses_item.view.*
 import timber.log.Timber
 
+
 class CoursesListFragment : Fragment() {
 
     private lateinit var myRef: DatabaseReference
@@ -54,8 +55,18 @@ class CoursesListFragment : Fragment() {
                 adapter.clear()
 
                 for (ds in dataSnapshot.children) {
-                    Timber.d("value is: $ds.value")
-                    adapter.add(UserItem("${ds.value}"))
+
+                    for (d in ds.children) {
+//                    ds.child("courses").value
+
+                        val map = d.value as Map<String, String>
+
+                        for ((key, value) in map) {
+                            adapter.add(UserItem(value))
+                        }
+
+                        Timber.d("value is: $ds.value")
+                    }
                 }
             }
 
