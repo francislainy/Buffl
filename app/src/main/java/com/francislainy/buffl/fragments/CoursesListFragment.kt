@@ -53,6 +53,7 @@ class CoursesListFragment : Fragment() {
 
         database = FirebaseDatabase.getInstance()
         myRef = database.reference.child(userId).child("courses")
+        myRef.orderByKey()
 
         // Read from the database
         myRef.addValueEventListener(object : ValueEventListener {
