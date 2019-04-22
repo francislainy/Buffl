@@ -12,6 +12,7 @@ import com.francislainy.buffl.R
 import com.francislainy.buffl.activities.LoginActivity
 import com.francislainy.buffl.activities.MainActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
@@ -26,6 +27,8 @@ class CoursesListFragment : Fragment() {
 
     private lateinit var myRef: DatabaseReference
     private lateinit var database: FirebaseDatabase
+    private lateinit var user: FirebaseUser
+    private lateinit var userId: String
 
     override fun onResume() {
         super.onResume()
@@ -45,8 +48,11 @@ class CoursesListFragment : Fragment() {
 
         tvLogout.setOnClickListener { logout() }
 
+        user = FirebaseAuth.getInstance().currentUser!!
+        userId = user.uid
+
         database = FirebaseDatabase.getInstance()
-        myRef = database.getReference("courses")
+        myRef = database.reference.child("courses").child(userId)
 
         // Read from the database
         myRef.addValueEventListener(object : ValueEventListener {
@@ -56,17 +62,17 @@ class CoursesListFragment : Fragment() {
 
                 for (ds in dataSnapshot.children) {
 
-                    for (d in ds.children) {
+//                    for (d in ds.children) {
 //                    ds.child("courses").value
 
-                        val map = d.value as Map<String, String>
+                        val map = ds.value as Map<String, String> //todo: keep order for items as they are added
 
                         for ((key, value) in map) {
                             adapter.add(UserItem(value))
                         }
 
                         Timber.d("value is: $ds.value")
-                    }
+//                    }
                 }
             }
 

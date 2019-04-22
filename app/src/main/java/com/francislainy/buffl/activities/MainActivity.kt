@@ -16,6 +16,7 @@ import com.francislainy.buffl.fragments.FragmentDrawer
 import com.francislainy.buffl.utils.ToolbarAndNavController
 import com.francislainy.buffl.utils.addFragment
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.custom_add_dialog.*
@@ -28,6 +29,9 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener 
     private lateinit var myRef: DatabaseReference
     private lateinit var database: FirebaseDatabase
 
+    private lateinit var user: FirebaseUser
+    private lateinit var userId: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -37,8 +41,12 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener 
 
         addFragment(CoursesListFragment(), R.id.container_body_main)
 
+        user = FirebaseAuth.getInstance().currentUser!!
+        userId = user.uid
+
         database = FirebaseDatabase.getInstance()
-        myRef = database.getReference("courses")
+//        myRef = database.getReference("courses")
+        myRef = database.getReference().child("courses").child(userId)
     }
 
     private fun toolbarActionBarSetUP() {
@@ -120,11 +128,7 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener 
                     return@setOnClickListener
                 }
 
-                val user = FirebaseAuth.getInstance().currentUser
-                val userId = user?.uid
-                myRef.child(userId!!).child("courses").push().setValue(etNewCourseTitle.text.toString())
-
-//                myRef.push().setValue(etNewCourseTitle.text.toString())
+                myRef.child(userId).child("courses").push().setValue(etNewCourseTitle.text.toString())
 
                 dismiss()
             }
