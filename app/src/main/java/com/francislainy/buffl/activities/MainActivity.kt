@@ -17,12 +17,19 @@ import com.francislainy.buffl.fragments.CoursesListFragment
 import com.francislainy.buffl.fragments.FragmentDrawer
 import com.francislainy.buffl.utils.ToolbarAndNavController
 import com.francislainy.buffl.utils.addFragment
+import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.custom_add_dialog.*
+import timber.log.Timber
+import com.google.firebase.database.DataSnapshot
 
 class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener {
 
     private var drawerFragment: FragmentDrawer? = null
     private var exit: Boolean? = false
+
+    private lateinit var myRef: DatabaseReference
+    private lateinit var database: FirebaseDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +39,10 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener 
         toolbarActionBarSetUP()
 
         addFragment(CoursesListFragment(), R.id.container_body_main)
+
+        // Write a message to the database
+        database = FirebaseDatabase.getInstance()
+        myRef = database.getReference("courses")
     }
 
     private fun toolbarActionBarSetUP() {
@@ -66,7 +77,6 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener 
         }
     }
 
-
     override fun onDrawerItemSelected(view: View, position: Int) {
 //        displayView(position)
     }
@@ -80,9 +90,9 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener 
     private fun setUpDrawer() {
         drawerFragment = supportFragmentManager.findFragmentById(R.id.fragment_drawer) as FragmentDrawer
         drawerFragment!!.setUp(
-                R.id.fragment_drawer,
-                findViewById(R.id.drawer_layout),
-                toolbar as Toolbar
+            R.id.fragment_drawer,
+            findViewById(R.id.drawer_layout),
+            toolbar as Toolbar
         )
         drawerFragment!!.setDrawerListener(this)
     }
@@ -101,23 +111,41 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener 
     }
 
     private fun showDialog() {
-        val dialogs = Dialog(this)
-        dialogs.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialogs.setCancelable(true)
-        dialogs.setContentView(R.layout.custom_add_dialog)
+        Dialog(this).apply {
 
-//        val body = dialogs.findViewById(R.id.body) as TextView
-//        body.text = title
-//
-//        val yesBtn = dialogs.findViewById(R.id.yesBtn) as Button
-//        val noBtn = dialogs.findViewById(R.id.noBtn) as TextView
-//
-//        yesBtn.setOnClickListener {
-//            dialogs.dismiss()
-//        }
-//        noBtn.setOnClickListener { dialogs.dismiss() }
-        dialogs.show()
+            requestWindowFeature(Window.FEATURE_NO_TITLE)
+            setCancelable(true)
+            setContentView(R.layout.custom_add_dialog)
+            show()
 
+            btnSave.setOnClickListener {
+
+                if (etNewCourseTitle.text.toString().isNullOrEmpty()) {
+                    return@setOnClickListener
+                }
+
+                myRef.push().setValue(etNewCourseTitle.text.toString())
+
+                // Read from the database
+                myRef.addValueEventListener(object : ValueEventListener {
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+                        // This method is called once with the initial value and again
+                        // whenever data at this location is updated.
+                        for (ds in dataSnapshot.children) {
+                            Timber.d("value is: $ds.value")
+                        }
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        // Failed to read value
+                        Timber.w("Failed to read value. + ${error.toException()}")
+                    }
+                })
+
+                dismiss()
+            }
+        }
     }
 
 
