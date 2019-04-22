@@ -52,7 +52,7 @@ class CoursesListFragment : Fragment() {
         userId = user.uid
 
         database = FirebaseDatabase.getInstance()
-        myRef = database.reference.child("courses").child(userId)
+        myRef = database.reference.child(userId).child("courses")
 
         // Read from the database
         myRef.addValueEventListener(object : ValueEventListener {
@@ -62,17 +62,13 @@ class CoursesListFragment : Fragment() {
 
                 for (ds in dataSnapshot.children) {
 
-//                    for (d in ds.children) {
-//                    ds.child("courses").value
+//                        val map = ds.value as Map<String, String> //todo: keep order for items as they are added
 
-                        val map = ds.value as Map<String, String> //todo: keep order for items as they are added
+//                        for ((key, value) in map) {
+                    adapter.add(UserItem(ds.value.toString())) //todo: have object instead of string to allow for more data
+//                        }
 
-                        for ((key, value) in map) {
-                            adapter.add(UserItem(value))
-                        }
-
-                        Timber.d("value is: $ds.value")
-//                    }
+                    Timber.d("value is: $ds.value")
                 }
             }
 

@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener 
 
         database = FirebaseDatabase.getInstance()
 //        myRef = database.getReference("courses")
-        myRef = database.getReference().child("courses").child(userId)
+        myRef = database.reference.child(userId).child("courses")
     }
 
     private fun toolbarActionBarSetUP() {
@@ -128,7 +128,7 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener 
                     return@setOnClickListener
                 }
 
-                myRef.child(userId).child("courses").push().setValue(etNewCourseTitle.text.toString())
+                myRef.push().setValue(etNewCourseTitle.text.toString())
 
                 dismiss()
             }
