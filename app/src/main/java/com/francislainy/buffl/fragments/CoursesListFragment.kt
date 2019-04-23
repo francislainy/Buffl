@@ -11,24 +11,19 @@ import com.firebase.ui.auth.AuthUI
 import com.francislainy.buffl.R
 import com.francislainy.buffl.activities.LoginActivity
 import com.francislainy.buffl.activities.MainActivity
+import com.francislainy.buffl.utils.toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
-import kotlinx.android.synthetic.main.custom_add_dialog.*
 import kotlinx.android.synthetic.main.fragment_courses_list.*
 import kotlinx.android.synthetic.main.row_courses_item.view.*
 import timber.log.Timber
 
 
 class CoursesListFragment : Fragment() {
-
-    private lateinit var myRef: DatabaseReference
-    private lateinit var database: FirebaseDatabase
-    private lateinit var user: FirebaseUser
-    private lateinit var userId: String
 
     override fun onResume() {
         super.onResume()
@@ -46,13 +41,23 @@ class CoursesListFragment : Fragment() {
         val adapter = GroupAdapter<ViewHolder>()
         rvCourseCards.adapter = adapter
 
+        // https://github.com/lisawray/groupie/issues/183
+        adapter.setOnItemClickListener { item, view ->
+
+            (activity as MainActivity).displayView(1) //todo: have dynamic position -21/04/19
+        }
+
+        displayFromFirebase(adapter)
+
         tvLogout.setOnClickListener { logout() }
+    }
 
-        user = FirebaseAuth.getInstance().currentUser!!
-        userId = user.uid
+    private fun displayFromFirebase(adapter: GroupAdapter<ViewHolder>) {
+        val user = FirebaseAuth.getInstance().currentUser!!
+        val userId = user.uid
 
-        database = FirebaseDatabase.getInstance()
-        myRef = database.reference.child(userId).child("courses")
+        val database = FirebaseDatabase.getInstance()
+        val myRef = database.reference.child(userId).child("courses")
         myRef.orderByKey()
 
         // Read from the database
@@ -63,11 +68,11 @@ class CoursesListFragment : Fragment() {
 
                 for (ds in dataSnapshot.children) {
 
-//                        val map = ds.value as Map<String, String> //todo: keep order for items as they are added
+    //                        val map = ds.value as Map<String, String> //todo: keep order for items as they are added
 
-//                        for ((key, value) in map) {
-                    adapter.add(UserItem(ds.value.toString())) //todo: have object instead of string to allow for more data
-//                        }
+    //                        for ((key, value) in map) {
+                    adapter.add(CourseItem(ds.value.toString())) //todo: have object instead of string to allow for more data
+    //                        }
 
                     Timber.d("value is: $ds.value")
                 }
@@ -89,7 +94,7 @@ class CoursesListFragment : Fragment() {
             }
     }
 
-    class UserItem(val text: String) : Item<ViewHolder>() {
+    class CourseItem(val text: String) : Item<ViewHolder>() {
 
         override fun bind(viewHolder: ViewHolder, position: Int) {
 
