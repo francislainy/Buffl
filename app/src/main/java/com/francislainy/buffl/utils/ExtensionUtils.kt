@@ -9,6 +9,9 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.francislainy.buffl.App
+import com.francislainy.buffl.R
+import com.francislainy.buffl.fragments.CourseDetailFragment
+import com.francislainy.buffl.fragments.CoursesListFragment
 
 fun RecyclerView.setVerticalLayout() {
 
@@ -19,14 +22,6 @@ fun RecyclerView.setVerticalLayout() {
 }
 
 fun Context.toast(message: CharSequence = "toast") = Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-
-//fun Fragment.replace(containerId: Int = R.id.container_body) {
-//
-//    val activity = LoginActivity()
-//
-//    activity.supportFragmentManager.beginTransaction().replace(R.id.container_body, this)
-//        .commit()
-//}
 
 inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> Unit) {
     val fragmentTransaction = beginTransaction()

@@ -6,8 +6,10 @@ import android.view.MenuItem
 import android.view.Window
 import com.francislainy.buffl.R
 import com.francislainy.buffl.fragments.CoursesListFragment
+import com.francislainy.buffl.model.Course
 import com.francislainy.buffl.utils.ToolbarAndNavController
 import com.francislainy.buffl.utils.addFragment
+import com.francislainy.buffl.utils.toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.custom_add_dialog.*
@@ -42,7 +44,9 @@ class MainActivity : NavActivity() {
 
             btnSave.setOnClickListener {
 
-                if (saveToFirebase(etNewCourseTitle.text.toString())) return@setOnClickListener
+                if (!saveToFirebase(etNewCourseTitle.text.toString())) {
+                    return@setOnClickListener
+                }
 
                 dismiss()
             }
@@ -58,11 +62,16 @@ class MainActivity : NavActivity() {
         val myRef = database.reference.child(userId).child("courses")
 
         if (courseTitle.isEmpty()) {
-            return true
+            return false
         }
 
-        myRef.push().setValue(courseTitle)
-        return false
+        val course = Course(courseTitle)
+
+        myRef.push().setValue(course).addOnSuccessListener {
+
+            toast("course saved")
+        }
+        return true
     }
 
     fun displayView(pos: Int) {

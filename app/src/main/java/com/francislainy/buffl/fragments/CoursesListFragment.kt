@@ -11,6 +11,7 @@ import com.firebase.ui.auth.AuthUI
 import com.francislainy.buffl.R
 import com.francislainy.buffl.activities.LoginActivity
 import com.francislainy.buffl.activities.MainActivity
+import com.francislainy.buffl.model.Course
 import com.francislainy.buffl.utils.toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -66,16 +67,15 @@ class CoursesListFragment : Fragment() {
 
                 adapter.clear()
 
-                for (ds in dataSnapshot.children) {
+                dataSnapshot.children.forEach {
+                    val map = it.value as Map<String, String>
 
-    //                        val map = ds.value as Map<String, String> //todo: keep order for items as they are added
+                    for ((key, value) in map) {
 
-    //                        for ((key, value) in map) {
-                    adapter.add(CourseItem(ds.value.toString())) //todo: have object instead of string to allow for more data
-    //                        }
-
-                    Timber.d("value is: $ds.value")
+                        adapter.add(CourseItem(Course(value)))
+                    }
                 }
+
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -94,13 +94,13 @@ class CoursesListFragment : Fragment() {
             }
     }
 
-    class CourseItem(val text: String) : Item<ViewHolder>() {
+    class CourseItem(val c: Course) : Item<ViewHolder>() {
 
         override fun bind(viewHolder: ViewHolder, position: Int) {
 
             with(viewHolder.itemView) {
 
-                tvCollectionTitle.text = text
+                tvCollectionTitle.text = c.courseTitle
             }
         }
 
