@@ -31,13 +31,13 @@ class ToolbarAndNavController(private val mainActivity: MainActivity) {
         mainActivity.supportActionBar!!.setHomeAsUpIndicator(R.drawable.ic_action_back)
     }
 
-    fun replaceFragment(pos: Int) {
+    fun replaceFragment(pos: Int, param: String) {
         val fragmentManager: FragmentManager = mainActivity.supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
 
         val f: Fragment = when (pos) {
             FRAG_HOME -> CoursesListFragment()
-            else -> CourseDetailFragment()
+            else -> CourseDetailFragment.newInstance(param)
         }
 
         if (shouldBeAddedToStackNavigation(pos.toString())) {

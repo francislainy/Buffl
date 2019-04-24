@@ -6,16 +6,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.firebase.ui.auth.AuthUI
 import com.francislainy.buffl.R
 import com.francislainy.buffl.activities.LoginActivity
 import com.francislainy.buffl.activities.MainActivity
 import com.francislainy.buffl.model.Course
+import com.francislainy.buffl.utils.Utils
+import com.francislainy.buffl.utils.objectToStringJson
 import com.francislainy.buffl.utils.toast
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
@@ -45,15 +49,17 @@ class CoursesListFragment : Fragment() {
         // https://github.com/lisawray/groupie/issues/183
         adapter.setOnItemClickListener { item, view ->
 
-            (activity as MainActivity).displayView(1) //todo: have dynamic position -21/04/19
+            val cItem = item as CourseItem
+
+            (activity as MainActivity).displayView(1, objectToStringJson(cItem.c)) //todo: have dynamic position -21/04/19
         }
 
-        displayFromFirebase(adapter)
+        fetchCourses(adapter)
 
         tvLogout.setOnClickListener { logout() }
     }
 
-    private fun displayFromFirebase(adapter: GroupAdapter<ViewHolder>) {
+    private fun fetchCourses(adapter: GroupAdapter<ViewHolder>) {
         val user = FirebaseAuth.getInstance().currentUser!!
         val userId = user.uid
 
@@ -68,8 +74,11 @@ class CoursesListFragment : Fragment() {
                 adapter.clear()
 
                 dataSnapshot.children.forEach {
+
+                    @Suppress("UNCHECKED_CAST")
                     val map = it.value as Map<String, String>
 
+                    @Suppress("UNUSED_VARIABLE")
                     for ((key, value) in map) {
 
                         adapter.add(CourseItem(Course(value)))
@@ -101,7 +110,12 @@ class CoursesListFragment : Fragment() {
             with(viewHolder.itemView) {
 
                 tvCollectionTitle.text = c.courseTitle
+
+//                tvCollectionTitle.setOnClickListener {
+//                    context.toast("clicked")
+//                }
             }
+
         }
 
         override fun getLayout(): Int {

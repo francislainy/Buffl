@@ -74,8 +74,8 @@ class MainActivity : NavActivity() {
         return true
     }
 
-    fun displayView(pos: Int) {
-        ToolbarAndNavController(this@MainActivity).replaceFragment(pos)
+    fun displayView(pos: Int, param: String = "") {
+        ToolbarAndNavController(this@MainActivity).replaceFragment(pos, param)
     }
 
     fun displayToolbar(pos: Int) {

@@ -9,9 +9,6 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.francislainy.buffl.App
-import com.francislainy.buffl.R
-import com.francislainy.buffl.fragments.CourseDetailFragment
-import com.francislainy.buffl.fragments.CoursesListFragment
 
 fun RecyclerView.setVerticalLayout() {
 
