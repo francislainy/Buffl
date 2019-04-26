@@ -28,9 +28,16 @@ class MainActivity : NavActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.menu_main_plus -> showDialog()
+//            android.R.id.home ->  {
+//                return false
+//            }
+            R.id.menu_main_plus -> {
+                showDialog()
+                return true
+            }
         }
-        return true
+
+        return super.onOptionsItemSelected(item)
     }
 
     private fun showDialog() {

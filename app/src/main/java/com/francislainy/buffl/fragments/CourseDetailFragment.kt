@@ -3,6 +3,7 @@ package com.francislainy.buffl.fragments
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 
@@ -12,7 +13,7 @@ import com.francislainy.buffl.model.Course
 import com.francislainy.buffl.utils.objectFromJsonString
 import kotlinx.android.synthetic.main.fragment_course_detail.*
 
-class CourseDetailFragment : Fragment() {
+class CourseDetailFragment : BaseFragmentNonRootView() {
 
     override fun onResume() {
         super.onResume()

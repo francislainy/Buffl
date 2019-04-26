@@ -48,7 +48,6 @@ class FragmentDrawer : Fragment() {
             override fun onDrawerOpened(drawerView: View) {
                 super.onDrawerOpened(drawerView)
                 activity!!.invalidateOptionsMenu()
-
             }
 
             override fun onDrawerClosed(drawerView: View) {

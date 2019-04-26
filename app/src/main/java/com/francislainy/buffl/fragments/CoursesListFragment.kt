@@ -46,12 +46,12 @@ class CoursesListFragment : Fragment() {
         val adapter = GroupAdapter<ViewHolder>()
         rvCourseCards.adapter = adapter
 
-        // https://github.com/lisawray/groupie/issues/183
+        /** https://github.com/lisawray/groupie/issues/183 */
         adapter.setOnItemClickListener { item, view ->
 
             val cItem = item as CourseItem
 
-            (activity as MainActivity).displayView(1, objectToStringJson(cItem.c)) //todo: have dynamic position -21/04/19
+            (activity as MainActivity).displayView(2, objectToStringJson(cItem.c)) //todo: have dynamic position -21/04/19
         }
 
         fetchCourses(adapter)

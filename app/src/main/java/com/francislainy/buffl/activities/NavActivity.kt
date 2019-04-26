@@ -7,29 +7,25 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.GravityCompat
 import com.francislainy.buffl.R
 import com.francislainy.buffl.fragments.FragmentDrawer
 import kotlinx.android.synthetic.main.activity_main.*
 
 open class NavActivity : AppCompatActivity(),  FragmentDrawer.FragmentDrawerListener {
 
-    private var drawerFragment: FragmentDrawer? = null
     private var exit: Boolean? = false
+    private var drawerFragment: FragmentDrawer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_nav)
     }
 
-    fun toolbarActionBarSetUP() {
-        setSupportActionBar(toolbar as Toolbar)
-        supportActionBar?.apply {
-            setDisplayShowHomeEnabled(true)
-            setDisplayHomeAsUpEnabled(true)
-            title = null
-            setHomeAsUpIndicator(R.drawable.ic_action_menu) // set Hamburger default back to the Actionbar ;)
-        }
+    override fun onDrawerItemSelected(view: View, position: Int) {
+//        displayView(position)
     }
 
     override fun onBackPressed() {
@@ -54,14 +50,20 @@ open class NavActivity : AppCompatActivity(),  FragmentDrawer.FragmentDrawerList
         }
     }
 
-    override fun onDrawerItemSelected(view: View, position: Int) {
-//        displayView(position)
-    }
-
     override fun onSupportNavigateUp(): Boolean {
 
         drawerFragment?.openDrawer()
         return true
+    }
+
+    fun toolbarActionBarSetUP() {
+        setSupportActionBar(toolbar as Toolbar)
+        supportActionBar?.apply {
+            setDisplayShowHomeEnabled(true)
+            setDisplayHomeAsUpEnabled(true)
+            title = null
+            setHomeAsUpIndicator(R.drawable.ic_action_menu) // set Hamburger default back to the Actionbar ;)
+        }
     }
 
     fun setUpDrawer() {

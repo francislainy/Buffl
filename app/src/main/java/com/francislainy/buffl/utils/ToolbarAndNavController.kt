@@ -8,7 +8,7 @@ import com.francislainy.buffl.fragments.CourseDetailFragment
 import com.francislainy.buffl.fragments.CoursesListFragment
 import kotlinx.android.synthetic.main.toolbar_widget.*
 
-const val FRAG_HOME = 10
+const val FRAG_HOME = 1
 
 class ToolbarAndNavController(private val mainActivity: MainActivity) {
 
@@ -19,8 +19,12 @@ class ToolbarAndNavController(private val mainActivity: MainActivity) {
             supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
             tvToolBarTitle.text = "Library"
-            toolbarWithHamburger()
+            when (pos) {
+                1 -> toolbarWithHamburger()
+                2 -> toolbarWithBackArrow()
+            }
         }
+
     }
 
     private fun toolbarWithHamburger() {
