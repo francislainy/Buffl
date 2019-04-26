@@ -4,13 +4,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.francislainy.buffl.R
 import com.francislainy.buffl.activities.MainActivity
+import com.francislainy.buffl.activities.NavActivity
 import com.francislainy.buffl.fragments.CourseDetailFragment
 import com.francislainy.buffl.fragments.CoursesListFragment
 import kotlinx.android.synthetic.main.toolbar_widget.*
 
 const val FRAG_HOME = 1
 
-class ToolbarAndNavController(private val mainActivity: MainActivity) {
+class ToolbarAndNavController(private val mainActivity: NavActivity) {
 
     fun toolbarSetUP(pos: Int) {
 

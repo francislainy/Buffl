@@ -12,6 +12,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import com.francislainy.buffl.R
 import com.francislainy.buffl.fragments.FragmentDrawer
+import com.francislainy.buffl.utils.ToolbarAndNavController
 import kotlinx.android.synthetic.main.activity_main.*
 
 open class NavActivity : AppCompatActivity(),  FragmentDrawer.FragmentDrawerListener {
@@ -76,10 +77,12 @@ open class NavActivity : AppCompatActivity(),  FragmentDrawer.FragmentDrawerList
         drawerFragment!!.setDrawerListener(this)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.main_menu, menu)
-        return true
+    fun displayView(pos: Int, param: String = "") {
+        ToolbarAndNavController(this@NavActivity).replaceFragment(pos, param)
+    }
+
+    fun displayToolbar(pos: Int) {
+        ToolbarAndNavController(this@NavActivity).toolbarSetUP(pos)
     }
 
 }

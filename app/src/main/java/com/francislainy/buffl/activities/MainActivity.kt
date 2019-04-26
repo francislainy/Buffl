@@ -2,12 +2,12 @@ package com.francislainy.buffl.activities
 
 import android.app.Dialog
 import android.os.Bundle
+import android.view.Menu
 import android.view.MenuItem
 import android.view.Window
 import com.francislainy.buffl.R
 import com.francislainy.buffl.fragments.CoursesListFragment
 import com.francislainy.buffl.model.Course
-import com.francislainy.buffl.utils.ToolbarAndNavController
 import com.francislainy.buffl.utils.addFragment
 import com.francislainy.buffl.utils.toast
 import com.google.firebase.auth.FirebaseAuth
@@ -26,11 +26,14 @@ class MainActivity : NavActivity() {
         addFragment(CoursesListFragment(), R.id.container_body_main)
     }
 
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return true
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-//            android.R.id.home ->  {
-//                return false
-//            }
             R.id.menu_main_plus -> {
                 showDialog()
                 return true
@@ -79,14 +82,6 @@ class MainActivity : NavActivity() {
             toast("course saved")
         }
         return true
-    }
-
-    fun displayView(pos: Int, param: String = "") {
-        ToolbarAndNavController(this@MainActivity).replaceFragment(pos, param)
-    }
-
-    fun displayToolbar(pos: Int) {
-        ToolbarAndNavController(this@MainActivity).toolbarSetUP(pos)
     }
 
 }
