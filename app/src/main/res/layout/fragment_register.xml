@@ -16,7 +16,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:background="@drawable/shape_edit_text_white_rectangle"
-            android:hint="@string/fragment_register_et_email"
+            android:hint="@string/register_et_email"
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
             android:textColor="#BBBBBB"
@@ -30,7 +30,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="32dp"
             android:background="@drawable/shape_edit_text_white_rectangle"
-            android:hint="@string/fragment_register_et_password"
+            android:hint="@string/register_et_password"
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
             android:textColor="#BBBBBB"
@@ -43,7 +43,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="24dp"
-            android:text="@string/fragment_register_btn_register" />
+            android:text="@string/register_btn_register" />
 
     <TextView
             android:id="@+id/tvBackToLogin"
@@ -55,7 +55,7 @@
             android:layout_marginBottom="40dp"
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
-            android:text="@string/fragment_register_tv_login"
+            android:text="@string/register_tv_login"
             android:textColor="#FFFFFF" />
 
     <com.google.android.gms.common.SignInButton

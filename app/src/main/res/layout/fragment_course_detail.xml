@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -22,19 +22,19 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            custom:donut_circle_starting_degree="270"
-            custom:donut_finished_color="@color/colorPrimaryDark"
-            custom:donut_finished_stroke_width="5dp"
-            custom:donut_progress="30"
-            custom:donut_text_color="@color/black"
-            custom:donut_text_size="24sp"
-            custom:donut_unfinished_stroke_width="5dp"
-            custom:layout_constraintBottom_toBottomOf="parent"
-            custom:layout_constraintEnd_toEndOf="parent"
-            custom:layout_constraintHorizontal_bias="0.497"
-            custom:layout_constraintStart_toStartOf="parent"
-            custom:layout_constraintTop_toTopOf="parent"
-            custom:layout_constraintVertical_bias="0.16" />
+            app:donut_circle_starting_degree="270"
+            app:donut_finished_color="@color/colorPrimaryDark"
+            app:donut_finished_stroke_width="5dp"
+            app:donut_progress="30"
+            app:donut_text_color="@color/black"
+            app:donut_text_size="24sp"
+            app:donut_unfinished_stroke_width="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.16" />
 
         <TextView
             android:id="@+id/tvCompleted"
@@ -46,11 +46,11 @@
             android:layout_alignBottom="@id/donutProgress"
             android:background="@android:color/transparent"
             android:text="@string/course_detail_tv_completed"
-            custom:layout_constraintBottom_toBottomOf="@+id/donutProgress"
-            custom:layout_constraintEnd_toEndOf="@+id/donutProgress"
-            custom:layout_constraintStart_toStartOf="@+id/donutProgress"
-            custom:layout_constraintTop_toTopOf="@+id/donutProgress"
-            custom:layout_constraintVertical_bias="0.65" />
+            app:layout_constraintBottom_toBottomOf="@+id/donutProgress"
+            app:layout_constraintEnd_toEndOf="@+id/donutProgress"
+            app:layout_constraintStart_toStartOf="@+id/donutProgress"
+            app:layout_constraintTop_toTopOf="@+id/donutProgress"
+            app:layout_constraintVertical_bias="0.65" />
 
         <TextView
             android:id="@+id/tvChooseABox"
@@ -61,15 +61,15 @@
             android:text="Choose a box"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="@color/black"
-            custom:layout_constraintBottom_toTopOf="@+id/viewLine"
-            custom:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintBottom_toTopOf="@+id/viewLine"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <FrameLayout
             android:id="@+id/viewLine"
             android:layout_width="match_parent"
             android:layout_height=".5dp"
             android:background="@color/light_grey_ddd"
-            custom:layout_constraintBottom_toTopOf="@id/tableLayout" />
+            app:layout_constraintBottom_toTopOf="@id/tableLayout" />
 
         <TableLayout
             android:id="@+id/tableLayout"
@@ -77,7 +77,7 @@
             android:layout_height="wrap_content"
             android:stretchColumns="*"
             android:textColor="@color/light_grey_ddd"
-            custom:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintBottom_toBottomOf="parent">
 
             <TableRow
                 android:layout_width="0dp"

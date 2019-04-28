@@ -7,13 +7,13 @@
     <string name="add_dialog_et_title">Title</string>
     <string name="add_dialog_tv_new_course">New Course</string>
     <string name="add_dialog_tv_new_course_info">Just give your course a name and you are done.</string>
-    <string name="fragment_login_et_email">Email</string>
-    <string name="fragment_login_et_password">Password</string>
-    <string name="fragment_login_btn_login">Login</string>
-    <string name="fragment_login_tv_sign_up">New here? Sign up now</string>
-    <string name="fragment_register_btn_register">Register</string>
-    <string name="fragment_register_tv_login">Have an account? Login now</string>
-    <string name="fragment_register_et_password">Password</string>
-    <string name="fragment_register_et_email">Email</string>
+    <string name="login_et_email">Email</string>
+    <string name="login_et_password">Password</string>
+    <string name="login_btn_login">Login</string>
+    <string name="login_tv_sign_up">New here? Sign up now</string>
+    <string name="register_btn_register">Register</string>
+    <string name="register_tv_login">Have an account? Login now</string>
+    <string name="register_et_password">Password</string>
+    <string name="register_et_email">Email</string>
     <string name="course_detail_tv_completed">completed</string>
 </resources>
