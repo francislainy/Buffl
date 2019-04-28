@@ -7,6 +7,7 @@ import android.view.ViewGroup
 
 import com.francislainy.buffl.R
 import com.francislainy.buffl.activities.MainActivity
+import com.francislainy.buffl.fragments.helper.BaseFragmentNonRootView
 import kotlinx.android.synthetic.main.fragment_course_collection.*
 
 class CourseCollectionFragment : BaseFragmentNonRootView() {

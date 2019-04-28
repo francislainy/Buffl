@@ -1,4 +1,4 @@
-package com.francislainy.buffl.fragments
+package com.francislainy.buffl.fragments.drawer
 
 import android.os.Bundle
 import android.view.LayoutInflater

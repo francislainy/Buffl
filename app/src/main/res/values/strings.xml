@@ -15,4 +15,5 @@
     <string name="fragment_register_tv_login">Have an account? Login now</string>
     <string name="fragment_register_et_password">Password</string>
     <string name="fragment_register_et_email">Email</string>
+    <string name="course_detail_tv_completed">completed</string>
 </resources>

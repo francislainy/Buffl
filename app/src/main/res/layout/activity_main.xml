@@ -28,7 +28,7 @@
 
     <fragment
             android:id="@+id/fragment_drawer"
-            android:name="com.francislainy.buffl.fragments.FragmentDrawer"
+            android:name="com.francislainy.buffl.fragments.drawer.FragmentDrawer"
             android:layout_width="260dp"
             android:layout_height="match_parent"
             android:layout_gravity="start"

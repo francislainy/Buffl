@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentPagerAdapter
 
 import com.francislainy.buffl.R
 import com.francislainy.buffl.activities.MainActivity
+import com.francislainy.buffl.fragments.helper.BaseFragmentNonRootView
 import com.francislainy.buffl.model.Course
 import com.francislainy.buffl.utils.objectFromJsonString
 import kotlinx.android.synthetic.main.fragment_course_pager_controller.*

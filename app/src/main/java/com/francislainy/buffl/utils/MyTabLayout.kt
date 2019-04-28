@@ -98,6 +98,6 @@ class MyTabLayout : TabLayout {
     override fun setupWithViewPager(viewPager: ViewPager?, autoRefresh: Boolean) {
         super.setupWithViewPager(viewPager, autoRefresh)
         addViews()
-        setTitlesAtTabs(listOf("Learn", "Explore", "new"))
+        setTitlesAtTabs(listOf("Learn", "Explore"))
     }
 }

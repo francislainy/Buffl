@@ -1,4 +1,4 @@
-package com.francislainy.buffl.fragments
+package com.francislainy.buffl.fragments.login_registration
 
 import android.os.Bundle
 import android.view.LayoutInflater

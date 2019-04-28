@@ -3,15 +3,11 @@ package com.francislainy.buffl.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
-import androidx.core.view.GravityCompat
 import com.francislainy.buffl.R
-import com.francislainy.buffl.fragments.FragmentDrawer
+import com.francislainy.buffl.fragments.drawer.FragmentDrawer
 import com.francislainy.buffl.utils.ToolbarAndNavController
 import kotlinx.android.synthetic.main.activity_main.*
 

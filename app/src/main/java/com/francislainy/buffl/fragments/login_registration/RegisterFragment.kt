@@ -1,4 +1,4 @@
-package com.francislainy.buffl.fragments
+package com.francislainy.buffl.fragments.login_registration
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.francislainy.buffl.R
 import com.francislainy.buffl.activities.LoginActivity
+import com.francislainy.buffl.fragments.login_registration.GoogleSignInParentFragment
+import com.francislainy.buffl.fragments.login_registration.LoginFragment
 import com.francislainy.buffl.utils.replaceFragment
 import kotlinx.android.synthetic.main.fragment_register.*
 

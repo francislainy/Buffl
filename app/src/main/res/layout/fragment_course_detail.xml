@@ -1,14 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/light_grey"
+    android:orientation="vertical"
     tools:context=".fragments.CourseDetailFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="hello course detail" />
+        android:layout_gravity="center">
 
-</FrameLayout>
+        <com.github.lzyzsd.circleprogress.DonutProgress
+            android:id="@+id/donutProgress"
+            android:layout_width="170dp"
+            android:layout_height="170dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            custom:donut_circle_starting_degree="270"
+            custom:donut_finished_color="@color/colorPrimaryDark"
+            custom:donut_finished_stroke_width="5dp"
+            custom:donut_progress="30"
+            custom:donut_text_color="@color/black"
+            custom:donut_text_size="24sp"
+            custom:donut_unfinished_stroke_width="5dp"
+            custom:layout_constraintBottom_toBottomOf="parent"
+            custom:layout_constraintEnd_toEndOf="parent"
+            custom:layout_constraintHorizontal_bias="0.497"
+            custom:layout_constraintStart_toStartOf="parent"
+            custom:layout_constraintTop_toTopOf="parent"
+            custom:layout_constraintVertical_bias="0.16" />
+
+        <TextView
+            android:id="@+id/tvCompleted"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@id/donutProgress"
+            android:layout_alignTop="@id/donutProgress"
+            android:layout_alignEnd="@id/donutProgress"
+            android:layout_alignBottom="@id/donutProgress"
+            android:background="@android:color/transparent"
+            android:text="@string/course_detail_tv_completed"
+            custom:layout_constraintBottom_toBottomOf="@+id/donutProgress"
+            custom:layout_constraintEnd_toEndOf="@+id/donutProgress"
+            custom:layout_constraintStart_toStartOf="@+id/donutProgress"
+            custom:layout_constraintTop_toTopOf="@+id/donutProgress"
+            custom:layout_constraintVertical_bias="0.65" />
+
+        <TextView
+            android:id="@+id/tvChooseABox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginBottom="24dp"
+            android:text="Choose a box"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/black"
+            custom:layout_constraintBottom_toTopOf="@+id/viewLine"
+            custom:layout_constraintStart_toStartOf="parent" />
+
+        <FrameLayout
+            android:id="@+id/viewLine"
+            android:layout_width="match_parent"
+            android:layout_height=".5dp"
+            android:background="@color/light_grey_ddd"
+            custom:layout_constraintBottom_toTopOf="@id/tableLayout" />
+
+        <TableLayout
+            android:id="@+id/tableLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="*"
+            android:textColor="@color/light_grey_ddd"
+            custom:layout_constraintBottom_toBottomOf="parent">
+
+            <TableRow
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/btn1"
+                    style="@style/styleTableCards" />
+
+                <Button
+                    android:id="@+id/btn2"
+                    style="@style/styleTableCards" />
+
+                <Button
+                    android:id="@+id/btn3"
+                    style="@style/styleTableCards" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/btn4"
+                    style="@style/styleTableCards" />
+
+                <Button
+                    android:id="@+id/btn5"
+                    style="@style/styleTableCards" />
+
+                <Button
+                    android:id="@+id/btn6"
+                    style="@style/styleTableCards" />
+
+            </TableRow>
+
+        </TableLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>
