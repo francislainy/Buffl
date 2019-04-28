@@ -31,6 +31,10 @@ open class NavActivity : AppCompatActivity(),  FragmentDrawer.FragmentDrawerList
 
     override fun onBackPressed() {
 
+        if(drawerFragment!!.isNavDrawerOpen()) {
+            drawerFragment!!.closeNavDrawer()
+        }
+
         val count = supportFragmentManager.backStackEntryCount
 
         when (count) {

@@ -7,8 +7,6 @@ import android.view.ViewGroup
 
 import com.francislainy.buffl.R
 import com.francislainy.buffl.activities.MainActivity
-import com.francislainy.buffl.model.Course
-import com.francislainy.buffl.utils.objectFromJsonString
 import kotlinx.android.synthetic.main.fragment_course_collection.*
 
 class CourseCollectionFragment : BaseFragmentNonRootView() {

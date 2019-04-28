@@ -15,4 +15,17 @@
         <item name="android:windowFullscreen">false</item>
     </style>
 
+    <style name="MyTitleStyle" parent="android:Widget.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="MyTabLayoutStyle" parent="Widget.Design.TabLayout">
+        <item name="tabIndicatorColor">#E97E78
+        </item>
+    </style>
+
 </resources>

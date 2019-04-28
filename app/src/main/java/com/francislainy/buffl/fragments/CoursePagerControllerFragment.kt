@@ -14,7 +14,10 @@ import com.francislainy.buffl.model.Course
 import com.francislainy.buffl.utils.objectFromJsonString
 import kotlinx.android.synthetic.main.fragment_course_pager_controller.*
 
+
 /**https://www.raywenderlich.com/324-viewpager-tutorial-getting-started-in-kotlin*/
+
+private const val MAX_VALUE = 2
 
 class CoursePagerControllerFragment : BaseFragmentNonRootView() {
 
@@ -40,11 +43,7 @@ class CoursePagerControllerFragment : BaseFragmentNonRootView() {
 
         pagerAdapter = ViewPagerAdapter(activity?.supportFragmentManager!!)
         viewPager.adapter = pagerAdapter
-
-        viewPager.currentItem =
-            pagerAdapter.count / 2 // Starting from half way so user can swipe left or tight on the first interaction
-
-
+        tabs.setupWithViewPager(viewPager)
     }
 
     companion object {
@@ -60,15 +59,12 @@ class CoursePagerControllerFragment : BaseFragmentNonRootView() {
         }
     }
 
-
     class ViewPagerAdapter internal constructor(fm: FragmentManager) : FragmentPagerAdapter(fm) {
-
-        private val MAX_VALUE = 200 // Number greater than the amount of fragments to allow infinite scrolling
 
         override fun getItem(position: Int): Fragment {
             var fragment: Fragment? = null
 
-            when (position % 2) { // Hack to have decide which fragment to show as there's only 2 ;)
+            when (position) {
                 0 -> fragment = CourseDetailFragment()
                 1 -> fragment = CourseCollectionFragment()
             }

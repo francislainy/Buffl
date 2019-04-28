@@ -6,10 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.francislainy.buffl.R
 
+/** https://guides.codepath.com/android/Fragment-Navigation-Drawer#navigating-between-menu-items */
 class FragmentDrawer : Fragment() {
 
     private var drawerToggle: ActionBarDrawerToggle? = null
@@ -36,15 +38,19 @@ class FragmentDrawer : Fragment() {
 //        challenges!!.setOnClickListener { closeNavDrawer(it, MainActivity.MENU_CHALLENGES) }
     }
 
-    private fun closeNavDrawer(v: View, viewID: Int) {
-        drawerListener!!.onDrawerItemSelected(v, viewID)
+    fun closeNavDrawer() {
         drawerLayout!!.closeDrawer(containerView!!)
+    }
+
+    fun isNavDrawerOpen(): Boolean {
+        return drawerLayout!!.isDrawerOpen(GravityCompat.START)
     }
 
     fun setUp(fragmentId: Int, drawerLayout: DrawerLayout, toolbar: Toolbar) {
         containerView = activity!!.findViewById(fragmentId)
         this.drawerLayout = drawerLayout
-        drawerToggle = object : ActionBarDrawerToggle(activity, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close) {
+        drawerToggle = object :
+            ActionBarDrawerToggle(activity, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close) {
             override fun onDrawerOpened(drawerView: View) {
                 super.onDrawerOpened(drawerView)
                 activity!!.invalidateOptionsMenu()
