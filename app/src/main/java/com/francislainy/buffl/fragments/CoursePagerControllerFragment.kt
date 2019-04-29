@@ -66,8 +66,8 @@ class CoursePagerControllerFragment : BaseFragmentNonRootView() {
             var fragment: Fragment? = null
 
             when (position) {
-                0 -> fragment = CourseDetailFragment()
-                1 -> fragment = CourseCollectionFragment()
+                0 -> fragment = LearnFragment()
+                1 -> fragment = ExploreFragment()
             }
 
             return fragment!!

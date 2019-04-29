@@ -11,16 +11,16 @@ import com.francislainy.buffl.model.Course
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
-import kotlinx.android.synthetic.main.fragment_course_detail.*
-import kotlinx.android.synthetic.main.row_cards_item.view.*
+import kotlinx.android.synthetic.main.fragment_learn.*
+import kotlinx.android.synthetic.main.row_box_item.view.*
 
-class CourseDetailFragment : Fragment() {
+class LearnFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_course_detail, container, false)
+        return inflater.inflate(R.layout.fragment_learn, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -31,31 +31,29 @@ class CourseDetailFragment : Fragment() {
         // todo: have arc start from top
 
         val adapter = GroupAdapter<ViewHolder>()
-        rvCards.adapter = adapter
-        adapter.add(CardItem(Course("15")))
-        adapter.add(CardItem(Course("5")))
-        adapter.add(CardItem(Course("34")))
-        adapter.add(CardItem(Course("23")))
-        adapter.add(CardItem(Course("18")))
-        adapter.add(CardItem(Course("2")))
+        rvBox.adapter = adapter
+        adapter.add(BoxItem(Course("15")))
+        adapter.add(BoxItem(Course("5")))
+        adapter.add(BoxItem(Course("34")))
+        adapter.add(BoxItem(Course("23")))
+        adapter.add(BoxItem(Course("18")))
+        adapter.add(BoxItem(Course("2")))
     }
 
-    class CardItem(val c: Course) : Item<ViewHolder>() {
+    class BoxItem(val c: Course) : Item<ViewHolder>() {
 
         override fun bind(viewHolder: ViewHolder, position: Int) {
 
             with(viewHolder.itemView) {
 
-                val cardsText = "${c.courseTitle} ${resources.getString(R.string.row_cards_tv_cards_text)}"
-                tvCardsText.text = cardsText
-
-                
+                val boxText = "${c.courseTitle} ${resources.getString(R.string.row_box_tv_box_text)}"
+                tvBoxText.text = boxText
             }
 
         }
 
         override fun getLayout(): Int {
-            return R.layout.row_cards_item
+            return R.layout.row_box_item
         }
     }
 
@@ -63,7 +61,7 @@ class CourseDetailFragment : Fragment() {
     companion object {
 
         fun newInstance(param1: String, param2: String) =
-            CourseDetailFragment().apply {
+            LearnFragment().apply {
                 arguments = Bundle().apply {
                     putString("oi", param1)
                     putString("oi2", param2)
@@ -71,9 +69,9 @@ class CourseDetailFragment : Fragment() {
             }
     }
 
-//    fun newInstance(objectString: String): CourseCollectionFragment {
+//    fun newInstance(objectString: String): ExploreFragment {
 //
-//        val fragment = CourseCollectionFragment()
+//        val fragment = ExploreFragment()
 //        val args = Bundle()
 //        args.putString("objectString", objectString)
 //        fragment.arguments = args

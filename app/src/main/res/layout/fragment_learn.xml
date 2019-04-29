@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/light_grey"
+    android:background="@color/light_grey_default_eee"
     android:orientation="vertical"
-    tools:context=".fragments.CourseDetailFragment">
+    tools:context=".fragments.LearnFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -69,16 +69,16 @@
             android:layout_width="match_parent"
             android:layout_height=".5dp"
             android:background="@color/light_grey_ddd"
-            app:layout_constraintBottom_toTopOf="@id/rvCards" />
+            app:layout_constraintBottom_toTopOf="@id/rvBox" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvCards"
+            android:id="@+id/rvBox"
             android:layout_width="match_parent"
             android:layout_height="164dp"
             app:layout_constraintBottom_toBottomOf="parent"
             tools:itemCount="6"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            tools:listitem="@layout/row_cards_item"
+            tools:listitem="@layout/row_box_item"
             app:spanCount="3" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -17,5 +17,5 @@
     <string name="register_et_email">Email</string>
     <string name="course_detail_tv_completed">completed</string>
     <string name="course_detail_tv_choose_a_box">Choose a box</string>
-    <string name="row_cards_tv_cards_text">Cards</string>
+    <string name="row_box_tv_box_text">Cards</string>
 </resources>

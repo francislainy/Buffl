@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="80dp"
     android:background="@drawable/shape_border_table_layout"
     android:orientation="vertical"
-    tools:showIn="@layout/fragment_course_detail">
+    tools:showIn="@layout/fragment_learn">
 
     <FrameLayout
-        android:layout_marginTop="14dp"
-        android:id="@+id/frameCards"
+        android:id="@+id/frameBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="14dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintBottom_toBottomOf="@id/guideline1"
-        app:layout_constraintBottom_toTopOf="@+id/tvCardsText"
+        app:layout_constraintBottom_toTopOf="@+id/tvBoxText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/tvCardNumber"
+            android:id="@+id/tvBoxNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -33,6 +33,7 @@
             android:visibility="visible" />
 
         <ImageView
+            android:id="@+id/ivTick"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -42,25 +43,25 @@
     </FrameLayout>
 
     <TextView
-        android:id="@+id/tvCardsText"
+        android:id="@+id/tvBoxText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal"
-        android:textSize="16sp"
-        android:text="@string/row_cards_tv_cards_text"
         android:layout_marginBottom="14dp"
+        android:text="@string/row_box_tv_box_text"
         android:textColor="@color/colorPrimary"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline1"
-        app:layout_constraintTop_toBottomOf="@+id/guideline1" />
+        app:layout_constraintTop_toBottomOf="@+id/guideline1"
+        app:layout_constraintTop_toTopOf="@+id/guideline1" />
 
     <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/guideline1"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent=".5" />
 
