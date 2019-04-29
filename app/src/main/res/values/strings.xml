@@ -16,4 +16,5 @@
     <string name="register_et_password">Password</string>
     <string name="register_et_email">Email</string>
     <string name="course_detail_tv_completed">completed</string>
+    <string name="course_detail_tv_choose_a_box">Choose a box</string>
 </resources>
