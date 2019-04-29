@@ -2,19 +2,36 @@ package com.francislainy.buffl.activities
 
 import android.app.Dialog
 import android.os.Bundle
+import android.os.Handler
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.view.Window
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import com.francislainy.buffl.R
 import com.francislainy.buffl.fragments.CoursesListFragment
+import com.francislainy.buffl.fragments.drawer.FragmentDrawer
 import com.francislainy.buffl.model.Course
+import com.francislainy.buffl.utils.ToolbarAndNavController
 import com.francislainy.buffl.utils.addFragment
 import com.francislainy.buffl.utils.toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.custom_add_dialog.*
 
-class MainActivity : NavActivity() {
+class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener {
+
+    private var exit: Boolean? = false
+    private var drawerFragment: FragmentDrawer? = null
+
+    override fun onResume() {
+        super.onResume()
+
+        displayToolbar(1) //todo: have dynamic position -21/04/19
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +41,60 @@ class MainActivity : NavActivity() {
         toolbarActionBarSetUP()
 
         addFragment(CoursesListFragment(), R.id.container_body_main)
+    }
+
+    override fun onDrawerItemSelected(view: View, position: Int) {
+//        displayView(position)
+    }
+
+    override fun onBackPressed() {
+
+        if(drawerFragment!!.isNavDrawerOpen()) {
+            drawerFragment!!.closeNavDrawer()
+        }
+
+        val count = supportFragmentManager.backStackEntryCount // todo: add press again to exit without checking frag back stack
+
+        when (count) {
+            0 -> pressAgainToExit()
+            else -> supportFragmentManager.popBackStack()
+        }
+    }
+
+    private fun pressAgainToExit() {
+
+        if (exit!!) {
+            finish() // finish activity
+        } else {
+            Toast.makeText(this, "Press Back again to Exit.", Toast.LENGTH_SHORT).show()
+
+            exit = true
+            Handler().postDelayed({ exit = false }, (3 * 1000).toLong())
+        }
+    }
+
+    private fun setUpDrawer() {
+        drawerFragment = supportFragmentManager.findFragmentById(R.id.fragment_drawer) as FragmentDrawer
+        drawerFragment!!.setUp(
+            R.id.fragment_drawer,
+            findViewById(R.id.drawer_layout),
+            toolbar as Toolbar
+        )
+        drawerFragment!!.setDrawerListener(this)
+    }
+
+    private fun toolbarActionBarSetUP() {
+        setSupportActionBar(toolbar as Toolbar)
+        supportActionBar?.apply {
+            setDisplayShowHomeEnabled(true)
+            setDisplayHomeAsUpEnabled(true)
+            title = null
+            setHomeAsUpIndicator(R.drawable.ic_action_menu) // set Hamburger default back to the Actionbar ;)
+        }
+    }
+
+    fun displayToolbar(pos: Int) {
+        ToolbarAndNavController(this@MainActivity).toolbarSetUP(pos)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

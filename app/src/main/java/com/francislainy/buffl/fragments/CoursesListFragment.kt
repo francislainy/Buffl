@@ -33,7 +33,7 @@ class CoursesListFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        (activity as MainActivity).displayToolbar(1) //todo: have dynamic position -21/04/19
+//        (activity as MainActivity).displayToolbar(1) //todo: have dynamic position -21/04/19
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -51,7 +51,7 @@ class CoursesListFragment : Fragment() {
 
             val cItem = item as CourseItem
 
-            (activity as MainActivity).displayView(2, objectToStringJson(cItem.c)) //todo: have dynamic position -21/04/19
+//            (activity as MainActivity).displayView(2, objectToStringJson(cItem.c)) //todo: have dynamic position -21/04/19
         }
 
         fetchCourses(adapter)

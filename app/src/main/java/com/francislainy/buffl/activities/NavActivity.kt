@@ -77,12 +77,12 @@ open class NavActivity : AppCompatActivity(),  FragmentDrawer.FragmentDrawerList
         drawerFragment!!.setDrawerListener(this)
     }
 
-    fun displayView(pos: Int, param: String = "") {
-        ToolbarAndNavController(this@NavActivity).replaceFragment(pos, param)
-    }
-
-    fun displayToolbar(pos: Int) {
-        ToolbarAndNavController(this@NavActivity).toolbarSetUP(pos)
-    }
+//    fun displayView(pos: Int, param: String = "") {
+//        ToolbarAndNavController(this@NavActivity).replaceFragment(pos, param)
+//    }
+//
+//    fun displayToolbar(pos: Int) {
+//        ToolbarAndNavController(this@NavActivity).toolbarSetUP(pos)
+//    }
 
 }
