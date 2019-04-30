@@ -7,16 +7,20 @@ import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
 import com.francislainy.buffl.R
 import com.francislainy.buffl.fragments.CoursePagerControllerFragment
+import com.francislainy.buffl.model.Course
 import com.francislainy.buffl.utils.ToolbarAndNavController
 import com.francislainy.buffl.utils.addFragment
+import com.francislainy.buffl.utils.objectFromJsonString
 import kotlinx.android.synthetic.main.activity_main.*
 
 class LearnExploreActivity : AppCompatActivity() {
 
+    private var objectTitle: String? = null
+
     override fun onResume() {
         super.onResume()
 
-        displayToolbar(2, "courseTitle") //todo: have dynamic position - 21/04/19
+        displayToolbar(2, objectTitle!!) //todo: have dynamic position - 21/04/19
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,7 +30,9 @@ class LearnExploreActivity : AppCompatActivity() {
         toolbarActionBarSetUP()
 
         val objectString = intent.getStringExtra("objectString")
-        addFragment(CoursePagerControllerFragment.newInstance(objectString), R.id.container_body_learn)
+        objectTitle = objectFromJsonString(objectString, Course::class.java).courseTitle
+
+        addFragment(CoursePagerControllerFragment.newInstance(objectString!!), R.id.container_body_learn)
     }
 
     private fun displayToolbar(pos: Int, param: String) {

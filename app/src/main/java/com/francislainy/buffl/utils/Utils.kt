@@ -5,7 +5,7 @@ import com.google.gson.GsonBuilder
 import timber.log.Timber
 import java.lang.reflect.Type
 
-fun objectToStringJson(o: Any): String {
+fun objectToStringJson(o: Any): String { //todo: have it as extension function instead
 
     val gson = GsonBuilder().setPrettyPrinting().create()
     return gson.toJson(o)
