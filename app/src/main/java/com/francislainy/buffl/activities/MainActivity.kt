@@ -30,13 +30,14 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener 
     override fun onResume() {
         super.onResume()
 
-        displayToolbar(1) //todo: have dynamic position -21/04/19
+        displayToolbar(1, "Library") //todo: have dynamic position -21/04/19
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        invalidateOptionsMenu()
         setUpDrawer()
         toolbarActionBarSetUP()
 
@@ -49,11 +50,12 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener 
 
     override fun onBackPressed() {
 
-        if(drawerFragment!!.isNavDrawerOpen()) {
+        if (drawerFragment!!.isNavDrawerOpen()) {
             drawerFragment!!.closeNavDrawer()
         }
 
-        val count = supportFragmentManager.backStackEntryCount // todo: add press again to exit without checking frag back stack
+        val count =
+            supportFragmentManager.backStackEntryCount // todo: add press again to exit without checking frag back stack
 
         when (count) {
             0 -> pressAgainToExit()
@@ -89,23 +91,25 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener 
             setDisplayShowHomeEnabled(true)
             setDisplayHomeAsUpEnabled(true)
             title = null
-            setHomeAsUpIndicator(R.drawable.ic_action_menu) // set Hamburger default back to the Actionbar ;)
+            setHomeAsUpIndicator(R.drawable.ic_action_menu)
         }
     }
 
-    fun displayToolbar(pos: Int) {
-        ToolbarAndNavController(this@MainActivity).toolbarSetUP(pos)
+    private fun displayToolbar(pos: Int, param: String) {
+        ToolbarAndNavController(this).toolbarSetUP(pos, param)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main_menu, menu)
+        menu.findItem(R.id.menu_settings).isVisible = false
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.menu_main_plus -> {
+            android.R.id.home -> drawerFragment?.openDrawer()
+            R.id.menu_plus -> {
                 showDialog()
                 return true
             }

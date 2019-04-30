@@ -37,7 +37,7 @@ class LearnFragment : Fragment() {
         adapter.add(BoxItem(Course("2")))
     }
 
-    class BoxItem(val c: Course) : Item<ViewHolder>() {
+    class BoxItem(private val c: Course) : Item<ViewHolder>() {
 
         override fun bind(viewHolder: ViewHolder, position: Int) {
 
@@ -54,25 +54,15 @@ class LearnFragment : Fragment() {
         }
     }
 
-
     companion object {
 
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance(param1: String) =
             LearnFragment().apply {
                 arguments = Bundle().apply {
-                    putString("oi", param1)
-                    putString("oi2", param2)
+                    putString("objectString", param1)
+//                    putString("oi2", param2)
                 }
             }
     }
 
-//    fun newInstance(objectString: String): ExploreFragment {
-//
-//        val fragment = ExploreFragment()
-//        val args = Bundle()
-//        args.putString("objectString", objectString)
-//        fragment.arguments = args
-//
-//        return fragment
-//    }
 }

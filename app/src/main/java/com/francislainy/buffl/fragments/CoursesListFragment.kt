@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.firebase.ui.auth.AuthUI
 import com.francislainy.buffl.R
+import com.francislainy.buffl.activities.LearnExploreActivity
 import com.francislainy.buffl.activities.LoginActivity
 import com.francislainy.buffl.activities.MainActivity
 import com.francislainy.buffl.model.Course
@@ -52,6 +53,10 @@ class CoursesListFragment : Fragment() {
             val cItem = item as CourseItem
 
 //            (activity as MainActivity).displayView(2, objectToStringJson(cItem.c)) //todo: have dynamic position -21/04/19
+
+            val intent = Intent(context, LearnExploreActivity::class.java)
+            intent.putExtra("objectString", objectToStringJson(cItem.c))
+            startActivity(intent)
         }
 
         fetchCourses(adapter)

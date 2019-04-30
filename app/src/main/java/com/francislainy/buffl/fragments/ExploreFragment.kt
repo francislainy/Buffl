@@ -45,7 +45,7 @@ class ExploreFragment : BaseFragmentNonRootView() {
         adapter.add(CardItem(Course("2")))
     }
 
-    class CardItem(val c: Course) : Item<ViewHolder>() {
+    class CardItem(private val c: Course) : Item<ViewHolder>() {
 
         override fun bind(viewHolder: ViewHolder, position: Int) {
 
