@@ -38,7 +38,7 @@ class NewCardActivity : AppCompatActivity() {
         setSupportActionBar(toolbar as Toolbar)
         supportActionBar?.apply {
             setDisplayShowHomeEnabled(false)
-            setDisplayHomeAsUpEnabled(true)
+            setDisplayHomeAsUpEnabled(false)
             title = null
         }
     }
@@ -52,6 +52,7 @@ class NewCardActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            android.R.id.home -> onBackPressed()
             R.id.menu_plus -> {
                 return true
             }

@@ -1,10 +1,12 @@
 package com.francislainy.buffl.fragments
 
+import android.animation.ObjectAnimator
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.DecelerateInterpolator
 
 import com.francislainy.buffl.R
 import com.francislainy.buffl.model.Course
@@ -13,6 +15,7 @@ import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.fragment_learn.*
 import kotlinx.android.synthetic.main.row_box_item.view.*
+import java.util.ArrayList
 
 class LearnFragment : Fragment() {
 
@@ -25,7 +28,8 @@ class LearnFragment : Fragment() {
 
         donutProgress.progress = "58".toFloat() // todo: remove hardcode
         donutProgress.text = "${donutProgress.progress.toInt()}%"
-        // todo: have arc start from top
+        donutProgressAnimation()
+
 
         val adapter = GroupAdapter<ViewHolder>()
         rvBox.adapter = adapter
@@ -35,6 +39,19 @@ class LearnFragment : Fragment() {
         adapter.add(BoxItem(Course("23")))
         adapter.add(BoxItem(Course("18")))
         adapter.add(BoxItem(Course("2")))
+
+    }
+
+    private fun donutProgressAnimation() {
+        activity!!.runOnUiThread {
+            val anim = ObjectAnimator.ofFloat(donutProgress, "progress", 0f, 58f)
+            anim.interpolator = DecelerateInterpolator()
+            anim.duration = 1000 // Todo: Check if should get back to 2000
+            anim.start()
+
+            val listObjectAnimator = ArrayList<ObjectAnimator>()
+            listObjectAnimator.add(anim)
+        }
     }
 
     class BoxItem(private val c: Course) : Item<ViewHolder>() {

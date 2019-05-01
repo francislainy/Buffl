@@ -37,7 +37,7 @@ class LearnExploreActivity : AppCompatActivity() {
     }
 
     private fun displayToolbar(pos: Int, param: String) {
-        ToolbarAndNavController(this@LearnExploreActivity).toolbarSetUP(pos, param)
+        ToolbarAndNavController(this).toolbarSetUP(pos, param)
     }
 
     private fun toolbarActionBarSetUP() {
@@ -58,6 +58,7 @@ class LearnExploreActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            android.R.id.home -> onBackPressed()
             R.id.menu_plus -> {
                 displayNewCardActivity()
                 return true
