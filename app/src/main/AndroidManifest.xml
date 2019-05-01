@@ -11,8 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.LearnExploreActivity"></activity>
-        <activity android:name=".activities.NavActivity"></activity>
+        <activity android:name=".activities.NewCardActivity"></activity>
+        <activity android:name=".activities.LearnExploreActivity" />
+        <activity android:name=".activities.NavActivity" />
         <activity
             android:name=".activities.LoginActivity"
             android:theme="@style/AppTheme.FullScreen">
