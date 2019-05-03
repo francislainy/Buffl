@@ -103,6 +103,7 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener 
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main_menu, menu)
         menu.findItem(R.id.menu_settings).isVisible = false
+        menu.findItem(R.id.menu_check).isVisible = false
         return true
     }
 

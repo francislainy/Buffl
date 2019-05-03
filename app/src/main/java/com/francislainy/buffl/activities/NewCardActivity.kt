@@ -46,6 +46,7 @@ class NewCardActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main_menu, menu)
+        menu.findItem(R.id.menu_plus).isVisible = false
         menu.findItem(R.id.menu_settings).isVisible = false
         return true
     }
@@ -53,10 +54,7 @@ class NewCardActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> onBackPressed()
-            R.id.menu_plus -> {
-                return true
-            }
-            R.id.menu_settings -> {
+            R.id.menu_check -> {
                 return true
             }
         }

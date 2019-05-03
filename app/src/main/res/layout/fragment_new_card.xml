@@ -4,17 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/light_grey_default"
     android:orientation="vertical"
     tools:context=".fragments.NewCardFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clCardParent"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="8dp"
         android:layout_weight="7"
-        android:background="@drawable/shape_rounded_rectangle_white">
+        android:background="@drawable/shape_rounded_rectangle_white"
+        android:elevation="2dp">
 
         <EditText
+            android:id="@+id/etTypeHere"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -34,23 +38,37 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:gravity="center_vertical"
         android:layout_gravity="center_vertical"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:gravity="center_vertical">
 
         <Button
-            android:text="Front"
+            android:id="@+id/btnFront"
+            style="?android:attr/borderlessButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/fui_transparent"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="4dp"
+            android:layout_gravity="bottom"
+            android:textColor="@color/black"
+            android:background="@drawable/shape_rectangle_bottom_border_green"
+            android:elevation="0dp"
+            android:text="Front" />
 
         <Button
-            android:text="Back"
-            android:background="@color/fui_transparent"
+            android:id="@+id/btnBack"
+            style="?android:attr/borderlessButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="8dp"
+            android:layout_gravity="bottom"
+            android:textColor="@color/dark_grey_aaa"
+            android:background="@drawable/shape_rectangle_bottom_border_same_grey"
+            android:elevation="0dp"
+            android:text="Back" />
 
     </LinearLayout>
 

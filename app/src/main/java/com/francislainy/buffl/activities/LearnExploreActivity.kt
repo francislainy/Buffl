@@ -28,6 +28,7 @@ class LearnExploreActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_learn_explore)
 
+        invalidateOptionsMenu()
         toolbarActionBarSetUP()
 
         val objectString = intent.getStringExtra("objectString")
@@ -52,7 +53,7 @@ class LearnExploreActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main_menu, menu)
-
+        menu.findItem(R.id.menu_check).isVisible = false
         return true
     }
 

@@ -16,4 +16,11 @@
         app:showAsAction="never"
         android:title="Settings" />
 
+    <item
+        android:id="@+id/menu_check"
+        android:icon="@drawable/ic_action_check"
+        android:orderInCategory="100"
+        app:showAsAction="ifRoom"
+        android:title="Check" />
+
 </menu>
