@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.francislainy.buffl.R
-import com.francislainy.buffl.activities.MainActivity
 import com.francislainy.buffl.fragments.helper.BaseFragmentNonRootView
 import com.francislainy.buffl.model.Course
 import com.xwray.groupie.GroupAdapter
@@ -42,7 +41,7 @@ class ExploreFragment : BaseFragmentNonRootView() {
         adapter.add(CardItem(Course("34")))
         adapter.add(CardItem(Course("23")))
         adapter.add(CardItem(Course("18")))
-        adapter.add(CardItem(Course("2")))
+        adapter.add(CardItem(Course("77")))
     }
 
     class CardItem(private val c: Course) : Item<ViewHolder>() {

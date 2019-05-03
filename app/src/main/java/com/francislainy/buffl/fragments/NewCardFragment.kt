@@ -6,16 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
 import com.francislainy.buffl.R
 import com.francislainy.buffl.utils.toast
 import kotlinx.android.synthetic.main.fragment_new_card.*
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
-import android.view.animation.AccelerateDecelerateInterpolator
-import android.view.animation.DecelerateInterpolator
-import android.animation.ObjectAnimator
-
+import com.francislainy.buffl.model.Card
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 
 class NewCardFragment : Fragment() {
 
@@ -28,6 +24,8 @@ class NewCardFragment : Fragment() {
 
         btnFront.setOnClickListener(onClickFrontBackButton)
         btnBack.setOnClickListener(onClickFrontBackButton)
+
+        btnTemp.setOnClickListener { saveToFirebase("cardAnswer", "cardQuestion") }
     }
 
     private val onClickFrontBackButton = View.OnClickListener { view ->
@@ -55,22 +53,49 @@ class NewCardFragment : Fragment() {
 
     }
 
-    private fun flipAnimation() {
-        /** https://stackoverflow.com/a/46111810/6654475 */
+    private fun saveToFirebase(cardQuestion: String, cardAnswer: String): Boolean {
 
-        val oa1 = ObjectAnimator.ofFloat(clCardParent, "scaleX", 1f, 0f)
-        val oa2 = ObjectAnimator.ofFloat(clCardParent, "scaleX", 0f, 1f)
-        oa1.interpolator = DecelerateInterpolator()
-        oa2.interpolator = AccelerateDecelerateInterpolator()
-        oa1.addListener(object : AnimatorListenerAdapter() {
-            override fun onAnimationEnd(animation: Animator) {
-                super.onAnimationEnd(animation)
-                activity?.toast()
+        val user = FirebaseAuth.getInstance().currentUser!!
+        val userId = user.uid
 
-                oa2.start()
+        val database = FirebaseDatabase.getInstance()
+        val myRef = database.reference.child(userId).child("cards")
+
+        if (cardQuestion.isEmpty() || cardQuestion.isEmpty()) {
+            return false
+        }
+
+        val card = Card("courseId", cardQuestion, cardAnswer) //todo: courseId not hardcoded - maybe retrieve it from course object
+
+        myRef.push().setValue(card)
+            .addOnSuccessListener {
+
+                activity?.toast("course saved")
             }
-        })
-        oa1.start()
+            .addOnFailureListener {
+                activity?.toast("failure")
+            }
+
+        return true
     }
+
+
+//    private fun flipAnimation() {
+//        /** https://stackoverflow.com/a/46111810/6654475 */
+//
+//        val oa1 = ObjectAnimator.ofFloat(clCardParent, "scaleX", 1f, 0f)
+//        val oa2 = ObjectAnimator.ofFloat(clCardParent, "scaleX", 0f, 1f)
+//        oa1.interpolator = DecelerateInterpolator()
+//        oa2.interpolator = AccelerateDecelerateInterpolator()
+//        oa1.addListener(object : AnimatorListenerAdapter() {
+//            override fun onAnimationEnd(animation: Animator) {
+//                super.onAnimationEnd(animation)
+//                activity?.toast()
+//
+//                oa2.start()
+//            }
+//        })
+//        oa1.start()
+//    }
 
 }

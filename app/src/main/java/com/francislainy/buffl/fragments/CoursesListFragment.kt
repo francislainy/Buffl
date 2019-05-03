@@ -6,21 +6,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.firebase.ui.auth.AuthUI
 import com.francislainy.buffl.R
 import com.francislainy.buffl.activities.LearnExploreActivity
 import com.francislainy.buffl.activities.LoginActivity
 import com.francislainy.buffl.activities.MainActivity
+import com.francislainy.buffl.activities.NewCardActivity
 import com.francislainy.buffl.model.Course
-import com.francislainy.buffl.utils.Utils
 import com.francislainy.buffl.utils.objectToStringJson
-import com.francislainy.buffl.utils.toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
@@ -61,7 +57,10 @@ class CoursesListFragment : Fragment() {
 
         fetchCourses(adapter)
 
-        tvLogout.setOnClickListener { logout() }
+        tvLogout.setOnClickListener {
+
+            logout()
+        }
     }
 
     private fun fetchCourses(adapter: GroupAdapter<ViewHolder>) {
@@ -115,10 +114,6 @@ class CoursesListFragment : Fragment() {
             with(viewHolder.itemView) {
 
                 tvCollectionTitle.text = c.courseTitle
-
-//                tvCollectionTitle.setOnClickListener {
-//                    context.toast("clicked")
-//                }
             }
 
         }
