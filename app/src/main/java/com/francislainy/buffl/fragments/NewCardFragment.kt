@@ -12,8 +12,13 @@ import kotlinx.android.synthetic.main.fragment_new_card.*
 import com.francislainy.buffl.model.Card
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import android.view.MenuItem
+import androidx.appcompat.widget.Toolbar
 
-class NewCardFragment : Fragment() {
+class NewCardFragment : Fragment(), Toolbar.OnMenuItemClickListener {
+
+    private var question: String? = null
+    private var answer: String? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_new_card, container, false)
@@ -22,10 +27,13 @@ class NewCardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val toolbar = activity!!.findViewById(R.id.toolbar) as Toolbar
+        toolbar.inflateMenu(R.menu.main_menu)
+        toolbar.setOnMenuItemClickListener(this)
+
+        // Listeners
         btnFront.setOnClickListener(onClickFrontBackButton)
         btnBack.setOnClickListener(onClickFrontBackButton)
-
-        btnTemp.setOnClickListener { saveToFirebase("cardAnswer", "cardQuestion") }
     }
 
     private val onClickFrontBackButton = View.OnClickListener { view ->
@@ -33,21 +41,27 @@ class NewCardFragment : Fragment() {
         when (view?.id) {
             R.id.btnFront -> {
 
-                etTypeHere.hint = "Type in Question..."
+                etQuestion.visibility = View.VISIBLE
+                etAnswer.visibility = View.INVISIBLE
 
                 btnFront.setTextColor(resources.getColor(R.color.black))
                 btnBack.setTextColor(resources.getColor(R.color.dark_grey_aaa))
                 btnFront.setBackgroundResource(R.drawable.shape_rectangle_bottom_border_green)
                 btnBack.setBackgroundResource(R.drawable.shape_rectangle_bottom_border_same_grey)
+
+                question = etQuestion.text?.toString()
             }
             R.id.btnBack -> {
 
-                etTypeHere.hint = "Type in Answer..."
+                etQuestion.visibility = View.INVISIBLE
+                etAnswer.visibility = View.VISIBLE
 
                 btnBack.setTextColor(resources.getColor(R.color.black))
                 btnFront.setTextColor(resources.getColor(R.color.dark_grey_aaa))
                 btnBack.setBackgroundResource(R.drawable.shape_rectangle_bottom_border_green)
                 btnFront.setBackgroundResource(R.drawable.shape_rectangle_bottom_border_same_grey)
+
+                answer = etAnswer.text?.toString()
             }
         }
 
@@ -65,12 +79,16 @@ class NewCardFragment : Fragment() {
             return false
         }
 
-        val card = Card("courseId", cardQuestion, cardAnswer) //todo: courseId not hardcoded - maybe retrieve it from course object
+        val card = Card(
+            "courseId",
+            cardQuestion,
+            cardAnswer
+        ) //todo: courseId not hardcoded - maybe retrieve it from course object - 03/05/19
 
         myRef.push().setValue(card)
             .addOnSuccessListener {
 
-                activity?.toast("course saved")
+                activity?.toast("card saved")
             }
             .addOnFailureListener {
                 activity?.toast("failure")
@@ -79,6 +97,28 @@ class NewCardFragment : Fragment() {
         return true
     }
 
+    override fun onMenuItemClick(menuItem: MenuItem): Boolean {
+        when (menuItem.itemId) {
+            R.id.menu_check -> {
+
+                question = etQuestion.text?.toString()
+                answer = etAnswer.text?.toString()
+
+                if (question.isNullOrEmpty()) {
+                    activity?.toast("Question can not be empty")
+                    return false
+                }
+                else if(answer.isNullOrEmpty()) {
+                    activity?.toast("Answer can not be empty")
+                    return false
+                }
+
+                saveToFirebase(question!!, answer!!)
+                return true
+            }
+        }
+        return false
+    }
 
 //    private fun flipAnimation() {
 //        /** https://stackoverflow.com/a/46111810/6654475 */

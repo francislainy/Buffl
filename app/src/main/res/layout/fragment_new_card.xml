@@ -18,14 +18,15 @@
         android:elevation="2dp">
 
         <EditText
-            android:id="@+id/etTypeHere"
+            android:id="@+id/etQuestion"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:hint="Type in answer..."
+            android:hint="Type in Question..."
+            android:visibility="visible"
             app:backgroundTint="@color/colorPrimaryDark"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -33,15 +34,22 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/btnTemp"
-            android:layout_width="match_parent"
+        <EditText
+            android:id="@+id/etAnswer"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/etTypeHere"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteX="16dp" />
+            android:hint="Type in Answer..."
+            android:visibility="invisible"
+            app:backgroundTint="@color/colorPrimaryDark"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -57,28 +65,28 @@
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_gravity="bottom"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="4dp"
-            android:layout_gravity="bottom"
-            android:textColor="@color/black"
+            android:layout_weight="1"
             android:background="@drawable/shape_rectangle_bottom_border_green"
             android:elevation="0dp"
-            android:text="Front" />
+            android:text="Front"
+            android:textColor="@color/black" />
 
         <Button
             android:id="@+id/btnBack"
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_gravity="bottom"
             android:layout_marginStart="4dp"
             android:layout_marginEnd="8dp"
-            android:layout_gravity="bottom"
-            android:textColor="@color/dark_grey_aaa"
+            android:layout_weight="1"
             android:background="@drawable/shape_rectangle_bottom_border_same_grey"
             android:elevation="0dp"
-            android:text="Back" />
+            android:text="Back"
+            android:textColor="@color/dark_grey_aaa" />
 
     </LinearLayout>
 
