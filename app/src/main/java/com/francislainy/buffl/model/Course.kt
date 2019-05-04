@@ -4,7 +4,7 @@ class Course(val courseTitle: String) {
     constructor() : this("")
 }
 
-class Card(val courseId: String, val cardQuestion: String, val cardAnswer: String) {
+data class Card(var courseId: String, var cardQuestion: String, var cardAnswer: String) {
     constructor() : this("", "", "")
 }
 
