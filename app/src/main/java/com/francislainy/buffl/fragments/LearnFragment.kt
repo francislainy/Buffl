@@ -53,7 +53,7 @@ class LearnFragment : Fragment() {
         activity!!.runOnUiThread {
             val anim = ObjectAnimator.ofFloat(donutProgress, "progress", 0f, 58f)
             anim.interpolator = DecelerateInterpolator()
-            anim.duration = 1000 // Todo: Check if should get back to 2000
+            anim.duration = 2000
             anim.start()
 
             val listObjectAnimator = ArrayList<ObjectAnimator>()
