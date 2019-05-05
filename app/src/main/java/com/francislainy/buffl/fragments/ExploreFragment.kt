@@ -43,14 +43,6 @@ class ExploreFragment : BaseFragmentNonRootView() {
         val adapter = GroupAdapter<ViewHolder>()
         rvCards.adapter = adapter
         fetchCards(adapter)
-
-
-//        adapter.add(CardItem(Card("God is not unrighteous to forget the love you've shown")))
-//        adapter.add(CardItem(Course("5")))
-//        adapter.add(CardItem(Course("34")))
-//        adapter.add(CardItem(Course("23")))
-//        adapter.add(CardItem(Course("18")))
-//        adapter.add(CardItem(Course("77")))
     }
 
     private fun fetchCards(adapter: GroupAdapter<ViewHolder>) {
@@ -69,17 +61,9 @@ class ExploreFragment : BaseFragmentNonRootView() {
 
                 dataSnapshot.children.forEach {
 
-                    val answer = it.child("cardAnswer").value as String
-                    val question = it.child("cardQuestion").value as String
-                    val courseId = it.child("courseId").value as String
-
-//                    val cardDs = dataSnapshot.children as Card
-                    val cardDs = dataSnapshot.getValue(Card::class.java)
-                    val json = Gson().toJson(cardDs)
-                    val card: Card = Gson().fromJson<Card>(json, Card::class.java)
-                    card.cardAnswer = answer
-                    card.cardQuestion = question
-                    card.courseId = courseId
+                    val cardMap = it.value
+                    val json = Gson().toJson(cardMap)
+                    val card = Gson().fromJson<Card>(json, Card::class.java)
 
                     adapter.add(CardItem(card))
                 }

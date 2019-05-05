@@ -8,11 +8,18 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="AppTheme.FullScreen" parent="@style/Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme.FullScreen" parent="@style/Theme.AppCompat.NoActionBar"> <!--todo: delete this for login page" -->
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
-        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <style name="Theme.AppCompat.Light.NoActionBar.FullScreen" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
     </style>
 
     <style name="MyTitleStyle" parent="android:Widget.TextView">

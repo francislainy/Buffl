@@ -107,8 +107,7 @@ class NewCardFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                 if (question.isNullOrEmpty()) {
                     activity?.toast("Question can not be empty")
                     return false
-                }
-                else if(answer.isNullOrEmpty()) {
+                } else if (answer.isNullOrEmpty()) {
                     activity?.toast("Answer can not be empty")
                     return false
                 }
@@ -119,23 +118,5 @@ class NewCardFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         }
         return false
     }
-
-//    private fun flipAnimation() {
-//        /** https://stackoverflow.com/a/46111810/6654475 */
-//
-//        val oa1 = ObjectAnimator.ofFloat(clCardParent, "scaleX", 1f, 0f)
-//        val oa2 = ObjectAnimator.ofFloat(clCardParent, "scaleX", 0f, 1f)
-//        oa1.interpolator = DecelerateInterpolator()
-//        oa2.interpolator = AccelerateDecelerateInterpolator()
-//        oa1.addListener(object : AnimatorListenerAdapter() {
-//            override fun onAnimationEnd(animation: Animator) {
-//                super.onAnimationEnd(animation)
-//                activity?.toast()
-//
-//                oa2.start()
-//            }
-//        })
-//        oa1.start()
-//    }
 
 }

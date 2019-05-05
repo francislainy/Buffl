@@ -1,6 +1,7 @@
 package com.francislainy.buffl.fragments
 
 import android.animation.ObjectAnimator
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,6 +10,7 @@ import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
 
 import com.francislainy.buffl.R
+import com.francislainy.buffl.activities.CardDetailActivity
 import com.francislainy.buffl.model.Course
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
@@ -39,6 +41,11 @@ class LearnFragment : Fragment() {
         adapter.add(BoxItem(Course("23")))
         adapter.add(BoxItem(Course("18")))
         adapter.add(BoxItem(Course("2")))
+        adapter.setOnItemClickListener { item, view ->
+
+            val intent = Intent(activity, CardDetailActivity::class.java)
+            startActivity(intent)
+        }
 
     }
 
