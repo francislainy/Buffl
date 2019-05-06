@@ -89,6 +89,7 @@ class NewCardFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             .addOnSuccessListener {
 
                 activity?.toast("card saved")
+                activity?.finish()
             }
             .addOnFailureListener {
                 activity?.toast("failure")

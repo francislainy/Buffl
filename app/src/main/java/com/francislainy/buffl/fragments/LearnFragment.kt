@@ -29,8 +29,16 @@ import java.util.ArrayList
 
 class LearnFragment : Fragment() {
 
+    private val adapter = GroupAdapter<ViewHolder>()
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_learn, container, false)
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        fetchData(adapter)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -40,8 +48,6 @@ class LearnFragment : Fragment() {
         donutProgress.text = "${donutProgress.progress.toInt()}%"
         donutProgressAnimation()
 
-
-        val adapter = GroupAdapter<ViewHolder>()
         rvBox.adapter = adapter
         fetchData(adapter)
         adapter.setOnItemClickListener { item, view ->
@@ -126,10 +132,26 @@ class LearnFragment : Fragment() {
                 for (i in m) {
 
                     val boxText = when (i.key.size) {
-                        0 -> "${i.key.size}"
                         1 -> "${i.key.size} ${resources.getString(R.string.row_box_tv_box_text_singular)}"
                         else -> {
                             "${i.key.size} ${resources.getString(R.string.row_box_tv_box_text)}"
+                        }
+                    }
+
+                    when (i.key.size) {
+                        0 -> tvBoxText.setTextColor(resources.getColor(R.color.dark_grey_aaa))
+                        else -> tvBoxText.setTextColor(resources.getColor(R.color.colorPrimary))
+                    }
+
+                    when (i.value) {
+
+                        5 -> { // Last box (completion)
+                            ivTick.visibility = View.VISIBLE
+                            tvBoxNumber.visibility = View.INVISIBLE
+                        }
+                        else -> {
+                            ivTick.visibility = View.INVISIBLE
+                            tvBoxNumber.visibility = View.VISIBLE
                         }
                     }
 

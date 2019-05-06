@@ -14,7 +14,9 @@
         <activity
             android:name=".activities.CardDetailActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
-        <activity android:name=".activities.NewCardActivity" />
+        <activity
+            android:name=".activities.NewCardActivity"
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".activities.LearnExploreActivity" />
         <activity android:name=".activities.NavActivity" />
         <activity

@@ -34,11 +34,12 @@
 
         <ImageView
             android:id="@+id/ivTick"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_gravity="center"
             android:visibility="invisible"
-            tools:src="@drawable/ic_action_back" />
+            android:tint="@color/dark_grey_aaa"
+            android:src="@drawable/ic_action_star" />
 
     </FrameLayout>
 

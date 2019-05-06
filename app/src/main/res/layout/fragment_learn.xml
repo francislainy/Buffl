@@ -1,86 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/light_grey_default"
-    android:orientation="vertical"
+    android:fillViewport="true"
     tools:context=".fragments.LearnFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center">
+        android:layout_height="wrap_content"
+        android:background="@color/light_grey_default"
+        android:orientation="vertical">
 
-        <com.github.lzyzsd.circleprogress.DonutProgress
-            android:id="@+id/donutProgress"
-            android:layout_width="175dp"
-            android:layout_height="175dp"
-            android:layout_gravity="center"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            app:donut_circle_starting_degree="270"
-            app:donut_finished_color="@color/colorPrimaryDark"
-            app:donut_finished_stroke_width="5dp"
-            app:donut_progress="30"
-            app:donut_text_color="@color/black"
-            app:donut_text_size="24sp"
-            app:donut_unfinished_stroke_width="5dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.16" />
-
-        <TextView
-            android:id="@+id/tvCompleted"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@id/donutProgress"
-            android:layout_alignTop="@id/donutProgress"
-            android:layout_alignEnd="@id/donutProgress"
-            android:layout_alignBottom="@id/donutProgress"
-            android:background="@android:color/transparent"
-            android:text="@string/course_detail_tv_completed"
-            app:layout_constraintBottom_toBottomOf="@+id/donutProgress"
-            app:layout_constraintEnd_toEndOf="@+id/donutProgress"
-            app:layout_constraintStart_toStartOf="@+id/donutProgress"
-            app:layout_constraintTop_toTopOf="@+id/donutProgress"
-            app:layout_constraintVertical_bias="0.65" />
-
-        <TextView
-            android:id="@+id/tvChooseABox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginBottom="24dp"
-            android:text="@string/course_detail_tv_choose_a_box"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toTopOf="@+id/viewLine"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <FrameLayout
-            android:id="@+id/viewLine"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height=".5dp"
-            android:background="@color/light_grey_ddd"
-            app:layout_constraintBottom_toTopOf="@id/rvBox" />
+            android:layout_height="match_parent"
+            android:layout_gravity="center">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvBox"
-            android:layout_width="match_parent"
-            android:layout_height="164dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            tools:itemCount="6"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            tools:listitem="@layout/row_box_item"
-            app:spanCount="3" />
+            <com.github.lzyzsd.circleprogress.DonutProgress
+                android:id="@+id/donutProgress"
+                android:layout_width="175dp"
+                android:layout_height="175dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                app:donut_circle_starting_degree="270"
+                app:donut_finished_color="@color/colorPrimaryDark"
+                app:donut_finished_stroke_width="5dp"
+                app:donut_progress="30"
+                app:donut_text_color="@color/black"
+                app:donut_text_size="24sp"
+                app:donut_unfinished_stroke_width="5dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.16" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/tvCompleted"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@id/donutProgress"
+                android:layout_alignTop="@id/donutProgress"
+                android:layout_alignEnd="@id/donutProgress"
+                android:layout_alignBottom="@id/donutProgress"
+                android:background="@android:color/transparent"
+                android:text="@string/course_detail_tv_completed"
+                app:layout_constraintBottom_toBottomOf="@+id/donutProgress"
+                app:layout_constraintEnd_toEndOf="@+id/donutProgress"
+                app:layout_constraintStart_toStartOf="@+id/donutProgress"
+                app:layout_constraintTop_toTopOf="@+id/donutProgress"
+                app:layout_constraintVertical_bias="0.65" />
 
-</LinearLayout>
+            <TextView
+                android:id="@+id/tvChooseABox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginBottom="24dp"
+                android:text="@string/course_detail_tv_choose_a_box"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toTopOf="@+id/viewLine"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <FrameLayout
+                android:id="@+id/viewLine"
+                android:layout_width="match_parent"
+                android:layout_height=".5dp"
+                android:background="@color/light_grey_ddd"
+                app:layout_constraintBottom_toTopOf="@id/rvBox" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvBox"
+                android:layout_width="match_parent"
+                android:layout_height="164dp"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:spanCount="3"
+                tools:itemCount="6"
+                tools:listitem="@layout/row_box_item" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+</ScrollView>
