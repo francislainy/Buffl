@@ -31,9 +31,7 @@ class CardDetailFragment : Fragment() {
 
             flipAnimation()
         }
-
     }
-
 
     private fun flipAnimation() {
 

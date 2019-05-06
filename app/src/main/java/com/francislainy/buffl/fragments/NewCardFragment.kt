@@ -82,7 +82,7 @@ class NewCardFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         val card = Card(
             "courseId",
             cardQuestion,
-            cardAnswer
+            cardAnswer, 0
         ) //todo: courseId not hardcoded - maybe retrieve it from course object - 03/05/19
 
         myRef.push().setValue(card)
