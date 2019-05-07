@@ -8,17 +8,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
+import androidx.core.content.ContextCompat.startActivity
 
 import com.francislainy.buffl.R
 import com.francislainy.buffl.activities.CardDetailActivity
 import com.francislainy.buffl.model.Card
 import com.francislainy.buffl.model.Course
+import com.francislainy.buffl.utils.objectToStringJson
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
@@ -50,12 +53,6 @@ class LearnFragment : Fragment() {
 
         rvBox.adapter = adapter
         fetchData(adapter)
-        adapter.setOnItemClickListener { item, view ->
-
-            val intent = Intent(activity, CardDetailActivity::class.java)
-            startActivity(intent)
-        }
-
     }
 
     private fun fetchData(adapter: GroupAdapter<ViewHolder>) {
@@ -108,12 +105,12 @@ class LearnFragment : Fragment() {
                 map4.set(lists4, 4)
                 map5.set(lists5, 5)
 
-                adapter.add(BoxItem(map0))
-                adapter.add(BoxItem(map1))
-                adapter.add(BoxItem(map2))
-                adapter.add(BoxItem(map3))
-                adapter.add(BoxItem(map4))
-                adapter.add(BoxItem(map5))
+                adapter.add(BoxItem(map0, lists0))
+                adapter.add(BoxItem(map1, lists1))
+                adapter.add(BoxItem(map2, lists2))
+                adapter.add(BoxItem(map3, lists3))
+                adapter.add(BoxItem(map4, lists4))
+                adapter.add(BoxItem(map5, lists5))
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -123,7 +120,7 @@ class LearnFragment : Fragment() {
         })
     }
 
-    class BoxItem(private val m: Map<ArrayList<Card>, Int>) : Item<ViewHolder>() {
+    class BoxItem(private val m: Map<ArrayList<Card>, Int>, private val list: ArrayList<Card>) : Item<ViewHolder>() {
 
         override fun bind(viewHolder: ViewHolder, position: Int) {
 
@@ -157,7 +154,15 @@ class LearnFragment : Fragment() {
 
                     tvBoxText.text = boxText
                 }
+
+                clParent.setOnClickListener {
+                    val json = objectToStringJson(list)
+                    val intent = Intent(context, CardDetailActivity::class.java)
+                    intent.putExtra("objectString", json)
+                    context.startActivity(intent)
+                }
             }
+
         }
 
         override fun getLayout(): Int {

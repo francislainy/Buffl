@@ -13,8 +13,13 @@ import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.DecelerateInterpolator
 
 import com.francislainy.buffl.R
+import com.francislainy.buffl.model.Card
+import com.francislainy.buffl.model.Cards
+import com.francislainy.buffl.utils.objectFromJsonString
 import com.francislainy.buffl.utils.toast
 import kotlinx.android.synthetic.main.fragment_card_detail.*
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 class CardDetailFragment : Fragment() {
 
@@ -25,11 +30,31 @@ class CardDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        tvCardTitle.text = "start"
+        val jsonString = arguments?.getString("objectString")
+
+        /** https://stackoverflow.com/a/9599112/6654475 */
+        val collectionType = object : TypeToken<List<Card>>() {}.type
+        val card = Gson().fromJson(jsonString, collectionType) as List<Card>
+
+
+        tvCardTitle.text = card[0].cardQuestion
 
         clCardParent.setOnClickListener {
 
             flipAnimation()
+        }
+    }
+
+    companion object {
+
+        fun newInstance(objectString: String): CardDetailFragment {
+
+            val fragment = CardDetailFragment()
+            val args = Bundle()
+            args.putString("objectString", objectString)
+            fragment.arguments = args
+
+            return fragment
         }
     }
 
@@ -58,4 +83,13 @@ class CardDetailFragment : Fragment() {
         oa1.start()
     }
 
+//    companion object {
+//
+//        fun newInstance(param1: String) =
+//            CardDetailFragment().apply {
+//                arguments = Bundle().apply {
+//                    putString("objectString", param1)
+//                }
+//            }
+//    }
 }

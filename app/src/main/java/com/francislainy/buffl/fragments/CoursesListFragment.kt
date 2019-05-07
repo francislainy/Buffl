@@ -48,8 +48,6 @@ class CoursesListFragment : Fragment() {
 
             val cItem = item as CourseItem
 
-//            (activity as MainActivity).displayView(2, objectToStringJson(cItem.c)) //todo: have dynamic position -21/04/19
-
             val intent = Intent(context, LearnExploreActivity::class.java)
             intent.putExtra("objectString", objectToStringJson(cItem.c))
             startActivity(intent)
