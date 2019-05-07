@@ -157,9 +157,15 @@ class LearnFragment : Fragment() {
 
                 clParent.setOnClickListener {
                     val json = objectToStringJson(list)
-                    val intent = Intent(context, CardDetailActivity::class.java)
-                    intent.putExtra("objectString", json)
-                    context.startActivity(intent)
+                    val intent = Intent(context, CardDetailActivity::class.java).apply {
+                        putExtra("objectString", json)
+                        putExtra("size", list.size)
+                    }
+                    intent.putExtra("oi", "6")
+
+                    if (list.size > 0) {
+                        context.startActivity(intent)
+                    }
                 }
             }
 

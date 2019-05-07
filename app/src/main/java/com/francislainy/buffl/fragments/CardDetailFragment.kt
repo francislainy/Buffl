@@ -14,14 +14,15 @@ import android.view.animation.DecelerateInterpolator
 
 import com.francislainy.buffl.R
 import com.francislainy.buffl.model.Card
-import com.francislainy.buffl.model.Cards
-import com.francislainy.buffl.utils.objectFromJsonString
 import com.francislainy.buffl.utils.toast
 import kotlinx.android.synthetic.main.fragment_card_detail.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
 class CardDetailFragment : Fragment() {
+
+    private var cardList: List<Card>? = null
+    private var randomNum: Int = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_card_detail, container, false)
@@ -34,27 +35,16 @@ class CardDetailFragment : Fragment() {
 
         /** https://stackoverflow.com/a/9599112/6654475 */
         val collectionType = object : TypeToken<List<Card>>() {}.type
-        val card = Gson().fromJson(jsonString, collectionType) as List<Card>
+        cardList = Gson().fromJson(jsonString, collectionType) as List<Card>
 
+        val size = cardList!!.size
+        randomNum = (0 until size).random()
 
-        tvCardTitle.text = card[0].cardQuestion
+        tvCardTitle.text = cardList!![randomNum].cardQuestion
 
         clCardParent.setOnClickListener {
 
             flipAnimation()
-        }
-    }
-
-    companion object {
-
-        fun newInstance(objectString: String): CardDetailFragment {
-
-            val fragment = CardDetailFragment()
-            val args = Bundle()
-            args.putString("objectString", objectString)
-            fragment.arguments = args
-
-            return fragment
         }
     }
 
@@ -72,15 +62,30 @@ class CardDetailFragment : Fragment() {
 
                 oa2.start()
 
-                tvCardTitle.text = when (tvCardTitle.text) {
-                    "end" -> "start"
-                    "start" -> "end"
-                    else -> ""
+                with(cardList?.get(randomNum)!!) {
+                    tvCardTitle.text = when (tvCardTitle.text) {
+                        cardQuestion -> cardAnswer
+                        cardAnswer -> cardQuestion
+                        else -> ""
+                    }
                 }
             }
         })
 
         oa1.start()
+    }
+
+    companion object {
+
+        fun newInstance(objectString: String): CardDetailFragment {
+
+            val fragment = CardDetailFragment()
+            fragment.arguments = Bundle().apply {
+                putString("objectString", objectString)
+            }
+
+            return fragment
+        }
     }
 
 //    companion object {
