@@ -54,6 +54,9 @@ dependencies {
 
     // Circle Progress
     implementation 'com.github.lzyzsd:circleprogress:1.2.1'
+
+    // Stack View
+    implementation "com.yuyakaido.android:card-stack-view:2.3.2"
 }
 
 apply plugin: 'com.google.gms.google-services'

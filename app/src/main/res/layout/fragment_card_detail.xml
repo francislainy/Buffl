@@ -18,38 +18,47 @@
         android:textColor="@color/black"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/clCardParent"
+    <com.yuyakaido.android.cardstackview.CardStackView
+        android:id="@+id/cardStackView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
-        android:layout_weight="4"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/shape_rounded_rectangle_white"
-        android:elevation="2dp">
+        android:layout_weight="4"/>
 
-        <TextView
-            android:id="@+id/tvCardTitle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:gravity="center"
-            tools:text="The way I'm running..."
-            android:textSize="20sp"
-            android:textColor="@color/black"
-            android:visibility="visible"
-            app:backgroundTint="@color/colorPrimaryDark"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <!--<androidx.constraintlayout.widget.ConstraintLayout-->
+        <!--android:id="@+id/clCardParent"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:layout_marginEnd="16dp"-->
+        <!--android:layout_marginStart="16dp"-->
+        <!--android:layout_weight="4"-->
+        <!--android:layout_marginBottom="16dp"-->
+        <!--android:background="@drawable/shape_rounded_rectangle_white"-->
+        <!--android:elevation="2dp">-->
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <!--<TextView-->
+            <!--android:id="@+id/tvCardTitle"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginStart="8dp"-->
+            <!--android:layout_marginTop="8dp"-->
+            <!--android:layout_marginEnd="8dp"-->
+            <!--android:layout_marginBottom="8dp"-->
+            <!--android:gravity="center"-->
+            <!--tools:text="The way I'm running..."-->
+            <!--android:textSize="20sp"-->
+            <!--android:textColor="@color/black"-->
+            <!--android:visibility="visible"-->
+            <!--app:backgroundTint="@color/colorPrimaryDark"-->
+            <!--app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--app:layout_constraintEnd_toEndOf="parent"-->
+            <!--app:layout_constraintHorizontal_bias="0.0"-->
+            <!--app:layout_constraintStart_toStartOf="parent"-->
+            <!--app:layout_constraintTop_toTopOf="parent" />-->
+
+    <!--</androidx.constraintlayout.widget.ConstraintLayout>-->
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -1,6 +1,5 @@
 package com.francislainy.buffl.fragments
 
-
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
@@ -11,18 +10,42 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.DecelerateInterpolator
+import android.view.animation.LinearInterpolator
+import androidx.recyclerview.widget.DefaultItemAnimator
 
 import com.francislainy.buffl.R
+import com.francislainy.buffl.activities.CardDetailActivity
+import com.francislainy.buffl.adapter.CardStackAdapter
 import com.francislainy.buffl.model.Card
 import com.francislainy.buffl.utils.toast
 import kotlinx.android.synthetic.main.fragment_card_detail.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.yuyakaido.android.cardstackview.*
 
-class CardDetailFragment : Fragment() {
+class CardDetailFragment : Fragment(), CardStackListener {
+    override fun onCardDisappeared(view: View?, position: Int) {
+    }
+
+    override fun onCardDragging(direction: Direction?, ratio: Float) {
+    }
+
+    override fun onCardSwiped(direction: Direction?) {
+    }
+
+    override fun onCardCanceled() {
+    }
+
+    override fun onCardAppeared(view: View?, position: Int) {
+    }
+
+    override fun onCardRewound() {
+    }
 
     private var cardList: List<Card>? = null
     private var randomNum: Int = 0
+    private val manager by lazy { CardStackLayoutManager(activity as CardDetailActivity, this) }
+    private val adapter by lazy { CardStackAdapter(cardList!!) }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_card_detail, container, false)
@@ -40,39 +63,42 @@ class CardDetailFragment : Fragment() {
         val size = cardList!!.size
         randomNum = (0 until size).random()
 
-        tvCardTitle.text = cardList!![randomNum].cardQuestion
+        setupCardStackView()
 
-        clCardParent.setOnClickListener {
 
-            flipAnimation()
+//        tvCardTitle.text = cardList!![randomNum].cardQuestion
+
+        cardStackView.setOnClickListener {
+
+//            flipAnimation()
         }
     }
 
-    private fun flipAnimation() {
+    private fun setupCardStackView() {
+        initialize()
+    }
 
-        /** https://stackoverflow.com/a/46111810/6654475 */
-        val oa1 = ObjectAnimator.ofFloat(clCardParent, "scaleX", 1f, 0f)
-        val oa2 = ObjectAnimator.ofFloat(clCardParent, "scaleX", 0f, 1f)
-        oa1.interpolator = DecelerateInterpolator()
-        oa2.interpolator = AccelerateDecelerateInterpolator()
-        oa1.addListener(object : AnimatorListenerAdapter() {
-            override fun onAnimationEnd(animation: Animator) {
-                super.onAnimationEnd(animation)
-                activity?.toast()
-
-                oa2.start()
-
-                with(cardList?.get(randomNum)!!) {
-                    tvCardTitle.text = when (tvCardTitle.text) {
-                        cardQuestion -> cardAnswer
-                        cardAnswer -> cardQuestion
-                        else -> ""
-                    }
-                }
+    private fun initialize() {
+        manager.apply {
+            setStackFrom(StackFrom.None)
+            setVisibleCount(3)
+            setTranslationInterval(8.0f)
+            setScaleInterval(0.95f)
+            setSwipeThreshold(0.3f)
+            setMaxDegree(20.0f)
+            setDirections(Direction.HORIZONTAL)
+            setCanScrollHorizontal(true)
+            setCanScrollVertical(true)
+            setSwipeableMethod(SwipeableMethod.AutomaticAndManual)
+            setOverlayInterpolator(LinearInterpolator())
+        }
+        cardStackView.layoutManager = manager
+        cardStackView.adapter = adapter
+        cardStackView.itemAnimator.apply {
+            if (this is DefaultItemAnimator) {
+                supportsChangeAnimations = false
             }
-        })
-
-        oa1.start()
+        }
     }
 
     companion object {
