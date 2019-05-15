@@ -27,7 +27,8 @@ class NewCardActivity : AppCompatActivity() {
         invalidateOptionsMenu()
         toolbarActionBarSetUP()
 
-        addFragment(NewCardFragment(), R.id.container_body_new_card)
+        val objectString = intent.getStringExtra("objectString")
+        addFragment(NewCardFragment.newInstance(objectString), R.id.container_body_new_card)
     }
 
     private fun displayToolbar(pos: Int = 0, param: String) {

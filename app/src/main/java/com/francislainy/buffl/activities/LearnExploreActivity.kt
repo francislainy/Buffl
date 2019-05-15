@@ -17,6 +17,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class LearnExploreActivity : AppCompatActivity() {
 
     private var objectTitle: String? = null
+    private var objectString: String? = null
 
     override fun onResume() {
         super.onResume()
@@ -31,7 +32,7 @@ class LearnExploreActivity : AppCompatActivity() {
         invalidateOptionsMenu()
         toolbarActionBarSetUP()
 
-        val objectString = intent.getStringExtra("objectString")
+        objectString = intent.getStringExtra("objectString")
         objectTitle = objectFromJsonString(objectString, Course::class.java).courseTitle
 
         addFragment(CoursePagerControllerFragment.newInstance(objectString!!), R.id.container_body_learn)
@@ -74,6 +75,7 @@ class LearnExploreActivity : AppCompatActivity() {
 
     private fun displayNewCardActivity() {
         val intent = Intent(this, NewCardActivity::class.java)
+        intent.putExtra("objectString", objectString)
         startActivity(intent)
     }
 

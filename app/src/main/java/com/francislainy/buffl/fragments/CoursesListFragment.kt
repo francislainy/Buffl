@@ -11,12 +11,9 @@ import com.francislainy.buffl.R
 import com.francislainy.buffl.activities.LearnExploreActivity
 import com.francislainy.buffl.activities.LoginActivity
 import com.francislainy.buffl.activities.MainActivity
-import com.francislainy.buffl.activities.NewCardActivity
 import com.francislainy.buffl.model.Course
 import com.francislainy.buffl.utils.DATA_COURSES
-import com.francislainy.buffl.utils.objectFromJsonString
 import com.francislainy.buffl.utils.objectToStringJson
-import com.francislainy.buffl.utils.toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.gson.Gson

@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import com.francislainy.buffl.R
 import com.francislainy.buffl.fragments.helper.BaseFragmentNonRootView
 import com.francislainy.buffl.model.Card
+import com.francislainy.buffl.model.Course
 import com.francislainy.buffl.utils.DATA_CARDS
+import com.francislainy.buffl.utils.objectFromJsonString
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -25,6 +27,8 @@ import com.google.gson.Gson
 
 class ExploreFragment : BaseFragmentNonRootView() {
 
+    private var course: Course? = null
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_explore, container, false)
     }
@@ -32,8 +36,8 @@ class ExploreFragment : BaseFragmentNonRootView() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        val jsonString = arguments?.getString("objectString")
-//        val course = objectFromJsonString(jsonString, Course::class.java)
+        val jsonString = arguments?.getString("objectString")
+        course = objectFromJsonString(jsonString, Course::class.java)
 
         val adapter = GroupAdapter<ViewHolder>()
         rvCards.adapter = adapter
@@ -60,7 +64,10 @@ class ExploreFragment : BaseFragmentNonRootView() {
                     val json = Gson().toJson(cardMap)
                     val card = Gson().fromJson<Card>(json, Card::class.java)
 
-                    adapter.add(CardItem(card))
+                    if (card.courseId == course!!.courseId) {
+
+                        adapter.add(CardItem(card))
+                    }
                 }
 
             }

@@ -93,19 +93,16 @@ class LearnFragment : Fragment() {
                     val json = Gson().toJson(cardMap)
                     val card = Gson().fromJson<Card>(json, Card::class.java)
 
-                    Timber.d("myfran ${card.courseId}")
-                    Timber.d("myfran ${course!!.courseId}")
-
                     if (card.courseId == course?.courseId) {
 
-                        when (card.cardPosition) {
+                        when (card.boxNumber) {
 
-                            0 -> lists0.add(card)
-                            1 -> lists1.add(card)
-                            2 -> lists2.add(card)
-                            3 -> lists3.add(card)
-                            4 -> lists4.add(card)
-                            5 -> lists5.add(card)
+                            1 -> lists0.add(card) // Box number start from 1
+                            2 -> lists1.add(card)
+                            3 -> lists2.add(card)
+                            4 -> lists3.add(card)
+                            5 -> lists4.add(card)
+                            6 -> lists5.add(card)
                         }
                     }
 

@@ -34,7 +34,6 @@ class CoursePagerControllerFragment : BaseFragmentNonRootView() {
         super.onViewCreated(view, savedInstanceState)
 
         jsonString = arguments?.getString("objectString")
-        val course = objectFromJsonString(jsonString, Course::class.java)
 
         pagerAdapter = ViewPagerAdapter(activity?.supportFragmentManager!!)
         viewPager.adapter = pagerAdapter
@@ -48,7 +47,7 @@ class CoursePagerControllerFragment : BaseFragmentNonRootView() {
 
             when (position) {
                 0 -> fragment = LearnFragment.newInstance(jsonString!!)
-                1 -> fragment = ExploreFragment()
+                1 -> fragment = ExploreFragment.newInstance(jsonString!!)
             }
 
             return fragment!!

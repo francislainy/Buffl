@@ -14,11 +14,15 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
+import com.francislainy.buffl.model.Course
+import com.francislainy.buffl.utils.DATA_CARDS
+import com.francislainy.buffl.utils.objectFromJsonString
 
 class NewCardFragment : Fragment(), Toolbar.OnMenuItemClickListener {
 
     private var question: String? = null
     private var answer: String? = null
+    private var course: Course? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_new_card, container, false)
@@ -26,6 +30,9 @@ class NewCardFragment : Fragment(), Toolbar.OnMenuItemClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val jsonString = arguments?.getString("objectString")
+        course = objectFromJsonString(jsonString, Course::class.java)
 
         val toolbar = activity!!.findViewById(R.id.toolbar) as Toolbar
         toolbar.inflateMenu(R.menu.main_menu)
@@ -73,17 +80,17 @@ class NewCardFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         val userId = user.uid
 
         val database = FirebaseDatabase.getInstance()
-        val myRef = database.reference.child(userId).child("cards")
+        val myRef = database.reference.child(userId).child(DATA_CARDS)
 
         if (cardQuestion.isEmpty() || cardQuestion.isEmpty()) {
             return false
         }
 
         val card = Card(
-            "courseId",
+            course!!.courseId,
             cardQuestion,
-            cardAnswer, 0
-        ) //todo: courseId not hardcoded - maybe retrieve it from course object - 03/05/19
+            cardAnswer, 1
+        )
 
         myRef.push().setValue(card)
             .addOnSuccessListener {
@@ -120,4 +127,16 @@ class NewCardFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         return false
     }
 
+    companion object {
+
+        fun newInstance(objectString: String): NewCardFragment {
+
+            val fragment = NewCardFragment()
+            fragment.arguments = Bundle().apply {
+                putString("objectString", objectString)
+            }
+
+            return fragment
+        }
+    }
 }
