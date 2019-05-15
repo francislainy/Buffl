@@ -1,15 +1,10 @@
 package com.francislainy.buffl.fragments
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
-import android.animation.ObjectAnimator
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AccelerateDecelerateInterpolator
-import android.view.animation.DecelerateInterpolator
 import android.view.animation.LinearInterpolator
 import androidx.recyclerview.widget.DefaultItemAnimator
 
@@ -17,7 +12,6 @@ import com.francislainy.buffl.R
 import com.francislainy.buffl.activities.CardDetailActivity
 import com.francislainy.buffl.adapter.CardStackAdapter
 import com.francislainy.buffl.model.Card
-import com.francislainy.buffl.utils.toast
 import kotlinx.android.synthetic.main.fragment_card_detail.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -65,13 +59,7 @@ class CardDetailFragment : Fragment(), CardStackListener {
 
         setupCardStackView()
 
-
 //        tvCardTitle.text = cardList!![randomNum].cardQuestion
-
-        cardStackView.setOnClickListener {
-
-//            flipAnimation()
-        }
     }
 
     private fun setupCardStackView() {

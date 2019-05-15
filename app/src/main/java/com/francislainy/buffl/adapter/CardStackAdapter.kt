@@ -23,13 +23,11 @@ class CardStackAdapter(private var cardList: List<Card> = emptyList()) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val card = cardList[position]
         val size = cardList.size
         val randomNum = (0 until size).random()
 
-        holder.tvCardTitle.text = card.cardQuestion
-
-        holder.itemView.setOnClickListener { v ->
+        holder.itemView.tvCardTitle.text = cardList[randomNum].cardQuestion
+        holder.itemView.cvParent.setOnClickListener { v ->
             flipAnimation(v, randomNum)
         }
     }
