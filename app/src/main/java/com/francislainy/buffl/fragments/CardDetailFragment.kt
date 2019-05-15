@@ -58,15 +58,9 @@ class CardDetailFragment : Fragment(), CardStackListener {
         randomNum = (0 until size).random()
 
         setupCardStackView()
-
-//        tvCardTitle.text = cardList!![randomNum].cardQuestion
     }
 
     private fun setupCardStackView() {
-        initialize()
-    }
-
-    private fun initialize() {
         manager.apply {
             setStackFrom(StackFrom.None)
             setVisibleCount(3)
@@ -102,13 +96,4 @@ class CardDetailFragment : Fragment(), CardStackListener {
         }
     }
 
-//    companion object {
-//
-//        fun newInstance(param1: String) =
-//            CardDetailFragment().apply {
-//                arguments = Bundle().apply {
-//                    putString("objectString", param1)
-//                }
-//            }
-//    }
 }

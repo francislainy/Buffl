@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.francislainy.buffl.R
 import com.francislainy.buffl.model.Card
 import kotlinx.android.synthetic.main.row_swipe_card_item.view.*
+import java.util.ArrayList
 
 class CardStackAdapter(private var cardList: List<Card> = emptyList()) :
     RecyclerView.Adapter<CardStackAdapter.ViewHolder>() {
@@ -24,15 +25,34 @@ class CardStackAdapter(private var cardList: List<Card> = emptyList()) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val size = cardList.size
-        val randomNum = (0 until size).random()
+        var randomNum = (0 until size).random()
 
-        holder.itemView.tvCardTitle.text = cardList[randomNum].cardQuestion
+        /**-----*/
+        // todo: keep track of which numbers have already being shown - 15/05/19
+        val randomNumberList = ArrayList<Int>()
+        var stillLooking = true
+
+        while (stillLooking) {
+            if (randomNumberList.contains(randomNum)) { // If random number already taken try to find a new one
+                randomNum = (0 until size).random()
+            } else {
+                randomNumberList.add(randomNum)
+                stillLooking = false
+            }
+        }
+        /**-----*/
+
+
+        val card = cardList[randomNum]
+
+        holder.itemView.tvCardTitle.text = card.cardQuestion
+
         holder.itemView.cvParent.setOnClickListener { v ->
-            flipAnimation(v, randomNum)
+            flipAnimation(v, card)
         }
     }
 
-    private fun flipAnimation(v: View, randomNum: Int) {
+    private fun flipAnimation(v: View, card: Card) {
 
         /** https://stackoverflow.com/a/46111810/6654475 */
         val oa1 = ObjectAnimator.ofFloat(v.cvParent, "scaleX", 1f, 0f)
@@ -45,7 +65,7 @@ class CardStackAdapter(private var cardList: List<Card> = emptyList()) :
 
                 oa2.start()
 
-                with(cardList[randomNum]) {
+                with(card) {
                     v.tvCardTitle.text = when (v.tvCardTitle.text) {
                         cardQuestion -> cardAnswer
                         cardAnswer -> cardQuestion

@@ -24,27 +24,39 @@ class CoursePagerControllerFragment : BaseFragmentNonRootView() {
 
     private lateinit var pagerAdapter: ViewPagerAdapter
 
-    override fun onResume() {
-        super.onResume()
-
-//        (activity as MainActivity).displayToolbar(2) //todo: have dynamic position -21/04/19
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_course_pager_controller, container, false)
     }
 
+    private var jsonString: String? = null
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val jsonString = arguments?.getString("objectString")
+        jsonString = arguments?.getString("objectString")
         val course = objectFromJsonString(jsonString, Course::class.java)
-
-//        tvTest.text = course.courseTitle
 
         pagerAdapter = ViewPagerAdapter(activity?.supportFragmentManager!!)
         viewPager.adapter = pagerAdapter
         tabs.setupWithViewPager(viewPager)
+    }
+
+    inner class ViewPagerAdapter internal constructor(fm: FragmentManager) : FragmentPagerAdapter(fm) {
+
+        override fun getItem(position: Int): Fragment {
+            var fragment: Fragment? = null
+
+            when (position) {
+                0 -> fragment = LearnFragment.newInstance(jsonString!!)
+                1 -> fragment = ExploreFragment()
+            }
+
+            return fragment!!
+        }
+
+        override fun getCount(): Int {
+            return MAX_VALUE
+        }
     }
 
     companion object {
@@ -57,24 +69,6 @@ class CoursePagerControllerFragment : BaseFragmentNonRootView() {
             fragment.arguments = args
 
             return fragment
-        }
-    }
-
-    class ViewPagerAdapter internal constructor(fm: FragmentManager) : FragmentPagerAdapter(fm) {
-
-        override fun getItem(position: Int): Fragment {
-            var fragment: Fragment? = null
-
-            when (position) {
-                0 -> fragment = LearnFragment()
-                1 -> fragment = ExploreFragment()
-            }
-
-            return fragment!!
-        }
-
-        override fun getCount(): Int {
-            return MAX_VALUE
         }
     }
 

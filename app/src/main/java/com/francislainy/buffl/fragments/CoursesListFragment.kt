@@ -1,6 +1,5 @@
 package com.francislainy.buffl.fragments
 
-
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,9 +13,13 @@ import com.francislainy.buffl.activities.LoginActivity
 import com.francislainy.buffl.activities.MainActivity
 import com.francislainy.buffl.activities.NewCardActivity
 import com.francislainy.buffl.model.Course
+import com.francislainy.buffl.utils.DATA_COURSES
+import com.francislainy.buffl.utils.objectFromJsonString
 import com.francislainy.buffl.utils.objectToStringJson
+import com.francislainy.buffl.utils.toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.google.gson.Gson
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
@@ -24,14 +27,9 @@ import kotlinx.android.synthetic.main.fragment_courses_list.*
 import kotlinx.android.synthetic.main.row_courses_item.view.*
 import timber.log.Timber
 
-
 class CoursesListFragment : Fragment() {
 
-    override fun onResume() {
-        super.onResume()
-
-//        (activity as MainActivity).displayToolbar(1) //todo: have dynamic position -21/04/19
-    }
+    private lateinit var adapter: GroupAdapter<ViewHolder>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_courses_list, container, false)
@@ -40,7 +38,7 @@ class CoursesListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = GroupAdapter<ViewHolder>()
+        adapter = GroupAdapter()
         rvCourseCards.adapter = adapter
 
         /** https://github.com/lisawray/groupie/issues/183 */
@@ -66,7 +64,7 @@ class CoursesListFragment : Fragment() {
         val userId = user.uid
 
         val database = FirebaseDatabase.getInstance()
-        val myRef = database.reference.child(userId).child("courses")
+        val myRef = database.reference.child(userId).child(DATA_COURSES)
         myRef.orderByKey()
 
         // Read from the database
@@ -77,14 +75,11 @@ class CoursesListFragment : Fragment() {
 
                 dataSnapshot.children.forEach {
 
-                    @Suppress("UNCHECKED_CAST")
-                    val map = it.value as Map<String, String>
+                    val cardMap = it.value
+                    val json = Gson().toJson(cardMap)
+                    val course = Gson().fromJson<Course>(json, Course::class.java)
 
-                    @Suppress("UNUSED_VARIABLE")
-                    for ((key, value) in map) {
-
-                        adapter.add(CourseItem(Course(value)))
-                    }
+                    adapter.add(CourseItem(course))
                 }
 
             }
@@ -116,8 +111,8 @@ class CoursesListFragment : Fragment() {
 
         }
 
-        override fun getLayout(): Int {
-            return R.layout.row_courses_item
-        }
+        override fun getLayout() = R.layout.row_courses_item
+
     }
+
 }

@@ -14,6 +14,8 @@ import com.francislainy.buffl.R
 import com.francislainy.buffl.activities.CardDetailActivity
 import com.francislainy.buffl.model.Card
 import com.francislainy.buffl.model.Course
+import com.francislainy.buffl.utils.DATA_CARDS
+import com.francislainy.buffl.utils.objectFromJsonString
 import com.francislainy.buffl.utils.objectToStringJson
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -33,6 +35,7 @@ import java.util.ArrayList
 class LearnFragment : Fragment() {
 
     private val adapter = GroupAdapter<ViewHolder>()
+    private var course: Course? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_learn, container, false)
@@ -47,6 +50,9 @@ class LearnFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val jsonString = arguments?.getString("objectString")
+        course = objectFromJsonString(jsonString, Course::class.java)
+
         donutProgress.progress = "58".toFloat() // todo: remove hardcode
         donutProgress.text = "${donutProgress.progress.toInt()}%"
         donutProgressAnimation()
@@ -60,7 +66,7 @@ class LearnFragment : Fragment() {
         val userId = user.uid
 
         val database = FirebaseDatabase.getInstance()
-        val myRef = database.reference.child(userId).child("cards")
+        val myRef = database.reference.child(userId).child(DATA_CARDS)
         myRef.orderByKey()
 
         adapter.clear()
@@ -87,13 +93,20 @@ class LearnFragment : Fragment() {
                     val json = Gson().toJson(cardMap)
                     val card = Gson().fromJson<Card>(json, Card::class.java)
 
-                    when (card.cardPosition) {
-                        0 -> lists0.add(card)
-                        1 -> lists1.add(card)
-                        2 -> lists2.add(card)
-                        3 -> lists3.add(card)
-                        4 -> lists4.add(card)
-                        5 -> lists5.add(card)
+                    Timber.d("myfran ${card.courseId}")
+                    Timber.d("myfran ${course!!.courseId}")
+
+                    if (card.courseId == course?.courseId) {
+
+                        when (card.cardPosition) {
+
+                            0 -> lists0.add(card)
+                            1 -> lists1.add(card)
+                            2 -> lists2.add(card)
+                            3 -> lists3.add(card)
+                            4 -> lists4.add(card)
+                            5 -> lists5.add(card)
+                        }
                     }
 
                 }
@@ -114,7 +127,6 @@ class LearnFragment : Fragment() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                // Failed to read value
                 Timber.w("Failed to read value. + ${error.toException()}")
             }
         })
@@ -139,6 +151,8 @@ class LearnFragment : Fragment() {
                         0 -> tvBoxText.setTextColor(resources.getColor(R.color.dark_grey_aaa))
                         else -> tvBoxText.setTextColor(resources.getColor(R.color.colorPrimary))
                     }
+
+                    tvBoxNumber.text = (position + 1).toString()
 
                     when (i.value) {
 
@@ -192,7 +206,6 @@ class LearnFragment : Fragment() {
             LearnFragment().apply {
                 arguments = Bundle().apply {
                     putString("objectString", param1)
-//                    putString("oi2", param2)
                 }
             }
     }

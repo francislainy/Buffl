@@ -1,6 +1,6 @@
 package com.francislainy.buffl.model
 
-class Course(val courseTitle: String)
+class Course(val courseId: String, val courseTitle: String)
 
 data class Card(var courseId: String, var cardQuestion: String, var cardAnswer: String, var cardPosition: Int)
 
