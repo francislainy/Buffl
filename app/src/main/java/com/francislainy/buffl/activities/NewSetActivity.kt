@@ -1,44 +1,37 @@
 package com.francislainy.buffl.activities
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
 import com.francislainy.buffl.R
-import com.francislainy.buffl.fragments.CoursePagerControllerFragment
-import com.francislainy.buffl.model.Course
+import com.francislainy.buffl.fragments.NewCardFragment
+import com.francislainy.buffl.fragments.NewSetFragment
 import com.francislainy.buffl.utils.ToolbarAndNavController
 import com.francislainy.buffl.utils.addFragment
-import com.francislainy.buffl.utils.objectFromJsonString
 import kotlinx.android.synthetic.main.activity_main.*
 
-class LearnExploreActivity : AppCompatActivity() {
-
-    private var objectTitle: String? = null
-    private var objectString: String? = null
-
-    override fun onResume() {
-        super.onResume()
-
-        displayToolbar(2, objectTitle!!) //todo: have dynamic position - 21/04/19
-    }
+class NewSetActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_learn_explore)
+        setContentView(R.layout.activity_new_set)
 
         invalidateOptionsMenu()
         toolbarActionBarSetUP()
 
-        objectString = intent.getStringExtra("objectString")
-        objectTitle = objectFromJsonString(objectString, Course::class.java).courseTitle
-
-        addFragment(CoursePagerControllerFragment.newInstance(objectString!!), R.id.container_body_learn)
+        val objectString = intent.getStringExtra("objectString")
+        addFragment(NewSetFragment.newInstance(objectString), R.id.container_body_new_set)
     }
 
-    private fun displayToolbar(pos: Int, param: String) {
+    override fun onResume() {
+        super.onResume()
+
+        displayToolbar(param = "New Set") //todo: have dynamic position - 21/04/19
+    }
+
+    private fun displayToolbar(pos: Int = 0, param: String) {
         ToolbarAndNavController(this).toolbarSetUP(pos, param)
     }
 
@@ -61,22 +54,11 @@ class LearnExploreActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> onBackPressed()
-            R.id.menu_plus -> {
-                displayNewCardActivity()
-                return true
-            }
-            R.id.menu_settings -> { //todo: navigate to settings - 17/05/19
+            R.id.menu_check -> {
                 return true
             }
         }
 
         return super.onOptionsItemSelected(item)
     }
-
-    private fun displayNewCardActivity() {
-        val intent = Intent(this, NewCardActivity::class.java)
-        intent.putExtra("objectString", objectString)
-        startActivity(intent)
-    }
-
 }

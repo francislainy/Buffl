@@ -11,7 +11,7 @@ import com.francislainy.buffl.fragments.drawer.FragmentDrawer
 import com.francislainy.buffl.utils.ToolbarAndNavController
 import kotlinx.android.synthetic.main.activity_main.*
 
-open class NavActivity : AppCompatActivity(),  FragmentDrawer.FragmentDrawerListener {
+open class NavActivity_old_delete : AppCompatActivity(),  FragmentDrawer.FragmentDrawerListener {
 
     private var exit: Boolean? = false
     private var drawerFragment: FragmentDrawer? = null
@@ -78,11 +78,11 @@ open class NavActivity : AppCompatActivity(),  FragmentDrawer.FragmentDrawerList
     }
 
 //    fun displayView(pos: Int, param: String = "") {
-//        ToolbarAndNavController(this@NavActivity).replaceFragment(pos, param)
+//        ToolbarAndNavController(this@NavActivity_old_delete).replaceFragment(pos, param)
 //    }
 //
 //    fun displayToolbar(pos: Int) {
-//        ToolbarAndNavController(this@NavActivity).toolbarSetUP(pos)
+//        ToolbarAndNavController(this@NavActivity_old_delete).toolbarSetUP(pos)
 //    }
 
 }

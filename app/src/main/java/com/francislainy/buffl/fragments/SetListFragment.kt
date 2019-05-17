@@ -20,16 +20,16 @@ import com.google.gson.Gson
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
-import kotlinx.android.synthetic.main.fragment_courses_list.*
+import kotlinx.android.synthetic.main.fragment_set_list.*
 import kotlinx.android.synthetic.main.row_courses_item.view.*
 import timber.log.Timber
 
-class CoursesListFragment : Fragment() {
+class SetListFragment : Fragment() {
 
     private lateinit var adapter: GroupAdapter<ViewHolder>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_courses_list, container, false)
+        return inflater.inflate(R.layout.fragment_set_list, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

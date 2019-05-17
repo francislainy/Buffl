@@ -19,4 +19,6 @@
     <string name="course_detail_tv_choose_a_box">Choose a box</string>
     <string name="row_box_tv_box_text">Cards</string>
     <string name="row_box_tv_box_text_singular">Card</string>
+    <string name="new_set_create_info_tv">Start Creating your first set with your \nWeb Editor.</string>
+    <string name="new_set_welcome_tv">Welcome</string>
 </resources>

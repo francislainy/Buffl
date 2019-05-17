@@ -1,6 +1,7 @@
 package com.francislainy.buffl.activities
 
 import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.view.Menu
@@ -11,9 +12,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.francislainy.buffl.R
-import com.francislainy.buffl.fragments.CoursesListFragment
+import com.francislainy.buffl.fragments.SetListFragment
 import com.francislainy.buffl.fragments.drawer.FragmentDrawer
 import com.francislainy.buffl.model.Course
+import com.francislainy.buffl.utils.DATA_COURSES
 import com.francislainy.buffl.utils.ToolbarAndNavController
 import com.francislainy.buffl.utils.addFragment
 import com.francislainy.buffl.utils.toast
@@ -26,6 +28,7 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener 
 
     private var exit: Boolean? = false
     private var drawerFragment: FragmentDrawer? = null
+    private lateinit var newPostReference: DatabaseReference
 
     override fun onResume() {
         super.onResume()
@@ -41,7 +44,7 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener 
         setUpDrawer()
         toolbarActionBarSetUP()
 
-        addFragment(CoursesListFragment(), R.id.container_body_main)
+        addFragment(SetListFragment(), R.id.container_body_main)
     }
 
     override fun onDrawerItemSelected(view: View, position: Int) {
@@ -145,17 +148,25 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener 
         val userId = user.uid
 
         val database = FirebaseDatabase.getInstance()
-        val myRef = database.reference.child(userId).child("courses")
+        val myRef = database.reference.child(userId).child(DATA_COURSES)
 
         if (courseTitle.isEmpty()) {
             return false
         }
 
-        val course = Course(courseTitle)
+//       myRef.push().setValue(course).addOnSuccessListener {
 
-        myRef.push().setValue(course).addOnSuccessListener {
+        newPostReference = myRef.push()
+
+        val course = Course(newPostReference.key!!, courseTitle)
+
+        newPostReference.setValue(course).addOnSuccessListener {
 
             toast("course saved")
+
+            val intent = Intent(this@MainActivity, NewSetActivity::class.java)
+            intent.putExtra("objectString", "delete") //todo: proper object
+            startActivity(intent)
         }
         return true
     }

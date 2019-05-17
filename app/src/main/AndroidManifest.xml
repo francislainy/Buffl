@@ -12,15 +12,25 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".activities.NewSetActivity"
+            android:screenOrientation="portrait"/>
+        <activity
             android:name=".activities.CardDetailActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen" />
         <activity
             android:name=".activities.NewCardActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".activities.LearnExploreActivity" />
-        <activity android:name=".activities.NavActivity" />
+        <activity
+            android:name=".activities.LearnExploreActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.NavActivity_old_delete"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.LoginActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -29,7 +39,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.MainActivity">
+        <activity
+            android:name=".activities.MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.DEFAULT" />
