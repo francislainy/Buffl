@@ -7,8 +7,8 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
 import com.francislainy.buffl.R
-import com.francislainy.buffl.fragments.CoursePagerControllerFragment
-import com.francislainy.buffl.model.Course
+import com.francislainy.buffl.fragments.SetPagerControllerFragment
+import com.francislainy.buffl.model.MySet
 import com.francislainy.buffl.utils.ToolbarAndNavController
 import com.francislainy.buffl.utils.addFragment
 import com.francislainy.buffl.utils.objectFromJsonString
@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class LearnExploreActivity : AppCompatActivity() {
 
     private var objectTitle: String? = null
-    private var objectString: String? = null
+    private var setString: String? = null
 
     override fun onResume() {
         super.onResume()
@@ -32,10 +32,10 @@ class LearnExploreActivity : AppCompatActivity() {
         invalidateOptionsMenu()
         toolbarActionBarSetUP()
 
-        objectString = intent.getStringExtra("objectString")
-        objectTitle = objectFromJsonString(objectString, Course::class.java).courseTitle
+        setString = intent.getStringExtra("setString")
+        objectTitle = objectFromJsonString(setString, MySet::class.java).setTitle
 
-        addFragment(CoursePagerControllerFragment.newInstance(objectString!!), R.id.container_body_learn)
+        addFragment(SetPagerControllerFragment.newInstance(setString!!), R.id.container_body_learn)
     }
 
     private fun displayToolbar(pos: Int, param: String) {
@@ -75,7 +75,7 @@ class LearnExploreActivity : AppCompatActivity() {
 
     private fun displayNewCardActivity() {
         val intent = Intent(this, NewCardActivity::class.java)
-        intent.putExtra("objectString", objectString)
+        intent.putExtra("setString", setString)
         startActivity(intent)
     }
 

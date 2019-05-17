@@ -12,7 +12,10 @@ import com.francislainy.buffl.activities.LearnExploreActivity
 import com.francislainy.buffl.activities.LoginActivity
 import com.francislainy.buffl.activities.MainActivity
 import com.francislainy.buffl.model.Course
+import com.francislainy.buffl.model.MySet
 import com.francislainy.buffl.utils.DATA_COURSES
+import com.francislainy.buffl.utils.DATA_SETS
+import com.francislainy.buffl.utils.objectFromJsonString
 import com.francislainy.buffl.utils.objectToStringJson
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -21,12 +24,13 @@ import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.fragment_set_list.*
-import kotlinx.android.synthetic.main.row_courses_item.view.*
+import kotlinx.android.synthetic.main.row_set_item.view.*
 import timber.log.Timber
 
 class SetListFragment : Fragment() {
 
     private lateinit var adapter: GroupAdapter<ViewHolder>
+    private var course: Course? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_set_list, container, false)
@@ -35,20 +39,23 @@ class SetListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val jsonString = arguments?.getString("courseString")
+        course = objectFromJsonString(jsonString, Course::class.java)
+
         adapter = GroupAdapter()
-        rvCourseCards.adapter = adapter
+        rvSetCards.adapter = adapter
 
         /** https://github.com/lisawray/groupie/issues/183 */
         adapter.setOnItemClickListener { item, view ->
 
-            val cItem = item as CourseItem
+            val cItem = item as SetItem
 
             val intent = Intent(context, LearnExploreActivity::class.java)
-            intent.putExtra("objectString", objectToStringJson(cItem.c))
+            intent.putExtra("setString", objectToStringJson(cItem.set))
             startActivity(intent)
         }
 
-        fetchCourses(adapter)
+        fetchSets(adapter)
 
         tvLogout.setOnClickListener {
 
@@ -56,12 +63,12 @@ class SetListFragment : Fragment() {
         }
     }
 
-    private fun fetchCourses(adapter: GroupAdapter<ViewHolder>) {
+    private fun fetchSets(adapter: GroupAdapter<ViewHolder>) {
         val user = FirebaseAuth.getInstance().currentUser!!
         val userId = user.uid
 
         val database = FirebaseDatabase.getInstance()
-        val myRef = database.reference.child(userId).child(DATA_COURSES)
+        val myRef = database.reference.child(userId).child(DATA_SETS)
         myRef.orderByKey()
 
         // Read from the database
@@ -74,11 +81,10 @@ class SetListFragment : Fragment() {
 
                     val cardMap = it.value
                     val json = Gson().toJson(cardMap)
-                    val course = Gson().fromJson<Course>(json, Course::class.java)
+                    val set = Gson().fromJson<MySet>(json, MySet::class.java)
 
-                    adapter.add(CourseItem(course))
+                    adapter.add(SetItem(set))
                 }
-
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -86,6 +92,21 @@ class SetListFragment : Fragment() {
                 Timber.w("Failed to read value. + ${error.toException()}")
             }
         })
+    }
+
+    inner class SetItem(val set: MySet) : Item<ViewHolder>() {
+
+        override fun bind(viewHolder: ViewHolder, position: Int) {
+
+            with(viewHolder.itemView) {
+
+                tvSetTitle.text = set.setTitle
+                tvCourseTitle.text = course?.courseTitle
+            }
+        }
+
+        override fun getLayout() = R.layout.row_set_item
+
     }
 
     private fun logout() {
@@ -97,19 +118,13 @@ class SetListFragment : Fragment() {
             }
     }
 
-    class CourseItem(val c: Course) : Item<ViewHolder>() {
+    companion object {
 
-        override fun bind(viewHolder: ViewHolder, position: Int) {
-
-            with(viewHolder.itemView) {
-
-                tvCollectionTitle.text = c.courseTitle
+        fun newInstance(param1: String) =
+            SetListFragment().apply {
+                arguments = Bundle().apply {
+                    putString("courseString", param1)
+                }
             }
-
-        }
-
-        override fun getLayout() = R.layout.row_courses_item
-
     }
-
 }

@@ -6,7 +6,6 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
 import com.francislainy.buffl.R
-import com.francislainy.buffl.fragments.CoursePagerControllerFragment
 import com.francislainy.buffl.fragments.NewCardFragment
 import com.francislainy.buffl.utils.ToolbarAndNavController
 import com.francislainy.buffl.utils.addFragment
@@ -27,8 +26,8 @@ class NewCardActivity : AppCompatActivity() {
         invalidateOptionsMenu()
         toolbarActionBarSetUP()
 
-        val objectString = intent.getStringExtra("objectString")
-        addFragment(NewCardFragment.newInstance(objectString), R.id.container_body_new_card)
+        val setString = intent.getStringExtra("setString")
+        addFragment(NewCardFragment.newInstance(setString), R.id.container_body_new_card)
     }
 
     private fun displayToolbar(pos: Int = 0, param: String) {

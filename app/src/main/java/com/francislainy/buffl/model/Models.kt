@@ -2,8 +2,8 @@ package com.francislainy.buffl.model
 
 class Course(val courseId: String, val courseTitle: String)
 
-data class Card(var courseId: String, var cardQuestion: String, var cardAnswer: String, var boxNumber: Int)
+class MySet (val courseId: String, val setId: String, val setTitle: String)
 
-data class Cards(val cards: List<Card>)
+data class Card(var setId: String, var cardQuestion: String, var cardAnswer: String, var boxNumber: Int)
 
 class User(val uid: String?, val username: String, val profileImageUrl: String)

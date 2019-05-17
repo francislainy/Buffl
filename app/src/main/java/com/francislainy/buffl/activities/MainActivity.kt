@@ -15,20 +15,23 @@ import com.francislainy.buffl.R
 import com.francislainy.buffl.fragments.SetListFragment
 import com.francislainy.buffl.fragments.drawer.FragmentDrawer
 import com.francislainy.buffl.model.Course
-import com.francislainy.buffl.utils.DATA_COURSES
-import com.francislainy.buffl.utils.ToolbarAndNavController
-import com.francislainy.buffl.utils.addFragment
-import com.francislainy.buffl.utils.toast
+import com.francislainy.buffl.utils.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.google.gson.Gson
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.custom_add_dialog.*
+import timber.log.Timber
 
 class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener {
 
     private var exit: Boolean? = false
     private var drawerFragment: FragmentDrawer? = null
     private lateinit var newPostReference: DatabaseReference
+
+    private var courseString: String? = null
 
     override fun onResume() {
         super.onResume()
@@ -44,7 +47,7 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener 
         setUpDrawer()
         toolbarActionBarSetUP()
 
-        addFragment(SetListFragment(), R.id.container_body_main)
+        fetchCourses()
     }
 
     override fun onDrawerItemSelected(view: View, position: Int) {
@@ -165,10 +168,39 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener 
             toast("course saved")
 
             val intent = Intent(this@MainActivity, NewSetActivity::class.java)
-            intent.putExtra("objectString", "delete") //todo: proper object
+            intent.putExtra("courseString", courseString)
             startActivity(intent)
         }
         return true
+    }
+
+    private fun fetchCourses() {
+        val user = FirebaseAuth.getInstance().currentUser!!
+        val userId = user.uid
+
+        val database = FirebaseDatabase.getInstance()
+        val myRef = database.reference.child(userId).child(DATA_COURSES)
+        myRef.orderByKey()
+
+        // Read from the database
+        myRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+                dataSnapshot.children.forEach {
+
+                    val cardMap = it.value
+                    courseString = Gson().toJson(cardMap)
+                    //todo: make it work just for the active most recent course (flag on the db to have course as most recent one - as soon as it's created and have all the other course set to inactive) - 17/05/19
+                }
+
+                addFragment(SetListFragment.newInstance(courseString!!), R.id.container_body_main)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // Failed to read value
+                Timber.w("Failed to read value. + ${error.toException()}")
+            }
+        })
     }
 
 }

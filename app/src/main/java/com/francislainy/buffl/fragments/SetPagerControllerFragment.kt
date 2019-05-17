@@ -9,10 +9,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 
 import com.francislainy.buffl.R
-import com.francislainy.buffl.activities.MainActivity
 import com.francislainy.buffl.fragments.helper.BaseFragmentNonRootView
-import com.francislainy.buffl.model.Course
-import com.francislainy.buffl.utils.objectFromJsonString
 import kotlinx.android.synthetic.main.fragment_course_pager_controller.*
 
 
@@ -20,20 +17,19 @@ import kotlinx.android.synthetic.main.fragment_course_pager_controller.*
 
 private const val MAX_VALUE = 2
 
-class CoursePagerControllerFragment : BaseFragmentNonRootView() {
+class SetPagerControllerFragment : BaseFragmentNonRootView() {
 
     private lateinit var pagerAdapter: ViewPagerAdapter
+    private var setString: String? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_course_pager_controller, container, false)
     }
 
-    private var jsonString: String? = null
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        jsonString = arguments?.getString("objectString")
+        setString = arguments?.getString("setString")
 
         pagerAdapter = ViewPagerAdapter(activity?.supportFragmentManager!!)
         viewPager.adapter = pagerAdapter
@@ -46,8 +42,8 @@ class CoursePagerControllerFragment : BaseFragmentNonRootView() {
             var fragment: Fragment? = null
 
             when (position) {
-                0 -> fragment = LearnFragment.newInstance(jsonString!!)
-                1 -> fragment = ExploreFragment.newInstance(jsonString!!)
+                0 -> fragment = LearnFragment.newInstance(setString!!)
+                1 -> fragment = ExploreFragment.newInstance(setString!!)
             }
 
             return fragment!!
@@ -60,11 +56,11 @@ class CoursePagerControllerFragment : BaseFragmentNonRootView() {
 
     companion object {
 
-        fun newInstance(objectString: String): CoursePagerControllerFragment {
+        fun newInstance(setString: String): SetPagerControllerFragment {
 
-            val fragment = CoursePagerControllerFragment()
+            val fragment = SetPagerControllerFragment()
             val args = Bundle()
-            args.putString("objectString", objectString)
+            args.putString("setString", setString)
             fragment.arguments = args
 
             return fragment

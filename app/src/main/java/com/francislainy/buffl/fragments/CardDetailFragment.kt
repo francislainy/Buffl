@@ -48,11 +48,11 @@ class CardDetailFragment : Fragment(), CardStackListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val jsonString = arguments?.getString("objectString")
+        val setString = arguments?.getString("setString")
 
         /** https://stackoverflow.com/a/9599112/6654475 */
         val collectionType = object : TypeToken<List<Card>>() {}.type
-        cardList = Gson().fromJson(jsonString, collectionType) as List<Card>
+        cardList = Gson().fromJson(setString, collectionType) as List<Card>
 
         val size = cardList!!.size
         randomNum = (0 until size).random()
@@ -85,11 +85,11 @@ class CardDetailFragment : Fragment(), CardStackListener {
 
     companion object {
 
-        fun newInstance(objectString: String): CardDetailFragment {
+        fun newInstance(setString: String): CardDetailFragment {
 
             val fragment = CardDetailFragment()
             fragment.arguments = Bundle().apply {
-                putString("objectString", objectString)
+                putString("setString", setString)
             }
 
             return fragment

@@ -14,6 +14,7 @@ import com.francislainy.buffl.R
 import com.francislainy.buffl.activities.CardDetailActivity
 import com.francislainy.buffl.model.Card
 import com.francislainy.buffl.model.Course
+import com.francislainy.buffl.model.MySet
 import com.francislainy.buffl.utils.DATA_CARDS
 import com.francislainy.buffl.utils.objectFromJsonString
 import com.francislainy.buffl.utils.objectToStringJson
@@ -35,7 +36,7 @@ import java.util.ArrayList
 class LearnFragment : Fragment() {
 
     private val adapter = GroupAdapter<ViewHolder>()
-    private var course: Course? = null
+    private var mySet: MySet? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_learn, container, false)
@@ -50,8 +51,8 @@ class LearnFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val jsonString = arguments?.getString("objectString")
-        course = objectFromJsonString(jsonString, Course::class.java)
+        val setString = arguments?.getString("setString")
+        mySet = objectFromJsonString(setString, MySet::class.java)
 
         donutProgress.progress = "58".toFloat() // todo: remove hardcode
         donutProgress.text = "${donutProgress.progress.toInt()}%"
@@ -93,7 +94,7 @@ class LearnFragment : Fragment() {
                     val json = Gson().toJson(cardMap)
                     val card = Gson().fromJson<Card>(json, Card::class.java)
 
-                    if (card.courseId == course?.courseId) {
+                    if (card.setId == mySet?.setId) {
 
                         when (card.boxNumber) {
 
@@ -169,7 +170,7 @@ class LearnFragment : Fragment() {
                 clParent.setOnClickListener {
                     val json = objectToStringJson(list)
                     val intent = Intent(context, CardDetailActivity::class.java).apply {
-                        putExtra("objectString", json)
+                        putExtra("setString", json)
                     }
 
                     if (list.size > 0) {
@@ -199,10 +200,10 @@ class LearnFragment : Fragment() {
 
     companion object {
 
-        fun newInstance(param1: String) =
+        fun newInstance(setString: String) =
             LearnFragment().apply {
                 arguments = Bundle().apply {
-                    putString("objectString", param1)
+                    putString("setString", setString)
                 }
             }
     }

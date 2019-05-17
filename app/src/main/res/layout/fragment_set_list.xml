@@ -8,8 +8,8 @@
     tools:context=".fragments.SetListFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        tools:listitem="@layout/row_courses_item"
-        android:id="@+id/rvCourseCards"
+        tools:listitem="@layout/row_set_item"
+        android:id="@+id/rvSetCards"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
