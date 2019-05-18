@@ -16,10 +16,10 @@ class NewSetFragment : Fragment() {
     }
 
     companion object {
-        fun newInstance(param1: String) =
+        fun newInstance(courseString: String) =
             NewSetFragment().apply {
                 arguments = Bundle().apply {
-                    //                    putString(ARG_PARAM1, param1)
+                    //                    putString("courseString", courseString)
                 }
             }
     }

@@ -39,8 +39,8 @@ class SetListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val jsonString = arguments?.getString("courseString")
-        course = objectFromJsonString(jsonString, Course::class.java)
+        val courseString = arguments?.getString("courseString")
+        course = objectFromJsonString(courseString, Course::class.java)
 
         adapter = GroupAdapter()
         rvSetCards.adapter = adapter
@@ -83,7 +83,10 @@ class SetListFragment : Fragment() {
                     val json = Gson().toJson(cardMap)
                     val set = Gson().fromJson<MySet>(json, MySet::class.java)
 
-                    adapter.add(SetItem(set))
+                    if (set.courseId == course?.courseId) {
+
+                        adapter.add(SetItem(set))
+                    }
                 }
             }
 

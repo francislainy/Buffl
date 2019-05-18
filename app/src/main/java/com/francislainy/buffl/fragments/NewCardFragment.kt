@@ -19,6 +19,8 @@ import com.francislainy.buffl.model.MySet
 import com.francislainy.buffl.utils.DATA_CARDS
 import com.francislainy.buffl.utils.objectFromJsonString
 
+private const val BOX_ONE = 1
+
 class NewCardFragment : Fragment(), Toolbar.OnMenuItemClickListener {
 
     private var question: String? = null
@@ -90,7 +92,7 @@ class NewCardFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         val card = Card(
             mySet!!.setId,
             cardQuestion,
-            cardAnswer, 1
+            cardAnswer, BOX_ONE
         )
 
         myRef.push().setValue(card)

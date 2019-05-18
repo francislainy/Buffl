@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.custom_add_dialog.*
 
 class NewSetActivity : AppCompatActivity() {
 
-    private lateinit var newPostReference: DatabaseReference
+    private var courseString: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,8 +31,8 @@ class NewSetActivity : AppCompatActivity() {
         invalidateOptionsMenu()
         toolbarActionBarSetUP()
 
-        val objectString = intent.getStringExtra("objectString")
-        addFragment(NewSetFragment.newInstance(objectString), R.id.container_body_new_set)
+        courseString = intent.getStringExtra("courseString")
+        addFragment(NewSetFragment.newInstance(courseString!!), R.id.container_body_new_set)
     }
 
     override fun onResume() {
@@ -108,8 +108,10 @@ class NewSetActivity : AppCompatActivity() {
             return false
         }
 
+        val course = objectFromJsonString(courseString, Course::class.java)
+
         val mySet = MySet(
-            "courseId", //todo: remove hardcode
+            course.courseId,
             "setId",//todo: not sure if needed
             setTitle
         )
@@ -117,7 +119,7 @@ class NewSetActivity : AppCompatActivity() {
         myRef.push().setValue(mySet)
             .addOnSuccessListener {
 
-                this.toast("card saved")
+                this.toast("set saved")
                 this.finish()
             }
             .addOnFailureListener {

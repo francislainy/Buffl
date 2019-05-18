@@ -161,11 +161,13 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener 
 
         newPostReference = myRef.push()
 
-        val course = Course(newPostReference.key!!, courseTitle)
+        val course = Course(newPostReference.key!!, courseTitle, true)
 
         newPostReference.setValue(course).addOnSuccessListener {
 
             toast("course saved")
+
+//            fetchCoursesToMarkThemNotRecentAnymore() // When a new course is added all the new ones are set to no longer the most recent
 
             val intent = Intent(this@MainActivity, NewSetActivity::class.java)
             intent.putExtra("courseString", courseString)
@@ -175,6 +177,39 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener 
     }
 
     private fun fetchCourses() {
+        val user = FirebaseAuth.getInstance().currentUser!!
+        val userId = user.uid
+
+        val database = FirebaseDatabase.getInstance()
+        val myRef = database.reference.child(userId).child(DATA_COURSES)
+        myRef.orderByKey().limitToLast(1)
+
+        // Read from the database
+        myRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+                dataSnapshot.children.forEach {
+
+                    val map = it.value
+                    courseString = objectToStringJson(map!!)
+
+                    val course = objectFromJsonString(courseString, Course::class.java) // todo: find why this is getting back to false - 18/05
+
+//                    if (course.mostRecent) {
+                        addFragment(SetListFragment.newInstance(courseString!!), R.id.container_body_main)
+//                        return@forEach
+//                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // Failed to read value
+                Timber.w("Failed to read value. + ${error.toException()}")
+            }
+        })
+    }
+
+    private fun fetchCoursesToMarkThemNotRecentAnymore() {
         val user = FirebaseAuth.getInstance().currentUser!!
         val userId = user.uid
 
@@ -190,10 +225,15 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener 
 
                     val cardMap = it.value
                     courseString = Gson().toJson(cardMap)
-                    //todo: make it work just for the active most recent course (flag on the db to have course as most recent one - as soon as it's created and have all the other course set to inactive) - 17/05/19
-                }
 
-                addFragment(SetListFragment.newInstance(courseString!!), R.id.container_body_main)
+                    val course = Gson().fromJson<Course>(courseString, Course::class.java)
+                    course.mostRecent = false
+
+                    newPostReference.setValue(course).addOnSuccessListener {
+
+                        Timber.d("Course ${course.courseId} not recent anymore")
+                    }
+                }
             }
 
             override fun onCancelled(error: DatabaseError) {
