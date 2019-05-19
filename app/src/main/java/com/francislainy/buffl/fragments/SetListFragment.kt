@@ -54,11 +54,6 @@ class SetListFragment : Fragment() {
         }
 
         fetchSets(adapter)
-
-        tvLogout.setOnClickListener {
-
-            logout()
-        }
     }
 
     private fun fetchSets(adapter: GroupAdapter<ViewHolder>) {
@@ -149,15 +144,6 @@ class SetListFragment : Fragment() {
 
         override fun getLayout() = R.layout.row_set_item
 
-    }
-
-    private fun logout() {
-        AuthUI.getInstance().signOut(activity as MainActivity)
-            .addOnCompleteListener {
-                // user is now signed out
-                activity?.startActivity(Intent(activity as MainActivity, LoginActivity::class.java))
-                activity?.finish()
-            }
     }
 
     companion object {

@@ -1,5 +1,6 @@
 package com.francislainy.buffl.fragments.drawer
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +10,10 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import com.firebase.ui.auth.AuthUI
 import com.francislainy.buffl.R
+import com.francislainy.buffl.activities.LoginActivity
+import com.francislainy.buffl.activities.MainActivity
 import com.francislainy.buffl.model.Course
 import com.francislainy.buffl.utils.DATA_COURSES
 import com.google.firebase.auth.FirebaseAuth
@@ -52,6 +56,8 @@ class FragmentDrawer : Fragment() {
         adapter = GroupAdapter()
         rvDrawerItems.adapter = adapter
         fetchCourses(adapter)
+
+        btnLogout.setOnClickListener { logout() }
     }
 
     fun closeNavDrawer() {
@@ -131,7 +137,15 @@ class FragmentDrawer : Fragment() {
         }
 
         override fun getLayout() = R.layout.row_drawer_item
+    }
 
+    private fun logout() {
+        AuthUI.getInstance().signOut(activity as MainActivity)
+            .addOnCompleteListener {
+                // user is now signed out
+                activity?.startActivity(Intent(activity as MainActivity, LoginActivity::class.java))
+                activity?.finish()
+            }
     }
 
     interface FragmentDrawerListener {
