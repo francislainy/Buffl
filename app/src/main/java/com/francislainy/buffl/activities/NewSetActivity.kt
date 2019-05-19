@@ -23,6 +23,7 @@ import kotlinx.android.synthetic.main.custom_add_dialog.*
 class NewSetActivity : AppCompatActivity() {
 
     private var courseString: String? = null
+    private lateinit var newPostReference: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -110,13 +111,15 @@ class NewSetActivity : AppCompatActivity() {
 
         val course = objectFromJsonString(courseString, Course::class.java)
 
+        newPostReference = myRef.push()
+
         val mySet = MySet(
             course.courseId,
-            "setId",//todo: not sure if needed
+            newPostReference.key!!,
             setTitle
         )
 
-        myRef.push().setValue(mySet)
+        newPostReference.setValue(mySet)
             .addOnSuccessListener {
 
                 this.toast("set saved")

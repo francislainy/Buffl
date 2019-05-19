@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.francislainy.buffl.R
-import com.francislainy.buffl.utils.toast
 import kotlinx.android.synthetic.main.fragment_new_card.*
 import com.francislainy.buffl.model.Card
 import com.google.firebase.auth.FirebaseAuth
@@ -16,8 +15,7 @@ import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
 import com.francislainy.buffl.model.Course
 import com.francislainy.buffl.model.MySet
-import com.francislainy.buffl.utils.DATA_CARDS
-import com.francislainy.buffl.utils.objectFromJsonString
+import com.francislainy.buffl.utils.*
 
 private const val BOX_ONE = 1
 
@@ -51,8 +49,8 @@ class NewCardFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         when (view?.id) {
             R.id.btnFront -> {
 
-                etQuestion.visibility = View.VISIBLE
-                etAnswer.visibility = View.INVISIBLE
+                etQuestion.visible()
+                etAnswer.invisible()
 
                 btnFront.setTextColor(resources.getColor(R.color.black))
                 btnBack.setTextColor(resources.getColor(R.color.dark_grey_aaa))
@@ -63,8 +61,8 @@ class NewCardFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             }
             R.id.btnBack -> {
 
-                etQuestion.visibility = View.INVISIBLE
-                etAnswer.visibility = View.VISIBLE
+                etQuestion.invisible()
+                etAnswer.visible()
 
                 btnBack.setTextColor(resources.getColor(R.color.black))
                 btnFront.setTextColor(resources.getColor(R.color.dark_grey_aaa))
