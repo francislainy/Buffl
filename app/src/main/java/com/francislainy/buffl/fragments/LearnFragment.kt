@@ -98,7 +98,7 @@ class LearnFragment : Fragment() {
 
                         when (card.boxNumber) {
 
-                            1 -> lists0.add(card) // Box number start from 1
+                            1 -> lists0.add(card) // Box number starts from 1
                             2 -> lists1.add(card)
                             3 -> lists2.add(card)
                             4 -> lists3.add(card)

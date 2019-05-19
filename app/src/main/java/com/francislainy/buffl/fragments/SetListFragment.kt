@@ -11,12 +11,10 @@ import com.francislainy.buffl.R
 import com.francislainy.buffl.activities.LearnExploreActivity
 import com.francislainy.buffl.activities.LoginActivity
 import com.francislainy.buffl.activities.MainActivity
+import com.francislainy.buffl.model.Card
 import com.francislainy.buffl.model.Course
 import com.francislainy.buffl.model.MySet
-import com.francislainy.buffl.utils.DATA_COURSES
-import com.francislainy.buffl.utils.DATA_SETS
-import com.francislainy.buffl.utils.objectFromJsonString
-import com.francislainy.buffl.utils.objectToStringJson
+import com.francislainy.buffl.utils.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.gson.Gson
@@ -79,13 +77,14 @@ class SetListFragment : Fragment() {
 
                 dataSnapshot.children.forEach {
 
-                    val cardMap = it.value
-                    val json = Gson().toJson(cardMap)
+                    val map = it.value
+                    val json = Gson().toJson(map)
                     val set = Gson().fromJson<MySet>(json, MySet::class.java)
 
                     if (set.courseId == course?.courseId) {
 
-                        adapter.add(SetItem(set))
+                        fetchCards(set, set.setId)
+
                     }
                 }
             }
@@ -97,7 +96,46 @@ class SetListFragment : Fragment() {
         })
     }
 
-    inner class SetItem(val set: MySet) : Item<ViewHolder>() {
+
+    private fun fetchCards(set: MySet, setId: String) {
+        val user = FirebaseAuth.getInstance().currentUser!!
+        val userId = user.uid
+
+        val database = FirebaseDatabase.getInstance()
+        val myRef = database.reference.child(userId).child(DATA_CARDS)
+        myRef.orderByKey()
+
+        var cardsAmount = 0
+
+        // Read from the database
+        myRef.addValueEventListener(object : ValueEventListener {
+
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+                dataSnapshot.children.forEach {
+
+                    val map = it.value
+                    val json = Gson().toJson(map)
+                    val card = Gson().fromJson<Card>(json, Card::class.java)
+
+                    if (card.setId == setId) {
+                        cardsAmount++
+                    }
+
+                }
+
+                adapter.add(SetItem(set, cardsAmount))
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // Failed to read value
+                Timber.w("Failed to read value. + ${error.toException()}")
+            }
+        })
+    }
+
+    inner class SetItem(val set: MySet, private val cardsAmount: Int) : Item<ViewHolder>() {
 
         override fun bind(viewHolder: ViewHolder, position: Int) {
 
@@ -105,6 +143,7 @@ class SetListFragment : Fragment() {
 
                 tvSetTitle.text = set.setTitle
                 tvCourseTitle.text = course?.courseTitle
+                tvCardsAmount.text = cardsAmount.toString()
             }
         }
 
