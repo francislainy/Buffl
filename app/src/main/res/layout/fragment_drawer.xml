@@ -55,7 +55,7 @@
             android:layout_marginBottom="16dp"
             android:background="@drawable/shape_rounded_rectangle_green"
             android:backgroundTint="@color/colorAccent"
-            android:text="Logout" />
+            android:text="@string/btn_logout" />
 
     </RelativeLayout>
 

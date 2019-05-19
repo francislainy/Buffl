@@ -12,6 +12,8 @@ import com.francislainy.buffl.R
 import com.francislainy.buffl.activities.CardDetailActivity
 import com.francislainy.buffl.adapter.CardStackAdapter
 import com.francislainy.buffl.model.Card
+import com.francislainy.buffl.utils.invisible
+import com.francislainy.buffl.utils.visible
 import kotlinx.android.synthetic.main.fragment_card_detail.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -57,10 +59,28 @@ class CardDetailFragment : Fragment(), CardStackListener {
         val size = cardList!!.size
         randomNum = (0 until size).random()
 
-        setupCardStackView()
+        setUpCardStackView()
+
+        llBottomItems.visible()
+        clBottomItems.invisible()
+
+        cvSettingsOpen.setOnClickListener {
+            // When it's opened we click to close it
+
+            llBottomItems.visible()
+            clBottomItems.invisible()
+        }
+
+        cvSettingsClosed.setOnClickListener {
+            // When it's closed we click to open it
+
+            llBottomItems.invisible()
+            clBottomItems.visible()
+        }
+
     }
 
-    private fun setupCardStackView() {
+    private fun setUpCardStackView() {
         manager.apply {
             setStackFrom(StackFrom.None)
             setVisibleCount(3)

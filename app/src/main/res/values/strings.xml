@@ -22,4 +22,6 @@
     <string name="new_set_create_info_tv">Start Creating your first set with your \nWeb Editor.</string>
     <string name="new_set_welcome_tv">Welcome</string>
     <string name="drawer_menu_header">Menu</string>
+    <string name="card_detail_button_flip">Flip</string>
+    <string name="btn_logout">Logout</string>
 </resources>

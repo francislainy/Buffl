@@ -37,4 +37,13 @@
         <item name="android:textAppearance">@style/Base.TextAppearance.AppCompat.Large</item>
     </style>
 
+    <style name="clItems">
+        <item name="android:layout_width">50dp</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginEnd">8dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:background">@drawable/shape_rounded_rectangle_green</item>
+    </style>
+
 </resources>

@@ -15,113 +15,198 @@
         android:layout_marginTop="40dp"
         android:layout_marginBottom="16dp"
         android:text="Versus"
-        android:textColor="@color/black"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/black" />
 
     <com.yuyakaido.android.cardstackview.CardStackView
         android:id="@+id/cardStackView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
-        android:layout_weight="4"/>
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_weight="4" />
 
-    <!--<androidx.constraintlayout.widget.ConstraintLayout-->
-        <!--android:id="@+id/clCardParent"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="0dp"-->
-        <!--android:layout_marginEnd="16dp"-->
-        <!--android:layout_marginStart="16dp"-->
-        <!--android:layout_weight="4"-->
-        <!--android:layout_marginBottom="16dp"-->
-        <!--android:background="@drawable/shape_rounded_rectangle_white"-->
-        <!--android:elevation="2dp">-->
-
-        <!--<TextView-->
-            <!--android:id="@+id/tvCardTitle"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginStart="8dp"-->
-            <!--android:layout_marginTop="8dp"-->
-            <!--android:layout_marginEnd="8dp"-->
-            <!--android:layout_marginBottom="8dp"-->
-            <!--android:gravity="center"-->
-            <!--tools:text="The way I'm running..."-->
-            <!--android:textSize="20sp"-->
-            <!--android:textColor="@color/black"-->
-            <!--android:visibility="visible"-->
-            <!--app:backgroundTint="@color/colorPrimaryDark"-->
-            <!--app:layout_constraintBottom_toBottomOf="parent"-->
-            <!--app:layout_constraintEnd_toEndOf="parent"-->
-            <!--app:layout_constraintHorizontal_bias="0.0"-->
-            <!--app:layout_constraintStart_toStartOf="parent"-->
-            <!--app:layout_constraintTop_toTopOf="parent" />-->
-
-    <!--</androidx.constraintlayout.widget.ConstraintLayout>-->
-
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_gravity="center_vertical"
-        android:layout_weight=".7"
-        android:gravity="center_vertical">
+        android:layout_marginTop="16dp"
+        android:layout_weight=".7">
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="32dp"
-            android:background="@drawable/shape_rounded_rectangle_green"
-            app:cardElevation="0dp"
-            app:cardCornerRadius="20dp">
-
-            <ImageView
-                android:id="@+id/ivStar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:src="@drawable/ic_action_star"
-                android:tint="@color/dark_grey_aaa" />
-
-        </androidx.cardview.widget.CardView>
-
-        <Button
-            android:id="@+id/btnFlip"
-            style="?android:attr/borderlessButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
+        <LinearLayout
+            android:id="@+id/llBottomItems"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_marginStart="16dp"
-            android:layout_marginEnd="20dp"
-            android:layout_weight="1"
-            android:background="@drawable/shape_rounded_rectangle_green"
-            android:elevation="0dp"
-            android:text="Flip"
-            android:textColor="@color/white" />
+            android:layout_marginEnd="16dp"
+            android:gravity="center_vertical"
+            android:visibility="invisible">
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/shape_rounded_rectangle_green"
-            app:cardCornerRadius="20dp"
-            app:cardElevation="0dp">
+            <androidx.cardview.widget.CardView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="32dp"
+                android:background="@drawable/shape_rounded_rectangle_green"
+                app:cardCornerRadius="25dp"
+                app:cardElevation="0dp">
 
-            <ImageView
-                android:id="@+id/ivSettings"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                <ImageView
+                    android:id="@+id/ivStar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_action_star"
+                    android:tint="@color/dark_grey_aaa" />
+
+            </androidx.cardview.widget.CardView>
+
+            <Button
+                android:id="@+id/btnFlip"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="20dp"
                 android:layout_weight="1"
-                android:src="@drawable/ic_action_settings"
-                android:tint="@color/dark_grey_aaa" />
+                android:background="@drawable/shape_rounded_rectangle_green"
+                android:elevation="0dp"
+                android:text="@string/card_detail_button_flip"
+                android:textColor="@color/white" />
 
-        </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvSettingsClosed"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/shape_rounded_rectangle_green"
+                app:cardCornerRadius="25dp"
+                app:cardElevation="0dp">
 
-    </LinearLayout>
+                <ImageView
+                    android:id="@+id/ivSettingsClosed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_action_settings"
+                    android:tint="@color/dark_grey_aaa" />
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clBottomItems"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:gravity="center_vertical"
+            android:visibility="visible">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvDelete"
+                app:cardCornerRadius="25dp"
+                app:cardElevation="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/cvEdit"
+                app:layout_constraintTop_toTopOf="parent"
+                style="@style/clItems">
+
+                <ImageView
+                    android:id="@+id/ivDelete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_action_delete"
+                    android:tint="@color/dark_grey_aaa" />
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvEdit"
+                app:cardCornerRadius="25dp"
+                app:cardElevation="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/cvDarkMode"
+                app:layout_constraintTop_toTopOf="parent"
+                style="@style/clItems">
+
+                <ImageView
+                    android:id="@+id/ivEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_action_edit"
+                    android:tint="@color/dark_grey_aaa" />
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvDarkMode"
+                app:cardCornerRadius="25dp"
+                app:cardElevation="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/cvNotSure"
+                app:layout_constraintTop_toTopOf="parent"
+                style="@style/clItems">
+
+                <ImageView
+                    android:id="@+id/ivDarkMode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_action_moon"
+                    android:tint="@color/dark_grey_aaa" />
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvNotSure"
+                app:cardCornerRadius="25dp"
+                app:cardElevation="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/cvSettingsOpen"
+                app:layout_constraintTop_toTopOf="parent"
+                style="@style/clItems">
+
+                <ImageView
+                    android:id="@+id/ivNotSure"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_action_arrows_not_sure"
+                    android:tint="@color/dark_grey_aaa" />
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvSettingsOpen"
+                app:cardCornerRadius="25dp"
+                app:cardElevation="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                style="@style/clItems">
+
+                <ImageView
+                    android:id="@+id/ivSettingsOpen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_action_settings"
+                    android:tint="@color/dark_grey_aaa" />
+
+            </androidx.cardview.widget.CardView>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </FrameLayout>
 
 </LinearLayout>
