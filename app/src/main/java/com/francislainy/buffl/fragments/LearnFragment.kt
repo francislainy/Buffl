@@ -15,9 +15,7 @@ import com.francislainy.buffl.activities.CardDetailActivity
 import com.francislainy.buffl.model.Card
 import com.francislainy.buffl.model.Course
 import com.francislainy.buffl.model.MySet
-import com.francislainy.buffl.utils.DATA_CARDS
-import com.francislainy.buffl.utils.objectFromJsonString
-import com.francislainy.buffl.utils.objectToStringJson
+import com.francislainy.buffl.utils.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -155,12 +153,12 @@ class LearnFragment : Fragment() {
                     when (i.value) {
 
                         5 -> { // Last box (completion)
-                            ivTick.visibility = View.VISIBLE
-                            tvBoxNumber.visibility = View.INVISIBLE
+                            ivTick.visible()
+                            tvBoxNumber.invisible()
                         }
                         else -> {
-                            ivTick.visibility = View.INVISIBLE
-                            tvBoxNumber.visibility = View.VISIBLE
+                            ivTick.invisible()
+                            tvBoxNumber.visible()
                         }
                     }
 

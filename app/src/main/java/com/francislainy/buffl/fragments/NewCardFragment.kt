@@ -16,6 +16,8 @@ import androidx.appcompat.widget.Toolbar
 import com.francislainy.buffl.model.Course
 import com.francislainy.buffl.model.MySet
 import com.francislainy.buffl.utils.*
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 private const val BOX_ONE = 1
 
@@ -24,6 +26,7 @@ class NewCardFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     private var question: String? = null
     private var answer: String? = null
     private var mySet: MySet? = null
+    private var cardList: List<Card>? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_new_card, container, false)
@@ -33,7 +36,14 @@ class NewCardFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         super.onViewCreated(view, savedInstanceState)
 
         val setString = arguments?.getString("setString")
-        mySet = objectFromJsonString(setString, MySet::class.java)
+        val edit = arguments?.getString("edit")
+
+        if (edit == null) { // When com
+            mySet = objectFromJsonString(setString, MySet::class.java)
+        } else { // When coming from the edit state we're bringing a collection instead of a set
+            val collectionType = object : TypeToken<List<Card>>() {}.type
+            cardList = Gson().fromJson(setString, collectionType) as List<Card>
+        }
 
         val toolbar = activity!!.findViewById(R.id.toolbar) as Toolbar
         toolbar.inflateMenu(R.menu.main_menu)
@@ -130,11 +140,12 @@ class NewCardFragment : Fragment(), Toolbar.OnMenuItemClickListener {
 
     companion object {
 
-        fun newInstance(setString: String): NewCardFragment {
+        fun newInstance(setString: String, edit: String? = null): NewCardFragment {
 
             val fragment = NewCardFragment()
             fragment.arguments = Bundle().apply {
                 putString("setString", setString)
+                putString("edit", edit)
             }
 
             return fragment

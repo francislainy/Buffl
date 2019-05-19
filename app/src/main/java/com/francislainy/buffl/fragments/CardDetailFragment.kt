@@ -1,5 +1,6 @@
 package com.francislainy.buffl.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,9 +11,12 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 
 import com.francislainy.buffl.R
 import com.francislainy.buffl.activities.CardDetailActivity
+import com.francislainy.buffl.activities.NewCardActivity
 import com.francislainy.buffl.adapter.CardStackAdapter
 import com.francislainy.buffl.model.Card
+import com.francislainy.buffl.model.MySet
 import com.francislainy.buffl.utils.invisible
+import com.francislainy.buffl.utils.objectFromJsonString
 import com.francislainy.buffl.utils.visible
 import kotlinx.android.synthetic.main.fragment_card_detail.*
 import com.google.gson.Gson
@@ -38,6 +42,7 @@ class CardDetailFragment : Fragment(), CardStackListener {
     override fun onCardRewound() {
     }
 
+    private var setString: String? = null
     private var cardList: List<Card>? = null
     private var randomNum: Int = 0
     private val manager by lazy { CardStackLayoutManager(activity as CardDetailActivity, this) }
@@ -50,7 +55,7 @@ class CardDetailFragment : Fragment(), CardStackListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val setString = arguments?.getString("setString")
+        setString = arguments?.getString("setString")
 
         /** https://stackoverflow.com/a/9599112/6654475 */
         val collectionType = object : TypeToken<List<Card>>() {}.type
@@ -64,18 +69,34 @@ class CardDetailFragment : Fragment(), CardStackListener {
         llBottomItems.visible()
         clBottomItems.invisible()
 
-        cvSettingsOpen.setOnClickListener {
-            // When it's opened we click to close it
+        // Listeners
+        cvSettingsOpen.setOnClickListener(onClickBottomItems)
+        cvSettingsClosed.setOnClickListener(onClickBottomItems)
+        cvEdit.setOnClickListener(onClickBottomItems)
+    }
 
-            llBottomItems.visible()
-            clBottomItems.invisible()
-        }
+    private val onClickBottomItems = View.OnClickListener {
 
-        cvSettingsClosed.setOnClickListener {
-            // When it's closed we click to open it
+        when (it) {
+            cvSettingsOpen -> {
+                // When it's opened we click to close it
 
-            llBottomItems.invisible()
-            clBottomItems.visible()
+                llBottomItems.visible()
+                clBottomItems.invisible()
+            }
+            cvSettingsClosed -> {
+                // When it's closed we click to open it
+
+                llBottomItems.invisible()
+                clBottomItems.visible()
+            }
+            cvEdit -> {
+                val intent = Intent(activity as CardDetailActivity, NewCardActivity::class.java)
+                intent.putExtra("edit", "edit")
+                intent.putExtra("setString", setString)
+                activity!!.startActivity(intent)
+            }
+
         }
 
     }
