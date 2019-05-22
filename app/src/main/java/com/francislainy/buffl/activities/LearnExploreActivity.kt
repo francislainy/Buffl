@@ -9,9 +9,7 @@ import androidx.appcompat.widget.Toolbar
 import com.francislainy.buffl.R
 import com.francislainy.buffl.fragments.SetPagerControllerFragment
 import com.francislainy.buffl.model.MySet
-import com.francislainy.buffl.utils.ToolbarAndNavController
-import com.francislainy.buffl.utils.addFragment
-import com.francislainy.buffl.utils.objectFromJsonString
+import com.francislainy.buffl.utils.*
 import kotlinx.android.synthetic.main.activity_main.*
 
 class LearnExploreActivity : AppCompatActivity() {
@@ -22,7 +20,7 @@ class LearnExploreActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        displayToolbar(2, objectTitle!!) //todo: have dynamic position - 21/04/19
+        toolbarSetUP(this, objectTitle!!)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,15 +36,11 @@ class LearnExploreActivity : AppCompatActivity() {
         addFragment(SetPagerControllerFragment.newInstance(setString!!), R.id.container_body_learn)
     }
 
-    private fun displayToolbar(pos: Int, param: String) {
-        ToolbarAndNavController(this).toolbarSetUP(pos, param)
-    }
-
     private fun toolbarActionBarSetUP() {
         setSupportActionBar(toolbar as Toolbar)
         supportActionBar?.apply {
             setDisplayShowHomeEnabled(false)
-            setDisplayHomeAsUpEnabled(false)
+            setDisplayHomeAsUpEnabled(true)
             title = null
         }
     }

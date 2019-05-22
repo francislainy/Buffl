@@ -39,11 +39,7 @@ class NewSetActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        displayToolbar(param = "New Set") //todo: have dynamic position - 21/04/19
-    }
-
-    private fun displayToolbar(pos: Int = 0, param: String) {
-        ToolbarAndNavController(this).toolbarSetUP(pos, param)
+        toolbarSetUP(this, "New Set")
     }
 
     private fun toolbarActionBarSetUP() {

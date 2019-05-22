@@ -19,9 +19,7 @@ import com.francislainy.buffl.utils.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.gson.Gson
-import com.xwray.groupie.GroupAdapter
-import com.xwray.groupie.ViewHolder
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.toolbar
 import kotlinx.android.synthetic.main.custom_add_dialog.*
 import timber.log.Timber
 
@@ -36,7 +34,7 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener 
     override fun onResume() {
         super.onResume()
 
-        displayToolbar(1, "Library") //todo: have dynamic position -21/04/19
+        toolbarSetUP(this, "Library")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,10 +58,7 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener 
             drawerFragment!!.closeNavDrawer()
         }
 
-        val count =
-            supportFragmentManager.backStackEntryCount // todo: add press again to exit without checking frag back stack
-
-        when (count) {
+        when (supportFragmentManager.backStackEntryCount) {
             0 -> pressAgainToExit()
             else -> supportFragmentManager.popBackStack()
         }
@@ -99,10 +94,6 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener 
             title = null
             setHomeAsUpIndicator(R.drawable.ic_action_menu)
         }
-    }
-
-    private fun displayToolbar(pos: Int, param: String) {
-        ToolbarAndNavController(this).toolbarSetUP(pos, param)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

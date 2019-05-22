@@ -7,11 +7,9 @@ import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
 import com.francislainy.buffl.R
 import com.francislainy.buffl.fragments.NewCardFragment
-import com.francislainy.buffl.model.MySet
-import com.francislainy.buffl.utils.ToolbarAndNavController
 import com.francislainy.buffl.utils.addFragment
-import com.francislainy.buffl.utils.objectFromJsonString
-import kotlinx.android.synthetic.main.activity_main.*
+import com.francislainy.buffl.utils.toolbarSetUP
+import kotlinx.android.synthetic.main.activity_main.toolbar
 
 class NewCardActivity : AppCompatActivity() {
 
@@ -21,10 +19,9 @@ class NewCardActivity : AppCompatActivity() {
         super.onResume()
 
         if (edit == null) {
-
-            displayToolbar(param = "Create Card") //todo: have dynamic position - 21/04/19
+            toolbarSetUP(this, "Create Card")
         } else {
-            displayToolbar(param = "Edit Card")
+            toolbarSetUP(this, "Edit Card")
         }
     }
 
@@ -44,15 +41,11 @@ class NewCardActivity : AppCompatActivity() {
         addFragment(NewCardFragment.newInstance(setString, edit), R.id.container_body_new_card)
     }
 
-    private fun displayToolbar(pos: Int = 0, param: String) {
-        ToolbarAndNavController(this).toolbarSetUP(pos, param)
-    }
-
     private fun toolbarActionBarSetUP() {
         setSupportActionBar(toolbar as Toolbar)
         supportActionBar?.apply {
             setDisplayShowHomeEnabled(false)
-            setDisplayHomeAsUpEnabled(false)
+            setDisplayHomeAsUpEnabled(true)
             title = null
         }
     }
