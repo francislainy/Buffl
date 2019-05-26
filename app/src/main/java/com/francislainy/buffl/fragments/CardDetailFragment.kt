@@ -12,9 +12,11 @@ import com.francislainy.buffl.R
 import com.francislainy.buffl.activities.CardDetailActivity
 import com.francislainy.buffl.adapter.CardStackAdapter
 import com.francislainy.buffl.model.Card
-import com.francislainy.buffl.utils.invisible
-import com.francislainy.buffl.utils.toast
-import com.francislainy.buffl.utils.visible
+import com.francislainy.buffl.model.Course
+import com.francislainy.buffl.model.MySet
+import com.francislainy.buffl.utils.*
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.fragment_card_detail.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -36,6 +38,9 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
     }
 
     override fun onCardSwiped(direction: Direction?) {
+//        itemView?.tvCardTitle?.performClick()
+//
+//        adapter.flipAnimation(this.itemView!!, this.itemModel!!)
     }
 
     override fun onCardCanceled() {
@@ -83,6 +88,7 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
         cvSettingsOpen.setOnClickListener(onClickBottomItems)
         cvSettingsClosed.setOnClickListener(onClickBottomItems)
         cvEdit.setOnClickListener(onClickBottomItems)
+        cvDelete.setOnClickListener(onClickBottomItems)
         btnFlip.setOnClickListener(onClickBottomItems)
     }
 
@@ -101,6 +107,10 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
                 llBottomItems.invisible()
                 clBottomItems.visible()
             }
+            cvDelete -> {
+                adapter.deleteItem(itemModel!!)
+                deleteFromFirebase()
+            }
             cvEdit -> {
 
                 activity?.toast(stringTest ?: "")
@@ -114,8 +124,31 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
 
                 adapter.flipAnimation(this.itemView!!, this.itemModel!!)
             }
-
         }
+    }
+
+    private fun deleteFromFirebase(): Boolean {
+
+        val user = FirebaseAuth.getInstance().currentUser!!
+        val userId = user.uid
+
+        val postReference = itemModel?.cardId
+
+        val database = FirebaseDatabase.getInstance()
+        val myRef = database.reference.child(userId).child(DATA_CARDS).
+            child(postReference!!)
+
+        myRef.removeValue()
+            .addOnSuccessListener {
+
+                activity?.toast("Card deleted")
+            }
+            .addOnFailureListener {
+                activity?.toast("Failure to delete")
+            }
+
+        return true
+
     }
 
     private fun setUpCardStackView() {

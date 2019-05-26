@@ -30,6 +30,11 @@ class CardStackAdapter(private val activity: Activity) :
         callback = adapterCallback
     }
 
+    fun deleteItem(item: Card) {
+        cardList.remove(item)
+        notifyDataSetChanged()
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         return ViewHolder(inflater.inflate(R.layout.row_swipe_card_item, parent, false))
@@ -96,7 +101,9 @@ class CardStackAdapter(private val activity: Activity) :
 
             itemView.tvCardTitle.text = card.cardQuestion
 
-            callback?.onClickCallback(card, itemView, position)
+//            itemView.tvCardTitle.setOnClickListener {
+//                callback?.onClickCallback(card, itemView, position)
+//            }
 
             itemView.cvParent.setOnClickListener { v ->
                 flipAnimation(v, card)

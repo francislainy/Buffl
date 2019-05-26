@@ -97,13 +97,16 @@ class NewCardFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             return false
         }
 
+        val newPostReference = myRef.push()
+
         val card = Card(
+            newPostReference.key!!,
             mySet!!.setId,
             cardQuestion,
             cardAnswer, BOX_ONE
         )
 
-        myRef.push().setValue(card)
+        newPostReference.setValue(card)
             .addOnSuccessListener {
 
                 activity?.toast("card saved")
