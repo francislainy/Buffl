@@ -19,11 +19,14 @@ import kotlinx.android.synthetic.main.fragment_card_detail.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.yuyakaido.android.cardstackview.*
+import kotlinx.android.synthetic.main.row_swipe_card_item.view.*
 
 class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.AdapterCallback {
     override fun onClickCallback(itemModel: Card, itemView: View, position: Int) {
-
         stringTest = itemModel.cardQuestion
+        this.itemModel = itemModel
+        this.itemView = itemView
+        this.position = position
     }
 
     override fun onCardDisappeared(view: View?, position: Int) {
@@ -44,13 +47,15 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
     override fun onCardRewound() {
     }
 
+    private var itemModel: Card? = null
+    private var itemView: View? = null
+    private var position: Int? = 0
+
     private var stringTest: String? = null
     private var setString: String? = null
     private var cardList: List<Card>? = null
-    private var randomNum: Int = 0
     private val manager by lazy { CardStackLayoutManager(activity as CardDetailActivity, this) }
-    //    private val adapter by lazy { CardStackAdapter(cardList!!) }
-    private var adapter: CardStackAdapter? = null
+    private val adapter by lazy { CardStackAdapter(activity as CardDetailActivity) }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_card_detail, container, false)
@@ -65,13 +70,9 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
         val collectionType = object : TypeToken<List<Card>>() {}.type
         cardList = Gson().fromJson(setString, collectionType) as List<Card>
 
-        adapter = CardStackAdapter(activity as CardDetailActivity)
         for (i in cardList!!) {
-            adapter!!.addItem(i, this)
+            adapter.addItem(i, this)
         }
-
-        val size = cardList!!.size
-        randomNum = (0 until size).random()
 
         setUpCardStackView()
 
@@ -82,6 +83,7 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
         cvSettingsOpen.setOnClickListener(onClickBottomItems)
         cvSettingsClosed.setOnClickListener(onClickBottomItems)
         cvEdit.setOnClickListener(onClickBottomItems)
+        btnFlip.setOnClickListener(onClickBottomItems)
     }
 
     private val onClickBottomItems = View.OnClickListener {
@@ -101,12 +103,16 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
             }
             cvEdit -> {
 
-                activity?.toast(stringTest!!)
+                activity?.toast(stringTest ?: "")
 
 //                val intent = Intent(activity as CardDetailActivity, NewCardActivity::class.java)
 //                intent.putExtra("edit", "edit")
 //                intent.putExtra("setString", setString)
 //                activity!!.startActivity(intent)
+            }
+            btnFlip -> {
+
+                adapter.flipAnimation(this.itemView!!, this.itemModel!!)
             }
 
         }

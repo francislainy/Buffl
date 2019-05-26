@@ -4,6 +4,7 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
 import android.app.Activity
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,6 +21,7 @@ class CardStackAdapter(private val activity: Activity) :
     RecyclerView.Adapter<CardStackAdapter.ViewHolder>() {
 
     private val cardList = ArrayList<Card>()
+    private var callback: AdapterCallback? = null
 
     fun addItem(item: Card, adapterCallback: AdapterCallback) {
 
@@ -28,11 +30,13 @@ class CardStackAdapter(private val activity: Activity) :
         callback = adapterCallback
     }
 
-    private var callback: AdapterCallback? = null
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         return ViewHolder(inflater.inflate(R.layout.row_swipe_card_item, parent, false))
+    }
+
+    override fun getItemCount(): Int {
+        return cardList.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -40,11 +44,7 @@ class CardStackAdapter(private val activity: Activity) :
         holder.bind(position)
     }
 
-    override fun getItemCount(): Int {
-        return cardList.size
-    }
-
-    private fun flipAnimation(v: View, card: Card) {
+    fun flipAnimation(v: View, card: Card) {
 
         /** https://stackoverflow.com/a/46111810/6654475 */
         val oa1 = ObjectAnimator.ofFloat(v.cvParent, "scaleX", 1f, 0f)
@@ -70,7 +70,6 @@ class CardStackAdapter(private val activity: Activity) :
         oa1.start()
     }
 
-
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         fun bind(position: Int) {
@@ -79,7 +78,7 @@ class CardStackAdapter(private val activity: Activity) :
             var randomNum = (0 until size).random()
 
             /**-----*/
-            // todo: keep track of which numbers have already being shown - 15/05/19
+            // todo: keep track of which numbers have already been shown - 15/05/19
             val randomNumberList = ArrayList<Int>()
             var stillLooking = true
 
@@ -93,16 +92,19 @@ class CardStackAdapter(private val activity: Activity) :
             }
             /**-----*/
 
-
-            val card = cardList[randomNum]
+            val card = cardList[position] // todo: have random number here and on callback and get them
 
             itemView.tvCardTitle.text = card.cardQuestion
 
+            callback?.onClickCallback(card, itemView, position)
+
             itemView.cvParent.setOnClickListener { v ->
                 flipAnimation(v, card)
+
+                callback?.onClickCallback(card, itemView, position)
+
             }
 
-            callback?.onClickCallback(card, itemView, position)
         }
 
     }
