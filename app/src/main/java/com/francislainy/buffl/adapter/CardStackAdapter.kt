@@ -14,6 +14,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.francislainy.buffl.R
 import com.francislainy.buffl.model.Card
+import com.francislainy.buffl.utils.DARK_THEME
+import com.francislainy.buffl.utils.PRIVATE_MODE
+import com.francislainy.buffl.utils.setBackgroundColorExt
+import com.francislainy.buffl.utils.setTvTextColor
 import kotlinx.android.synthetic.main.row_swipe_card_item.view.*
 import java.util.ArrayList
 
@@ -100,6 +104,16 @@ class CardStackAdapter(private val activity: Activity) :
             val card = cardList[position] // todo: have random number here and on callback and get them
 
             itemView.tvCardTitle.text = card.cardQuestion
+
+            val sharedPref = activity.getSharedPreferences(DARK_THEME, PRIVATE_MODE)
+
+            if (sharedPref.getBoolean(DARK_THEME, true)) {
+                itemView.tvCardTitle.setTvTextColor(R.color.white)
+                itemView.cvParent.setBackgroundColorExt(R.color.blue_dark_theme_card)
+            } else {
+                itemView.tvCardTitle.setTvTextColor(R.color.black)
+                itemView.cvParent.setBackgroundColorExt(R.color.white)
+            }
 
 //            itemView.tvCardTitle.setOnClickListener {
 //                callback?.onClickCallback(card, itemView, position)

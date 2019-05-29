@@ -1,5 +1,8 @@
 package com.francislainy.buffl.fragments
 
+import android.annotation.SuppressLint
+import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -23,6 +26,7 @@ import com.google.gson.reflect.TypeToken
 import com.yuyakaido.android.cardstackview.*
 import kotlinx.android.synthetic.main.row_swipe_card_item.view.*
 
+@SuppressLint("CommitPrefEdits")
 class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.AdapterCallback {
     override fun onClickCallback(itemModel: Card, itemView: View, position: Int) {
         stringTest = itemModel.cardQuestion
@@ -52,6 +56,9 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
     override fun onCardRewound() {
     }
 
+    private val sharedPref by lazy { activity!!.getSharedPreferences(DARK_THEME, PRIVATE_MODE) }
+    private val editor by lazy { sharedPref.edit() }
+
     private var itemModel: Card? = null
     private var itemView: View? = null
     private var position: Int? = 0
@@ -63,7 +70,12 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
     private val adapter by lazy { CardStackAdapter(activity as CardDetailActivity) }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_card_detail, container, false)
+
+        return if (sharedPref.getBoolean(DARK_THEME, true)) {
+            inflater.inflate(R.layout.fragment_card_detail_dark, container, false)
+        } else {
+            inflater.inflate(R.layout.fragment_card_detail, container, false)
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -88,6 +100,7 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
         cvSettingsOpen.setOnClickListener(onClickBottomItems)
         cvSettingsClosed.setOnClickListener(onClickBottomItems)
         cvEdit.setOnClickListener(onClickBottomItems)
+        cvDarkMode.setOnClickListener(onClickBottomItems)
         cvDelete.setOnClickListener(onClickBottomItems)
         btnFlip.setOnClickListener(onClickBottomItems)
     }
@@ -120,6 +133,25 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
 //                intent.putExtra("setString", setString)
 //                activity!!.startActivity(intent)
             }
+            cvDarkMode -> {
+
+                if (sharedPref.getBoolean(DARK_THEME, true)) { //if true now false
+
+                    editor.putBoolean(DARK_THEME, false)
+
+                } else { //if false now true
+
+                    editor.putBoolean(DARK_THEME, true)
+                }
+
+                editor.apply()
+
+                val intent = Intent((activity as CardDetailActivity), (activity as CardDetailActivity)::class.java)
+                intent.putExtra("setString", setString)
+                startActivity(intent)
+                activity?.finish()
+
+            }
             btnFlip -> {
 
                 adapter.flipAnimation(this.itemView!!, this.itemModel!!)
@@ -135,8 +167,7 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
         val postReference = itemModel?.cardId
 
         val database = FirebaseDatabase.getInstance()
-        val myRef = database.reference.child(userId).child(DATA_CARDS).
-            child(postReference!!)
+        val myRef = database.reference.child(userId).child(DATA_CARDS).child(postReference!!)
 
         myRef.removeValue()
             .addOnSuccessListener {

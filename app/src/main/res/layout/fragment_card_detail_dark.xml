@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/light_grey_ddd"
+    android:background="@color/blue_dark_theme_exterior"
     android:orientation="vertical"
     tools:context=".fragments.NewCardFragment">
 
@@ -15,9 +15,9 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="40dp"
         android:layout_marginBottom="16dp"
-        android:text="Versus"
+        android:text="VersusDark"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@color/black" />
+        android:textColor="@color/white" />
 
     <com.yuyakaido.android.cardstackview.CardStackView
         android:id="@+id/cardStackView"
@@ -50,6 +50,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="32dp"
                 android:background="@drawable/shape_rounded_rectangle_green"
+                android:backgroundTint="@color/blue_dark_theme_inside_image"
                 app:cardCornerRadius="25dp"
                 app:cardElevation="0dp">
 
@@ -60,7 +61,7 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:src="@drawable/ic_action_star"
-                    android:tint="@color/dark_grey_aaa" />
+                    android:tint="@color/blue_dark_theme_exterior" />
 
             </androidx.cardview.widget.CardView>
 
@@ -84,6 +85,7 @@
                 android:layout_marginStart="32dp"
                 android:layout_marginEnd="8dp"
                 android:background="@drawable/shape_rounded_rectangle_green"
+                android:backgroundTint="@color/blue_dark_theme_inside_image"
                 app:cardCornerRadius="25dp"
                 app:cardElevation="0dp">
 
@@ -94,7 +96,7 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:src="@drawable/ic_action_settings"
-                    android:tint="@color/dark_grey_aaa" />
+                    android:tint="@color/blue_dark_theme_exterior" />
 
             </androidx.cardview.widget.CardView>
 
@@ -112,12 +114,13 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cvDelete"
+                style="@style/clItems"
+                android:backgroundTint="@color/blue_dark_theme_inside_image"
                 app:cardCornerRadius="25dp"
                 app:cardElevation="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/cvEdit"
-                app:layout_constraintTop_toTopOf="parent"
-                style="@style/clItems">
+                app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
                     android:id="@+id/ivDelete"
@@ -125,18 +128,19 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:src="@drawable/ic_action_delete"
-                    android:tint="@color/dark_grey_aaa" />
+                    android:tint="@color/blue_dark_theme_exterior" />
 
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cvEdit"
+                style="@style/clItems"
+                android:backgroundTint="@color/blue_dark_theme_inside_image"
                 app:cardCornerRadius="25dp"
                 app:cardElevation="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/cvDarkMode"
-                app:layout_constraintTop_toTopOf="parent"
-                style="@style/clItems">
+                app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
                     android:id="@+id/ivEdit"
@@ -144,18 +148,19 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:src="@drawable/ic_action_edit"
-                    android:tint="@color/dark_grey_aaa" />
+                    android:tint="@color/blue_dark_theme_exterior" />
 
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cvDarkMode"
+                style="@style/clItems"
+                android:backgroundTint="@color/blue_dark_theme_inside_image"
                 app:cardCornerRadius="25dp"
                 app:cardElevation="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/cvNotSure"
-                app:layout_constraintTop_toTopOf="parent"
-                style="@style/clItems">
+                app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
                     android:id="@+id/ivDarkMode"
@@ -163,18 +168,19 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:src="@drawable/ic_action_moon"
-                    android:tint="@color/dark_grey_aaa" />
+                    android:tint="@color/blue_dark_theme_exterior" />
 
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cvNotSure"
+                style="@style/clItems"
+                android:backgroundTint="@color/blue_dark_theme_inside_image"
                 app:cardCornerRadius="25dp"
                 app:cardElevation="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/cvSettingsOpen"
-                app:layout_constraintTop_toTopOf="parent"
-                style="@style/clItems">
+                app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
                     android:id="@+id/ivNotSure"
@@ -182,18 +188,19 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:src="@drawable/ic_action_arrows_not_sure"
-                    android:tint="@color/dark_grey_aaa" />
+                    android:tint="@color/blue_dark_theme_exterior" />
 
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cvSettingsOpen"
+                style="@style/clItems"
+                android:backgroundTint="@color/blue_dark_theme_inside_image"
                 app:cardCornerRadius="25dp"
                 app:cardElevation="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                style="@style/clItems">
+                app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
                     android:id="@+id/ivSettingsOpen"
@@ -201,7 +208,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:src="@drawable/ic_action_settings"
-                    android:tint="@color/dark_grey_aaa" />
+                    android:tint="@color/blue_dark_theme_exterior" />
 
             </androidx.cardview.widget.CardView>
 

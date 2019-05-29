@@ -8,4 +8,7 @@
     <color name="light_grey_default">#FBFBFD</color>
     <color name="light_grey_ddd">#DDDDDD</color>
     <color name="dark_grey_aaa">#AAAAAA</color>
+    <color name="blue_dark_theme_exterior">#1F2E3D</color>
+    <color name="blue_dark_theme_card">#1A2634</color>
+    <color name="blue_dark_theme_inside_image">#26384A</color>
 </resources>

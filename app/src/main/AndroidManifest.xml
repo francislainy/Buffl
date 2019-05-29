@@ -26,9 +26,6 @@
             android:name=".activities.LearnExploreActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.NavActivity_old_delete"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".activities.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.FullScreen">

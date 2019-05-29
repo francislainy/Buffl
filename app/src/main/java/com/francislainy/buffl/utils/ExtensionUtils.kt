@@ -2,8 +2,10 @@ package com.francislainy.buffl.utils
 
 import android.content.Context
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -32,6 +34,14 @@ fun View.gone() {
 }
 
 fun Context.toast(message: CharSequence = "toast") = Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+
+fun TextView.setTvTextColor(colorId: Int) {
+    this.setTextColor(ContextCompat.getColor(context, colorId))
+}
+
+fun View.setBackgroundColorExt(colorId: Int) {
+    this.setBackgroundColor(ContextCompat.getColor(context, colorId))
+}
 
 inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> Unit) {
     val fragmentTransaction = beginTransaction()

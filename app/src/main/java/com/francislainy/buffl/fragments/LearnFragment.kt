@@ -144,8 +144,8 @@ class LearnFragment : Fragment() {
                     }
 
                     when (i.key.size) {
-                        0 -> tvBoxText.setTextColor(resources.getColor(R.color.dark_grey_aaa))
-                        else -> tvBoxText.setTextColor(resources.getColor(R.color.colorPrimary))
+                        0 -> tvBoxText.setTvTextColor(R.color.dark_grey_aaa)
+                        else -> tvBoxText.setTvTextColor(R.color.colorPrimary)
                     }
 
                     tvBoxNumber.text = (position + 1).toString()
@@ -179,9 +179,7 @@ class LearnFragment : Fragment() {
 
         }
 
-        override fun getLayout(): Int {
-            return R.layout.row_box_item
-        }
+        override fun getLayout() =  R.layout.row_box_item
     }
 
     private fun donutProgressAnimation() {

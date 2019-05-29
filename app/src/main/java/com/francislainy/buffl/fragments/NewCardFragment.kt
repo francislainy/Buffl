@@ -62,8 +62,8 @@ class NewCardFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                 etQuestion.visible()
                 etAnswer.invisible()
 
-                btnFront.setTextColor(resources.getColor(R.color.black))
-                btnBack.setTextColor(resources.getColor(R.color.dark_grey_aaa))
+                btnFront.setTvTextColor(R.color.black)
+                btnBack.setTvTextColor(R.color.dark_grey_aaa)
                 btnFront.setBackgroundResource(R.drawable.shape_rectangle_bottom_border_green)
                 btnBack.setBackgroundResource(R.drawable.shape_rectangle_bottom_border_same_grey)
 
@@ -74,8 +74,8 @@ class NewCardFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                 etQuestion.invisible()
                 etAnswer.visible()
 
-                btnBack.setTextColor(resources.getColor(R.color.black))
-                btnFront.setTextColor(resources.getColor(R.color.dark_grey_aaa))
+                btnBack.setTvTextColor(R.color.black)
+                btnFront.setTvTextColor(R.color.dark_grey_aaa)
                 btnBack.setBackgroundResource(R.drawable.shape_rectangle_bottom_border_green)
                 btnFront.setBackgroundResource(R.drawable.shape_rectangle_bottom_border_same_grey)
 
