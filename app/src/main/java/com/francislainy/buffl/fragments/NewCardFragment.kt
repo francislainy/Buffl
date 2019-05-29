@@ -36,6 +36,7 @@ class NewCardFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         super.onViewCreated(view, savedInstanceState)
 
         val setString = arguments?.getString("setString")
+
         val edit = arguments?.getString("edit")
 
         if (edit == null) { // When com

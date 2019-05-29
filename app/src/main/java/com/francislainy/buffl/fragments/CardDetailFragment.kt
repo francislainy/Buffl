@@ -24,6 +24,16 @@ import kotlinx.android.synthetic.main.fragment_card_detail.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.yuyakaido.android.cardstackview.*
+import kotlinx.android.synthetic.main.fragment_card_detail.btnFlip
+import kotlinx.android.synthetic.main.fragment_card_detail.cardStackView
+import kotlinx.android.synthetic.main.fragment_card_detail.clBottomItems
+import kotlinx.android.synthetic.main.fragment_card_detail.cvDarkMode
+import kotlinx.android.synthetic.main.fragment_card_detail.cvDelete
+import kotlinx.android.synthetic.main.fragment_card_detail.cvEdit
+import kotlinx.android.synthetic.main.fragment_card_detail.cvSettingsClosed
+import kotlinx.android.synthetic.main.fragment_card_detail.cvSettingsOpen
+import kotlinx.android.synthetic.main.fragment_card_detail.llBottomItems
+import kotlinx.android.synthetic.main.fragment_card_detail_dark.*
 import kotlinx.android.synthetic.main.row_swipe_card_item.view.*
 
 @SuppressLint("CommitPrefEdits")
@@ -56,6 +66,7 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
     override fun onCardRewound() {
     }
 
+    private var objectTitle: String? = null
     private val sharedPref by lazy { activity!!.getSharedPreferences(DARK_THEME, PRIVATE_MODE) }
     private val editor by lazy { sharedPref.edit() }
 
@@ -82,10 +93,19 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
         super.onViewCreated(view, savedInstanceState)
 
         setString = arguments?.getString("setString")
+        objectTitle = arguments?.getString("objectTitle")
+        if (sharedPref.getBoolean(DARK_THEME, true)) {
+            tvSetTitleDark.text = objectTitle
+            tvSetTitleDark.setTvTextColor(R.color.white)
+        } else {
+            tvSetTitle.text = objectTitle
+            tvSetTitle.setTvTextColor(R.color.black)
+        }
 
         /** https://stackoverflow.com/a/9599112/6654475 */
         val collectionType = object : TypeToken<List<Card>>() {}.type
         cardList = Gson().fromJson(setString, collectionType) as List<Card>
+
 
         for (i in cardList!!) {
             adapter.addItem(i, this)
@@ -148,6 +168,7 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
 
                 val intent = Intent((activity as CardDetailActivity), (activity as CardDetailActivity)::class.java)
                 intent.putExtra("setString", setString)
+                intent.putExtra("objectTitle", objectTitle)
                 startActivity(intent)
                 activity?.finish()
 
@@ -207,11 +228,12 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
 
     companion object {
 
-        fun newInstance(setString: String): CardDetailFragment {
+        fun newInstance(setString: String, objectTitle: String): CardDetailFragment {
 
             val fragment = CardDetailFragment()
             fragment.arguments = Bundle().apply {
                 putString("setString", setString)
+                putString("objectTitle", objectTitle)
             }
 
             return fragment

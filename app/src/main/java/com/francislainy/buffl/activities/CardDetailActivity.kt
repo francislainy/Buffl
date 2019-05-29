@@ -14,7 +14,8 @@ class CardDetailActivity : AppCompatActivity() {
         setContentView(R.layout.activity_card_detail)
 
         val setString = intent.getStringExtra("setString")
-        addFragment(CardDetailFragment.newInstance(setString), R.id.container_body)
+        val objectTitle = intent.getStringExtra("objectTitle")
+        addFragment(CardDetailFragment.newInstance(setString, objectTitle), R.id.container_body)
     }
 
 }

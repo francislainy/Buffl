@@ -33,6 +33,7 @@ import java.util.ArrayList
 
 class LearnFragment : Fragment() {
 
+    private var objectTitle: String? = null
     private val adapter = GroupAdapter<ViewHolder>()
     private var mySet: MySet? = null
 
@@ -51,6 +52,8 @@ class LearnFragment : Fragment() {
 
         val setString = arguments?.getString("setString")
         mySet = objectFromJsonString(setString, MySet::class.java)
+        objectTitle = objectFromJsonString(setString, MySet::class.java).setTitle
+
 
         donutProgress.progress = "58".toFloat() // todo: remove hardcode
         donutProgress.text = "${donutProgress.progress.toInt()}%"
@@ -128,7 +131,7 @@ class LearnFragment : Fragment() {
         })
     }
 
-    class BoxItem(private val m: Map<ArrayList<Card>, Int>, private val list: ArrayList<Card>) : Item<ViewHolder>() {
+    inner class BoxItem(private val m: Map<ArrayList<Card>, Int>, private val list: ArrayList<Card>) : Item<ViewHolder>() {
 
         override fun bind(viewHolder: ViewHolder, position: Int) {
 
@@ -166,9 +169,10 @@ class LearnFragment : Fragment() {
                 }
 
                 clParent.setOnClickListener {
-                    val json = objectToStringJson(list)
+                    val setString = objectToStringJson(list)
                     val intent = Intent(context, CardDetailActivity::class.java).apply {
-                        putExtra("setString", json)
+                        putExtra("setString", setString)
+                        putExtra("objectTitle", objectTitle)
                     }
 
                     if (list.size > 0) {
@@ -179,7 +183,7 @@ class LearnFragment : Fragment() {
 
         }
 
-        override fun getLayout() =  R.layout.row_box_item
+        override fun getLayout() = R.layout.row_box_item
     }
 
     private fun donutProgressAnimation() {

@@ -8,14 +8,14 @@
     android:orientation="vertical"
     tools:context=".fragments.NewCardFragment">
 
-    <!--todo remove hardcode for set title - 290519-->
     <TextView
+        android:id="@+id/tvSetTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="40dp"
         android:layout_marginBottom="16dp"
-        android:text="Versus"
+        tools:text="Versus"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@color/black" />
 
