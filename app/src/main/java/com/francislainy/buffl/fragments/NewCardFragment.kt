@@ -1,6 +1,7 @@
 package com.francislainy.buffl.fragments
 
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -18,6 +19,12 @@ import com.francislainy.buffl.model.MySet
 import com.francislainy.buffl.utils.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import android.view.inputmethod.InputMethodManager.SHOW_IMPLICIT
+import android.content.Context.INPUT_METHOD_SERVICE
+import android.view.inputmethod.InputMethodManager
+import androidx.core.content.ContextCompat.getSystemService
+import android.widget.EditText
+
 
 private const val BOX_ONE = 1
 
@@ -63,6 +70,10 @@ class NewCardFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                 etQuestion.visible()
                 etAnswer.invisible()
 
+                etQuestion.requestFocus()
+                val imm = activity?.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager?
+                imm!!.showSoftInput(etQuestion, SHOW_IMPLICIT)
+
                 btnFront.setTvTextColor(R.color.black)
                 btnBack.setTvTextColor(R.color.dark_grey_aaa)
                 btnFront.setBackgroundResource(R.drawable.shape_rectangle_bottom_border_green)
@@ -74,6 +85,10 @@ class NewCardFragment : Fragment(), Toolbar.OnMenuItemClickListener {
 
                 etQuestion.invisible()
                 etAnswer.visible()
+
+                etAnswer.requestFocus()
+                val imm = activity?.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager?
+                imm!!.showSoftInput(etAnswer, SHOW_IMPLICIT)
 
                 btnBack.setTvTextColor(R.color.black)
                 btnFront.setTvTextColor(R.color.dark_grey_aaa)
