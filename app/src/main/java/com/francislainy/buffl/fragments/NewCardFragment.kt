@@ -14,8 +14,6 @@ import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
 import com.francislainy.buffl.model.MySet
 import com.francislainy.buffl.utils.*
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import android.view.inputmethod.InputMethodManager.SHOW_IMPLICIT
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.view.inputmethod.InputMethodManager
@@ -24,6 +22,8 @@ private const val BOX_ONE = 1
 
 class NewCardFragment : Fragment(), Toolbar.OnMenuItemClickListener {
 
+    private var card: Card? = null
+    private var edit: String? = null
     private var question: String? = null
     private var answer: String? = null
     private var mySet: MySet? = null
@@ -37,7 +37,7 @@ class NewCardFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         super.onViewCreated(view, savedInstanceState)
 
         val setString = arguments?.getString("setString")
-        val edit = arguments?.getString("edit")
+        edit = arguments?.getString("edit")
         val cardString = arguments?.getString("cardString")
 
         if (edit == null) { // When creating a new card
@@ -45,10 +45,10 @@ class NewCardFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         } else { // When coming from the edit state we're bringing a collection instead of a set
 //            val collectionType = object : TypeToken<List<Card>>() {}.type
 //            cardList = Gson().fromJson(setString, collectionType) as List<Card>
-            val card = objectFromJsonString(cardString, Card::class.java)
+            card = objectFromJsonString(cardString, Card::class.java)
 
-            etQuestion.setText(card.cardQuestion)
-            etAnswer.setText(card.cardAnswer)
+            etQuestion.setText(card!!.cardQuestion)
+            etAnswer.setText(card!!.cardAnswer)
         }
 
         val toolbar = activity!!.findViewById(R.id.toolbar) as Toolbar
@@ -134,6 +134,48 @@ class NewCardFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         return true
     }
 
+    private fun updateToFirebase(cardQuestion: String, cardAnswer: String): Boolean {
+
+        if (cardQuestion.isEmpty() || cardQuestion.isEmpty()) {
+            return false
+        }
+
+        val user = FirebaseAuth.getInstance().currentUser!!
+        val userId = user.uid
+
+        val database = FirebaseDatabase.getInstance()
+        val myRef = database.reference.child(userId).child(DATA_CARDS).child(card!!.cardId)
+
+
+        if (cardQuestion != card!!.cardQuestion) { //check as if the same value as before don't need to do an update
+
+            myRef.child("cardQuestion").setValue(cardQuestion)
+                .addOnSuccessListener {
+
+                    activity?.toast("card updated")
+                    activity?.finish()
+                }
+                .addOnFailureListener {
+                    activity?.toast("failure")
+                }
+        }
+
+        if (cardAnswer != card!!.cardAnswer) {
+
+            myRef.child("cardAnswer").setValue(cardAnswer)
+                .addOnSuccessListener {
+
+                    activity?.toast("card updated")
+                    activity?.finish()
+                }
+                .addOnFailureListener {
+                    activity?.toast("failure")
+                }
+        }
+
+        return true
+    }
+
     override fun onMenuItemClick(menuItem: MenuItem): Boolean {
         when (menuItem.itemId) {
             R.id.menu_check -> {
@@ -149,7 +191,12 @@ class NewCardFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                     return false
                 }
 
-                saveToFirebase(question!!, answer!!)
+                if (edit == null) {
+
+                    saveToFirebase(question!!, answer!!)
+                } else {
+                    updateToFirebase(question!!, answer!!)
+                }
                 return true
             }
         }
