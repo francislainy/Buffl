@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 
 import com.francislainy.buffl.R
 import com.francislainy.buffl.activities.CardDetailActivity
+import com.francislainy.buffl.activities.NewCardActivity
 import com.francislainy.buffl.adapter.CardStackAdapter
 import com.francislainy.buffl.model.Card
 import com.francislainy.buffl.model.Course
@@ -148,10 +149,11 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
 
                 activity?.toast(stringTest ?: "")
 
-//                val intent = Intent(activity as CardDetailActivity, NewCardActivity::class.java)
-//                intent.putExtra("edit", "edit")
-//                intent.putExtra("setString", setString)
-//                activity!!.startActivity(intent)
+                val intent = Intent(activity as CardDetailActivity, NewCardActivity::class.java)
+                intent.putExtra("edit", "edit")
+                intent.putExtra("setString", setString)
+                intent.putExtra("cardString", objectToStringJson(itemModel as Card))
+                activity!!.startActivity(intent)
             }
             cvDarkMode -> {
 

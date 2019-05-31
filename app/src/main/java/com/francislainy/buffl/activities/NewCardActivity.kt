@@ -7,15 +7,14 @@ import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
 import com.francislainy.buffl.R
 import com.francislainy.buffl.fragments.NewCardFragment
-import com.francislainy.buffl.model.MySet
 import com.francislainy.buffl.utils.addFragment
-import com.francislainy.buffl.utils.objectFromJsonString
 import com.francislainy.buffl.utils.toolbarSetUP
 import kotlinx.android.synthetic.main.activity_main.toolbar
 
 class NewCardActivity : AppCompatActivity() {
 
     private var edit: String? = null
+    private var cardString: String? = null
 
     override fun onResume() {
         super.onResume()
@@ -39,8 +38,11 @@ class NewCardActivity : AppCompatActivity() {
         if (intent?.getStringExtra("edit") != null) {
             edit = intent?.getStringExtra("edit")
         }
+        if (intent?.getStringExtra("cardString") != null) {
+            cardString = intent?.getStringExtra("cardString")
+        }
 
-        addFragment(NewCardFragment.newInstance(setString, edit), R.id.container_body_new_card)
+        addFragment(NewCardFragment.newInstance(setString, edit, cardString), R.id.container_body_new_card)
     }
 
     private fun toolbarActionBarSetUP() {

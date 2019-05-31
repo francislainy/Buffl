@@ -1,7 +1,5 @@
 package com.francislainy.buffl.fragments
 
-
-import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,7 +12,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
-import com.francislainy.buffl.model.Course
 import com.francislainy.buffl.model.MySet
 import com.francislainy.buffl.utils.*
 import com.google.gson.Gson
@@ -22,9 +19,6 @@ import com.google.gson.reflect.TypeToken
 import android.view.inputmethod.InputMethodManager.SHOW_IMPLICIT
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.view.inputmethod.InputMethodManager
-import androidx.core.content.ContextCompat.getSystemService
-import android.widget.EditText
-
 
 private const val BOX_ONE = 1
 
@@ -43,14 +37,18 @@ class NewCardFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         super.onViewCreated(view, savedInstanceState)
 
         val setString = arguments?.getString("setString")
-
         val edit = arguments?.getString("edit")
+        val cardString = arguments?.getString("cardString")
 
-        if (edit == null) { // When com
+        if (edit == null) { // When creating a new card
             mySet = objectFromJsonString(setString, MySet::class.java)
         } else { // When coming from the edit state we're bringing a collection instead of a set
-            val collectionType = object : TypeToken<List<Card>>() {}.type
-            cardList = Gson().fromJson(setString, collectionType) as List<Card>
+//            val collectionType = object : TypeToken<List<Card>>() {}.type
+//            cardList = Gson().fromJson(setString, collectionType) as List<Card>
+            val card = objectFromJsonString(cardString, Card::class.java)
+
+            etQuestion.setText(card.cardQuestion)
+            etAnswer.setText(card.cardAnswer)
         }
 
         val toolbar = activity!!.findViewById(R.id.toolbar) as Toolbar
@@ -86,6 +84,7 @@ class NewCardFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                 etQuestion.invisible()
                 etAnswer.visible()
 
+                // Have the editText ready for accepting typping
                 etAnswer.requestFocus()
                 val imm = activity?.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager?
                 imm!!.showSoftInput(etAnswer, SHOW_IMPLICIT)
@@ -159,12 +158,13 @@ class NewCardFragment : Fragment(), Toolbar.OnMenuItemClickListener {
 
     companion object {
 
-        fun newInstance(setString: String, edit: String? = null): NewCardFragment {
+        fun newInstance(setString: String, edit: String? = null, cardString: String? = null): NewCardFragment {
 
             val fragment = NewCardFragment()
             fragment.arguments = Bundle().apply {
                 putString("setString", setString)
                 putString("edit", edit)
+                putString("cardString", cardString)
             }
 
             return fragment
