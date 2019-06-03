@@ -53,6 +53,10 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
     }
 
     override fun onCardSwiped(direction: Direction?) {
+
+        btnFlip.visible()
+        clYesNo.invisible()
+
 //        itemView?.tvCardTitle?.performClick()
 //
 //        adapter.flipAnimation(this.itemView!!, this.itemModel!!)
@@ -176,6 +180,9 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
 
             }
             btnFlip -> {
+
+                btnFlip.invisible()
+                clYesNo.visible()
 
                 adapter.flipAnimation(this.itemView!!, this.itemModel!!)
             }

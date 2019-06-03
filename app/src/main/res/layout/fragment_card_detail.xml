@@ -15,9 +15,9 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="40dp"
         android:layout_marginBottom="16dp"
-        tools:text="Versus"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@color/black" />
+        android:textColor="@color/black"
+        tools:text="Versus" />
 
     <com.yuyakaido.android.cardstackview.CardStackView
         android:id="@+id/cardStackView"
@@ -42,7 +42,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:gravity="center_vertical"
-            android:visibility="invisible">
+            android:visibility="visible">
 
             <androidx.cardview.widget.CardView
                 android:layout_width="50dp"
@@ -64,18 +64,83 @@
 
             </androidx.cardview.widget.CardView>
 
-            <Button
-                android:id="@+id/btnFlip"
-                style="?android:attr/borderlessButtonStyle"
+            <FrameLayout
                 android:layout_width="0dp"
-                android:layout_height="60dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="20dp"
-                android:layout_weight="1"
-                android:background="@drawable/shape_rounded_rectangle_green"
-                android:elevation="0dp"
-                android:text="@string/card_detail_button_flip"
-                android:textColor="@color/white" />
+                android:layout_height="70dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="12dp"
+                android:layout_weight="1">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clYesNo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:visibility="visible">
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cvNo"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/shape_rounded_rectangle_green"
+                        app:cardCornerRadius="30dp"
+                        app:cardElevation="0dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:id="@+id/ivNo"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_action_close"
+                            android:tint="#FF0000" />
+
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cvYes"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="0dp"
+                        android:background="@drawable/shape_rounded_rectangle_green"
+                        app:cardCornerRadius="30dp"
+                        app:cardElevation="0dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:id="@+id/ivYes"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_action_check"
+                            android:tint="#00FF00" />
+
+                    </androidx.cardview.widget.CardView>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <Button
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/btnFlip"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@drawable/shape_rounded_rectangle_green"
+                    android:elevation="0dp"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:text="@string/card_detail_button_flip"
+                    android:textColor="@color/white"
+                    android:visibility="invisible" />
+
+            </FrameLayout>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cvSettingsClosed"
@@ -108,16 +173,16 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:gravity="center_vertical"
-            android:visibility="visible">
+            android:visibility="invisible">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cvDelete"
+                style="@style/clItems"
                 app:cardCornerRadius="25dp"
                 app:cardElevation="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/cvEdit"
-                app:layout_constraintTop_toTopOf="parent"
-                style="@style/clItems">
+                app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
                     android:id="@+id/ivDelete"
@@ -131,12 +196,12 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cvEdit"
+                style="@style/clItems"
                 app:cardCornerRadius="25dp"
                 app:cardElevation="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/cvDarkMode"
-                app:layout_constraintTop_toTopOf="parent"
-                style="@style/clItems">
+                app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
                     android:id="@+id/ivEdit"
@@ -150,12 +215,12 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cvDarkMode"
+                style="@style/clItems"
                 app:cardCornerRadius="25dp"
                 app:cardElevation="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/cvNotSure"
-                app:layout_constraintTop_toTopOf="parent"
-                style="@style/clItems">
+                app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
                     android:id="@+id/ivDarkMode"
@@ -169,12 +234,12 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cvNotSure"
+                style="@style/clItems"
                 app:cardCornerRadius="25dp"
                 app:cardElevation="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/cvSettingsOpen"
-                app:layout_constraintTop_toTopOf="parent"
-                style="@style/clItems">
+                app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
                     android:id="@+id/ivNotSure"
@@ -188,12 +253,12 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cvSettingsOpen"
+                style="@style/clItems"
                 app:cardCornerRadius="25dp"
                 app:cardElevation="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                style="@style/clItems">
+                app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
                     android:id="@+id/ivSettingsOpen"
