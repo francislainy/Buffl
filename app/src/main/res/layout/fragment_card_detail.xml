@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/light_grey_ddd"
     android:orientation="vertical"
+    android:id="@+id/llParentCardDetail"
     tools:context=".fragments.NewCardFragment">
 
     <TextView
@@ -45,6 +46,7 @@
             android:visibility="visible">
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cvStar"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="8dp"

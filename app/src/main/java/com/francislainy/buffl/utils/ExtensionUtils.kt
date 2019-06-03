@@ -1,7 +1,9 @@
 package com.francislainy.buffl.utils
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +14,8 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.francislainy.buffl.App
+import com.francislainy.buffl.R
+import kotlinx.android.synthetic.main.fragment_card_detail.*
 
 fun RecyclerView.setVerticalLayout() {
 
@@ -37,6 +41,14 @@ fun Context.toast(message: CharSequence = "toast") = Toast.makeText(this, messag
 
 fun TextView.setTvTextColor(colorId: Int) {
     this.setTextColor(ContextCompat.getColor(context, colorId))
+}
+
+fun ImageView.setTintImageView(colorId: Int) {
+    this.setColorFilter(ContextCompat.getColor(context, colorId), android.graphics.PorterDuff.Mode.MULTIPLY)
+}
+
+fun View.setBackgroundTint(colorId: Int) {
+    this.backgroundTintList = ColorStateList.valueOf(resources.getColor(colorId))
 }
 
 fun View.setBackgroundColorExt(colorId: Int) {

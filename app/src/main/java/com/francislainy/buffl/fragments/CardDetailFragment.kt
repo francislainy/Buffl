@@ -2,13 +2,13 @@ package com.francislainy.buffl.fragments
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.LinearInterpolator
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DefaultItemAnimator
 
 import com.francislainy.buffl.R
@@ -16,8 +16,6 @@ import com.francislainy.buffl.activities.CardDetailActivity
 import com.francislainy.buffl.activities.NewCardActivity
 import com.francislainy.buffl.adapter.CardStackAdapter
 import com.francislainy.buffl.model.Card
-import com.francislainy.buffl.model.Course
-import com.francislainy.buffl.model.MySet
 import com.francislainy.buffl.utils.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -33,9 +31,14 @@ import kotlinx.android.synthetic.main.fragment_card_detail.cvDelete
 import kotlinx.android.synthetic.main.fragment_card_detail.cvEdit
 import kotlinx.android.synthetic.main.fragment_card_detail.cvSettingsClosed
 import kotlinx.android.synthetic.main.fragment_card_detail.cvSettingsOpen
+import kotlinx.android.synthetic.main.fragment_card_detail.ivDarkMode
+import kotlinx.android.synthetic.main.fragment_card_detail.ivDelete
+import kotlinx.android.synthetic.main.fragment_card_detail.ivEdit
+import kotlinx.android.synthetic.main.fragment_card_detail.ivNotSure
+import kotlinx.android.synthetic.main.fragment_card_detail.ivSettingsClosed
+import kotlinx.android.synthetic.main.fragment_card_detail.ivSettingsOpen
+import kotlinx.android.synthetic.main.fragment_card_detail.ivStar
 import kotlinx.android.synthetic.main.fragment_card_detail.llBottomItems
-import kotlinx.android.synthetic.main.fragment_card_detail_dark.*
-import kotlinx.android.synthetic.main.row_swipe_card_item.view.*
 
 @SuppressLint("CommitPrefEdits")
 class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.AdapterCallback {
@@ -87,25 +90,22 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        return if (sharedPref.getBoolean(DARK_THEME, true)) {
-            inflater.inflate(R.layout.fragment_card_detail_dark, container, false)
-        } else {
-            inflater.inflate(R.layout.fragment_card_detail, container, false)
-        }
+        return inflater.inflate(R.layout.fragment_card_detail, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        if (sharedPref.getBoolean(DARK_THEME, true)) {
+            updateUIDarkMode()
+        } else {
+            //
+        }
+
         setString = arguments?.getString("setString")
         objectTitle = arguments?.getString("objectTitle")
-        if (sharedPref.getBoolean(DARK_THEME, true)) {
-            tvSetTitleDark.text = objectTitle
-            tvSetTitleDark.setTvTextColor(R.color.white)
-        } else {
-            tvSetTitle.text = objectTitle
-            tvSetTitle.setTvTextColor(R.color.black)
-        }
+
+        tvSetTitle.text = objectTitle
 
         /** https://stackoverflow.com/a/9599112/6654475 */
         val collectionType = object : TypeToken<List<Card>>() {}.type
@@ -129,6 +129,31 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
         cvDelete.setOnClickListener(onClickBottomItems)
         btnFlip.setOnClickListener(onClickBottomItems)
     }
+
+    private fun updateUIDarkMode() {
+
+        tvSetTitle.setTvTextColor(R.color.white)
+        llParentCardDetail.setBackgroundTint(R.color.blue_dark_theme_exterior)
+        cvStar.setBackgroundTint(R.color.blue_dark_theme_inside_image)
+        ivStar.setTintImageView(R.color.blue_dark_theme_exterior)
+        cvSettingsClosed.setBackgroundTint(R.color.blue_dark_theme_inside_image)
+        ivSettingsClosed.setTintImageView(R.color.blue_dark_theme_exterior)
+
+        cvNo.setBackgroundTint(R.color.blue_dark_theme_inside_image)
+        cvYes.setBackgroundTint(R.color.blue_dark_theme_inside_image)
+
+        cvDelete.setBackgroundTint(R.color.blue_dark_theme_inside_image)
+        ivDelete.setTintImageView(R.color.blue_dark_theme_exterior)
+        cvEdit.setBackgroundTint(R.color.blue_dark_theme_inside_image)
+        ivEdit.setTintImageView(R.color.blue_dark_theme_exterior)
+        cvDarkMode.setBackgroundTint(R.color.blue_dark_theme_inside_image)
+        ivDarkMode.setTintImageView(R.color.blue_dark_theme_exterior)
+        cvNotSure.setBackgroundTint(R.color.blue_dark_theme_inside_image)
+        ivNotSure.setTintImageView(R.color.blue_dark_theme_exterior)
+        cvSettingsOpen.setBackgroundTint(R.color.blue_dark_theme_inside_image)
+        ivSettingsOpen.setTintImageView(R.color.blue_dark_theme_exterior)
+    }
+
 
     private val onClickBottomItems = View.OnClickListener {
 
