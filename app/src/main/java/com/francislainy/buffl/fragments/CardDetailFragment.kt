@@ -50,6 +50,8 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
     }
 
     override fun onCardDisappeared(view: View?, position: Int) {
+
+//        activity?.toast()
     }
 
     override fun onCardDragging(direction: Direction?, ratio: Float) {
@@ -60,15 +62,23 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
         btnFlip.visible()
         clYesNo.invisible()
 
+        when (direction) {
+            Direction.Left -> {
+
+            }
+            Direction.Right -> {
+
+            }
+        }
 //        itemView?.tvCardTitle?.performClick()
 //
 //        adapter.flipAnimation(this.itemView!!, this.itemModel!!)
     }
-
-    override fun onCardCanceled() {
-    }
+    override fun onCardCanceled() {}
 
     override fun onCardAppeared(view: View?, position: Int) {
+
+        onClickCallback(itemModel!!, itemView!!, position)
     }
 
     override fun onCardRewound() {
@@ -98,8 +108,6 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
 
         if (sharedPref.getBoolean(DARK_THEME, true)) {
             updateUIDarkMode()
-        } else {
-            //
         }
 
         setString = arguments?.getString("setString")
@@ -121,13 +129,18 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
         llBottomItems.visible()
         clBottomItems.invisible()
 
-        // Listeners
-        cvSettingsOpen.setOnClickListener(onClickBottomItems)
-        cvSettingsClosed.setOnClickListener(onClickBottomItems)
-        cvEdit.setOnClickListener(onClickBottomItems)
-        cvDarkMode.setOnClickListener(onClickBottomItems)
-        cvDelete.setOnClickListener(onClickBottomItems)
-        btnFlip.setOnClickListener(onClickBottomItems)
+        listeners()
+    }
+
+    private fun listeners() {
+        val listOfClickables = listOf<View>(
+            cvSettingsOpen, cvSettingsClosed, cvEdit,
+            cvDarkMode, cvDelete, btnFlip
+        )
+
+        for (i in listOfClickables) {
+            i.setOnClickListener(onClickBottomItems)
+        }
     }
 
     private fun updateUIDarkMode() {
@@ -153,7 +166,6 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
         cvSettingsOpen.setBackgroundTint(R.color.blue_dark_theme_inside_image)
         ivSettingsOpen.setTintImageView(R.color.blue_dark_theme_exterior)
     }
-
 
     private val onClickBottomItems = View.OnClickListener {
 
@@ -208,6 +220,8 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
 
                 btnFlip.invisible()
                 clYesNo.visible()
+
+                onClickCallback(itemModel!!, itemView!!, position!!)
 
                 adapter.flipAnimation(this.itemView!!, this.itemModel!!)
             }

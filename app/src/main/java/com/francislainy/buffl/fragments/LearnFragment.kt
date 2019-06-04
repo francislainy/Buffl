@@ -8,12 +8,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
-import androidx.core.content.ContextCompat.startActivity
 
 import com.francislainy.buffl.R
 import com.francislainy.buffl.activities.CardDetailActivity
 import com.francislainy.buffl.model.Card
-import com.francislainy.buffl.model.Course
 import com.francislainy.buffl.model.MySet
 import com.francislainy.buffl.utils.*
 import com.google.firebase.auth.FirebaseAuth
@@ -22,7 +20,6 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
@@ -36,6 +33,8 @@ class LearnFragment : Fragment() {
     private var objectTitle: String? = null
     private val adapter = GroupAdapter<ViewHolder>()
     private var mySet: MySet? = null
+    private var percentageProgressed: Int = 0
+    private var correctItems: Int = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_learn, container, false)
@@ -44,6 +43,7 @@ class LearnFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
+        correctItems = 0
         fetchData(adapter)
     }
 
@@ -53,11 +53,6 @@ class LearnFragment : Fragment() {
         val setString = arguments?.getString("setString")
         mySet = objectFromJsonString(setString, MySet::class.java)
         objectTitle = objectFromJsonString(setString, MySet::class.java).setTitle
-
-
-        donutProgress.progress = "58".toFloat() // todo: remove hardcode
-        donutProgress.text = "${donutProgress.progress.toInt()}%"
-        donutProgressAnimation()
 
         rvBox.adapter = adapter
         fetchData(adapter)
@@ -95,6 +90,10 @@ class LearnFragment : Fragment() {
                     val json = Gson().toJson(cardMap)
                     val card = Gson().fromJson<Card>(json, Card::class.java)
 
+                    if (card.guessed) {
+                        correctItems++
+                    }
+
                     if (card.setId == mySet?.setId) {
 
                         when (card.boxNumber) {
@@ -107,8 +106,16 @@ class LearnFragment : Fragment() {
                             6 -> lists5.add(card)
                         }
                     }
-
                 }
+
+                // todo: fix view showing 100% progress when first loaded - 04/06/19
+                if(dataSnapshot.childrenCount > 0) {
+                    percentageProgressed = (correctItems.times(100)).div(dataSnapshot.childrenCount.toInt())
+                }
+                donutProgress.progress = percentageProgressed.toFloat()
+                donutProgress.text = "$percentageProgressed%"
+                donutProgressAnimation()
+
 
                 map0.set(lists0, 0)
                 map1.set(lists1, 1)
@@ -131,7 +138,8 @@ class LearnFragment : Fragment() {
         })
     }
 
-    inner class BoxItem(private val m: Map<ArrayList<Card>, Int>, private val list: ArrayList<Card>) : Item<ViewHolder>() {
+    inner class BoxItem(private val m: Map<ArrayList<Card>, Int>, private val list: ArrayList<Card>) :
+        Item<ViewHolder>() {
 
         override fun bind(viewHolder: ViewHolder, position: Int) {
 
@@ -188,7 +196,7 @@ class LearnFragment : Fragment() {
 
     private fun donutProgressAnimation() {
         activity!!.runOnUiThread {
-            val anim = ObjectAnimator.ofFloat(donutProgress, "progress", 0f, 58f)
+            val anim = ObjectAnimator.ofFloat(donutProgress, "progress", 0f, percentageProgressed.toFloat())
             anim.interpolator = DecelerateInterpolator()
             anim.duration = 2000
             anim.start()

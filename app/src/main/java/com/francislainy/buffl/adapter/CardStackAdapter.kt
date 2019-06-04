@@ -83,49 +83,54 @@ class CardStackAdapter(private val activity: Activity) :
 
         fun bind(position: Int) {
 
-            val size = cardList.size
-            var randomNum = (0 until size).random()
+            with(itemView) {
 
-            /**-----*/
-            // todo: keep track of which numbers have already been shown - 15/05/19
-            val randomNumberList = ArrayList<Int>()
-            var stillLooking = true
+                val size = cardList.size
+                var randomNum = (0 until size).random()
 
-            while (stillLooking) {
-                if (randomNumberList.contains(randomNum)) { // If random number already taken try to find a new one
-                    randomNum = (0 until size).random()
-                } else {
-                    randomNumberList.add(randomNum)
-                    stillLooking = false
+                /**-----*/
+                // todo: keep track of which numbers have already been shown - 15/05/19
+                val randomNumberList = ArrayList<Int>()
+                var stillLooking = true
+
+                while (stillLooking) {
+                    if (randomNumberList.contains(randomNum)) { // If random number already taken try to find a new one
+                        randomNum = (0 until size).random()
+                    } else {
+                        randomNumberList.add(randomNum)
+                        stillLooking = false
+                    }
                 }
-            }
-            /**-----*/
+                /**-----*/
 
-            val card = cardList[position] // todo: have random number here and on callback and get them
+                val card = cardList[position] // todo: have random number here and on callback and get them
 
-            itemView.tvCardTitle.text = card.cardQuestion
+                tvCardTitle.text = card.cardQuestion
 
-            val sharedPref = activity.getSharedPreferences(DARK_THEME, PRIVATE_MODE)
+                val sharedPref = activity.getSharedPreferences(DARK_THEME, PRIVATE_MODE)
 
-            if (sharedPref.getBoolean(DARK_THEME, true)) {
-                itemView.tvCardTitle.setTvTextColor(R.color.white)
-                itemView.cvParent.setBackgroundColorExt(R.color.blue_dark_theme_card)
-            } else {
-                itemView.tvCardTitle.setTvTextColor(R.color.black)
-                itemView.cvParent.setBackgroundColorExt(R.color.white)
-            }
+                if (sharedPref.getBoolean(DARK_THEME, true)) {
+                    tvCardTitle.setTvTextColor(R.color.white)
+                    cvParent.setBackgroundColorExt(R.color.blue_dark_theme_card)
+                } else {
+                    tvCardTitle.setTvTextColor(R.color.black)
+                    cvParent.setBackgroundColorExt(R.color.white)
+                }
 
 //            itemView.tvCardTitle.setOnClickListener {
 //                callback?.onClickCallback(card, itemView, position)
 //            }
 
-            itemView.cvParent.setOnClickListener { v ->
-                flipAnimation(v, card)
-
                 callback?.onClickCallback(card, itemView, position)
 
-            }
+                cvParent.setOnClickListener { v ->
+                    flipAnimation(v, card)
 
+                    callback?.onClickCallback(card, itemView, position)
+
+                }
+
+            }
         }
 
     }

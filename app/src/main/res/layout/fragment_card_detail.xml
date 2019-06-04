@@ -78,7 +78,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:visibility="visible">
+                    android:visibility="invisible">
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/cvNo"
@@ -99,7 +99,7 @@
                             android:layout_height="32dp"
                             android:layout_gravity="center"
                             android:src="@drawable/ic_action_close"
-                            android:tint="#FF0000" />
+                            android:tint="@color/red" />
 
                     </androidx.cardview.widget.CardView>
 
@@ -122,7 +122,7 @@
                             android:layout_height="32dp"
                             android:layout_gravity="center"
                             android:src="@drawable/ic_action_check"
-                            android:tint="#00FF00" />
+                            android:tint="@color/green" />
 
                     </androidx.cardview.widget.CardView>
 
@@ -140,7 +140,7 @@
                     android:paddingEnd="8dp"
                     android:text="@string/card_detail_button_flip"
                     android:textColor="@color/white"
-                    android:visibility="invisible" />
+                    android:visibility="visible" />
 
             </FrameLayout>
 
