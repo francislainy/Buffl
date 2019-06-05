@@ -74,6 +74,7 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
 //
 //        adapter.flipAnimation(this.itemView!!, this.itemModel!!)
     }
+
     override fun onCardCanceled() {}
 
     override fun onCardAppeared(view: View?, position: Int) {
@@ -135,36 +136,12 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
     private fun listeners() {
         val listOfClickables = listOf<View>(
             cvSettingsOpen, cvSettingsClosed, cvEdit,
-            cvDarkMode, cvDelete, btnFlip
+            cvDarkMode, cvDelete, cvYes, cvNo, btnFlip
         )
 
         for (i in listOfClickables) {
             i.setOnClickListener(onClickBottomItems)
         }
-    }
-
-    private fun updateUIDarkMode() {
-
-        tvSetTitle.setTvTextColor(R.color.white)
-        llParentCardDetail.setBackgroundTint(R.color.blue_dark_theme_exterior)
-        cvStar.setBackgroundTint(R.color.blue_dark_theme_inside_image)
-        ivStar.setTintImageView(R.color.blue_dark_theme_exterior)
-        cvSettingsClosed.setBackgroundTint(R.color.blue_dark_theme_inside_image)
-        ivSettingsClosed.setTintImageView(R.color.blue_dark_theme_exterior)
-
-        cvNo.setBackgroundTint(R.color.blue_dark_theme_inside_image)
-        cvYes.setBackgroundTint(R.color.blue_dark_theme_inside_image)
-
-        cvDelete.setBackgroundTint(R.color.blue_dark_theme_inside_image)
-        ivDelete.setTintImageView(R.color.blue_dark_theme_exterior)
-        cvEdit.setBackgroundTint(R.color.blue_dark_theme_inside_image)
-        ivEdit.setTintImageView(R.color.blue_dark_theme_exterior)
-        cvDarkMode.setBackgroundTint(R.color.blue_dark_theme_inside_image)
-        ivDarkMode.setTintImageView(R.color.blue_dark_theme_exterior)
-        cvNotSure.setBackgroundTint(R.color.blue_dark_theme_inside_image)
-        ivNotSure.setTintImageView(R.color.blue_dark_theme_exterior)
-        cvSettingsOpen.setBackgroundTint(R.color.blue_dark_theme_inside_image)
-        ivSettingsOpen.setTintImageView(R.color.blue_dark_theme_exterior)
     }
 
     private val onClickBottomItems = View.OnClickListener {
@@ -216,6 +193,14 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
                 activity?.finish()
 
             }
+            cvYes -> {
+                itemModel?.guessed = true
+                updateToFirebase(itemModel!!)
+            }
+            cvNo -> {
+                itemModel?.guessed = false
+                updateToFirebase(itemModel!!)
+            }
             btnFlip -> {
 
                 btnFlip.invisible()
@@ -226,6 +211,30 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
                 adapter.flipAnimation(this.itemView!!, this.itemModel!!)
             }
         }
+    }
+
+    private fun updateUIDarkMode() {
+
+        tvSetTitle.setTvTextColor(R.color.white)
+        llParentCardDetail.setBackgroundTint(R.color.blue_dark_theme_exterior)
+        cvStar.setBackgroundTint(R.color.blue_dark_theme_inside_image)
+        ivStar.setTintImageView(R.color.blue_dark_theme_exterior)
+        cvSettingsClosed.setBackgroundTint(R.color.blue_dark_theme_inside_image)
+        ivSettingsClosed.setTintImageView(R.color.blue_dark_theme_exterior)
+
+        cvNo.setBackgroundTint(R.color.blue_dark_theme_inside_image)
+        cvYes.setBackgroundTint(R.color.blue_dark_theme_inside_image)
+
+        cvDelete.setBackgroundTint(R.color.blue_dark_theme_inside_image)
+        ivDelete.setTintImageView(R.color.blue_dark_theme_exterior)
+        cvEdit.setBackgroundTint(R.color.blue_dark_theme_inside_image)
+        ivEdit.setTintImageView(R.color.blue_dark_theme_exterior)
+        cvDarkMode.setBackgroundTint(R.color.blue_dark_theme_inside_image)
+        ivDarkMode.setTintImageView(R.color.blue_dark_theme_exterior)
+        cvNotSure.setBackgroundTint(R.color.blue_dark_theme_inside_image)
+        ivNotSure.setTintImageView(R.color.blue_dark_theme_exterior)
+        cvSettingsOpen.setBackgroundTint(R.color.blue_dark_theme_inside_image)
+        ivSettingsOpen.setTintImageView(R.color.blue_dark_theme_exterior)
     }
 
     private fun deleteFromFirebase(): Boolean {
@@ -248,7 +257,25 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
             }
 
         return true
+    }
 
+    private fun updateToFirebase(card: Card) {
+
+        val user = FirebaseAuth.getInstance().currentUser!!
+        val userId = user.uid
+
+        val database = FirebaseDatabase.getInstance()
+        val myRef = database.reference.child(userId).child(DATA_CARDS).child(card.cardId)
+
+        myRef.child("guessed").setValue(card.guessed)
+            .addOnSuccessListener {
+
+                activity?.toast("card updated")
+                activity?.finish()
+            }
+            .addOnFailureListener {
+                activity?.toast("failure")
+            }
     }
 
     private fun setUpCardStackView() {

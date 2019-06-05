@@ -55,7 +55,6 @@ class LearnFragment : Fragment() {
         objectTitle = objectFromJsonString(setString, MySet::class.java).setTitle
 
         rvBox.adapter = adapter
-        fetchData(adapter)
     }
 
     private fun fetchData(adapter: GroupAdapter<ViewHolder>) {
@@ -108,10 +107,11 @@ class LearnFragment : Fragment() {
                     }
                 }
 
-                // todo: fix view showing 100% progress when first loaded - 04/06/19
+
                 if(dataSnapshot.childrenCount > 0) {
                     percentageProgressed = (correctItems.times(100)).div(dataSnapshot.childrenCount.toInt())
                 }
+
                 donutProgress.progress = percentageProgressed.toFloat()
                 donutProgress.text = "$percentageProgressed%"
                 donutProgressAnimation()
