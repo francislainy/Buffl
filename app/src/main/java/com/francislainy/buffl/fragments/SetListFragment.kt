@@ -100,12 +100,15 @@ class SetListFragment : Fragment() {
         val myRef = database.reference.child(userId).child(DATA_CARDS)
         myRef.orderByKey()
 
-        var cardsAmount = 0
+        var cardsAmount: Int
 
         // Read from the database
         myRef.addValueEventListener(object : ValueEventListener {
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+                adapter.clear()
+                cardsAmount = 0
 
                 dataSnapshot.children.forEach {
 
