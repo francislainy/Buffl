@@ -1,39 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:animateLayoutChanges="true"
-            android:fillViewport="true">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="1"
+    android:animateLayoutChanges="true"
+    android:fillViewport="true">
 
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
 
         <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:background="@color/colorPrimary"
-                android:gravity="center"
-                android:orientation="vertical">
+            android:id="@+id/llMenu"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="@color/colorPrimary"
+            android:gravity="center"
+            android:orientation="vertical">
 
             <TextView
-                    android:id="@+id/menuTitleTV"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="8dp"
-                    android:text="Menu"
-                    android:textColor="@color/white"
-                    android:textSize="15sp"/>
+                android:id="@+id/menuTitleTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="@string/drawer_menu_header"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
 
         </LinearLayout>
 
         <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"/>
+            android:id="@+id/frameView"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/llMenu" />
 
-    </LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvDrawerItems"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/frameView"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+        <Button
+            android:id="@+id/btnLogout"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="120dp"
+            android:layout_height="48dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/shape_rounded_rectangle_green"
+            android:backgroundTint="@color/colorAccent"
+            android:text="@string/btn_logout" />
+
+    </RelativeLayout>
 
 </ScrollView>

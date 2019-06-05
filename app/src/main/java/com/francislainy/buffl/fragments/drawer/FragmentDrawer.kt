@@ -1,5 +1,6 @@
 package com.francislainy.buffl.fragments.drawer
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +10,24 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import com.firebase.ui.auth.AuthUI
 import com.francislainy.buffl.R
+import com.francislainy.buffl.activities.LoginActivity
+import com.francislainy.buffl.activities.MainActivity
+import com.francislainy.buffl.model.Course
+import com.francislainy.buffl.utils.DATA_COURSES
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import com.google.gson.Gson
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.Item
+import com.xwray.groupie.ViewHolder
+import kotlinx.android.synthetic.main.fragment_drawer.*
+import kotlinx.android.synthetic.main.row_drawer_item.view.*
+import timber.log.Timber
 
 /** https://guides.codepath.com/android/Fragment-Navigation-Drawer#navigating-between-menu-items */
 class FragmentDrawer : Fragment() {
@@ -18,6 +36,7 @@ class FragmentDrawer : Fragment() {
     private var drawerLayout: DrawerLayout? = null
     private var containerView: View? = null
     private var drawerListener: FragmentDrawerListener? = null
+    private lateinit var adapter: GroupAdapter<ViewHolder>
 
     fun openDrawer() {
         drawerLayout?.openDrawer(containerView!!)
@@ -34,8 +53,11 @@ class FragmentDrawer : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Listeners
-//        challenges!!.setOnClickListener { closeNavDrawer(it, MainActivity.MENU_CHALLENGES) }
+        adapter = GroupAdapter()
+        rvDrawerItems.adapter = adapter
+        fetchCourses(adapter)
+
+        btnLogout.setOnClickListener { logout() }
     }
 
     fun closeNavDrawer() {
@@ -69,6 +91,61 @@ class FragmentDrawer : Fragment() {
 
         this.drawerLayout!!.setDrawerListener(drawerToggle)
         this.drawerLayout!!.post { drawerToggle!!.syncState() }
+    }
+
+    private fun fetchCourses(adapter: GroupAdapter<ViewHolder>) {
+        val user = FirebaseAuth.getInstance().currentUser!!
+        val userId = user.uid
+
+        val database = FirebaseDatabase.getInstance()
+        val myRef = database.reference.child(userId).child(DATA_COURSES)
+        myRef.orderByKey()
+
+        // Read from the database
+        myRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+                adapter.clear()
+
+                dataSnapshot.children.forEach {
+
+                    val cardMap = it.value
+                    val json = Gson().toJson(cardMap)
+                    val course = Gson().fromJson<Course>(json, Course::class.java)
+
+                    adapter.add(CourseItem(course))
+                }
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // Failed to read value
+                Timber.w("Failed to read value. + ${error.toException()}")
+            }
+        })
+    }
+
+    class CourseItem(private val c: Course) : Item<ViewHolder>() {
+
+        override fun bind(viewHolder: ViewHolder, position: Int) {
+
+            with(viewHolder.itemView) {
+
+                tvItemTitle.text = c.courseTitle
+            }
+
+        }
+
+        override fun getLayout() = R.layout.row_drawer_item
+    }
+
+    private fun logout() {
+        AuthUI.getInstance().signOut(activity as MainActivity)
+            .addOnCompleteListener {
+                // user is now signed out
+                activity?.startActivity(Intent(activity as MainActivity, LoginActivity::class.java))
+                activity?.finish()
+            }
     }
 
     interface FragmentDrawerListener {

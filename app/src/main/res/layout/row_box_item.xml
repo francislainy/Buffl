@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/clParent"
     android:layout_width="match_parent"
     android:layout_height="80dp"
     android:background="@drawable/shape_border_table_layout"
@@ -34,11 +35,12 @@
 
         <ImageView
             android:id="@+id/ivTick"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_gravity="center"
-            android:visibility="invisible"
-            tools:src="@drawable/ic_action_back" />
+            android:src="@drawable/ic_action_star"
+            android:tint="@color/dark_grey_aaa"
+            android:visibility="invisible" />
 
     </FrameLayout>
 

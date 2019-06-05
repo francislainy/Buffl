@@ -27,27 +27,27 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tvCourseTitle"
+            android:id="@+id/tvSetTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="Versus"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            app:layout_constraintBottom_toTopOf="@+id/tvCollectionTitle"
+            app:layout_constraintBottom_toTopOf="@+id/tvCourseTitle"
             app:layout_constraintStart_toEndOf="@+id/frameLeft"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tvCollectionTitle"
+            android:id="@+id/tvCourseTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:text="Bible Versus"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/tvCourseTitle"
-            app:layout_constraintTop_toBottomOf="@+id/tvCourseTitle" />
+            app:layout_constraintStart_toStartOf="@+id/tvSetTitle"
+            app:layout_constraintTop_toBottomOf="@+id/tvSetTitle" />
 
         <TextView
             android:id="@+id/tvCardsAmount"
