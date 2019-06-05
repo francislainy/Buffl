@@ -4,7 +4,7 @@ Copy of the Buffl app for learning purposes
 This is a project to display my skill set as they are at the moment of the writing for this app.
 
 The app uses Firebase for CRUD operations, CardStackAdapter for swiping between decks and dialogs to input new info. 
-It also contains a navigation drawer and customises the toolbar and action bar beside allowing the user to see some of its sections in dark mode.
+It also contains a navigation drawer and customises the toolbar and action bar besides allowing the user to see some of its sections in dark mode.
 It's totally written in Kotlin.
 
 ![image](https://user-images.githubusercontent.com/19685849/58932924-8aafdc00-875d-11e9-82b2-e0b6d86226d7.png)
