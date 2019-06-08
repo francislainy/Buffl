@@ -56,8 +56,8 @@ class CardStackAdapter(private val activity: Activity) :
     fun flipAnimation(v: View, card: Card) {
 
         /** https://stackoverflow.com/a/46111810/6654475 */
-        val oa1 = ObjectAnimator.ofFloat(v.frameParent, "scaleX", 1f, 0f)
-        val oa2 = ObjectAnimator.ofFloat(v.frameParent, "scaleX", 0f, 1f)
+        val oa1 = ObjectAnimator.ofFloat(v.cvParent, "scaleX", 1f, 0f)
+        val oa2 = ObjectAnimator.ofFloat(v.cvParent, "scaleX", 0f, 1f)
         oa1.interpolator = DecelerateInterpolator()
         oa2.interpolator = AccelerateDecelerateInterpolator()
         oa1.addListener(object : AnimatorListenerAdapter() {
@@ -111,12 +111,10 @@ class CardStackAdapter(private val activity: Activity) :
 
                 if (sharedPref.getBoolean(DARK_THEME, true)) {
                     tvCardTitle.setTvTextColor(R.color.white)
-                    frameParent.setBackgroundColorExt(R.color.blue_dark_theme_exterior)
-                    cvParent.setBackgroundColorExt(R.color.blue_dark_theme_card)
+                    cvParent.setCardBackgroundColor(resources.getColor(R.color.blue_dark_theme_card))
                 } else {
                     tvCardTitle.setTvTextColor(R.color.black)
-                    frameParent.setBackgroundColorExt(R.color.light_grey_ddd)
-//                    cvParent.setBackgroundColorExt(R.color.white)
+                    cvParent.setCardBackgroundColor(resources.getColor(R.color.white)) //todo: try to find out why this is removing the radius for the card
                 }
 
 //            itemView.tvCardTitle.setOnClickListener {
@@ -125,7 +123,7 @@ class CardStackAdapter(private val activity: Activity) :
 
                 callback?.onClickCallback(card, itemView, position)
 
-                frameParent.setOnClickListener { v ->
+                cvParent.setOnClickListener { v ->
                     flipAnimation(v, card)
 
                     callback?.onClickCallback(card, itemView, position)
