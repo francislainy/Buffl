@@ -14,29 +14,35 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.francislainy.buffl.R
 import com.francislainy.buffl.model.Card
-import com.francislainy.buffl.utils.DARK_THEME
-import com.francislainy.buffl.utils.PRIVATE_MODE
-import com.francislainy.buffl.utils.setBackgroundColorExt
-import com.francislainy.buffl.utils.setTvTextColor
+import com.francislainy.buffl.utils.*
 import kotlinx.android.synthetic.main.row_swipe_card_item.view.*
 import java.util.ArrayList
 
-class CardStackAdapter(private val activity: Activity) :
+class CardStackAdapter() :
     RecyclerView.Adapter<CardStackAdapter.ViewHolder>() {
 
     private val cardList = ArrayList<Card>()
     private var callback: AdapterCallback? = null
+    private var isFlipped: Boolean = false
 
     fun addItem(item: Card, adapterCallback: AdapterCallback) {
 
         cardList.add(item)
-        notifyDataSetChanged()
         callback = adapterCallback
+        isFlipped = false
+        notifyDataSetChanged()
     }
 
     fun deleteItem(item: Card) {
         cardList.remove(item)
         notifyDataSetChanged()
+    }
+
+    fun flip(position: Int) {
+        cardList[position].isFlipped = true
+        isFlipped = true
+
+        notifyItemChanged(position)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -107,7 +113,7 @@ class CardStackAdapter(private val activity: Activity) :
 
                 tvCardTitle.text = card.cardQuestion
 
-                val sharedPref = activity.getSharedPreferences(DARK_THEME, PRIVATE_MODE)
+                val sharedPref = context.getSharedPreferences(DARK_THEME, PRIVATE_MODE)
 
                 if (sharedPref.getBoolean(DARK_THEME, true)) {
                     tvCardTitle.setTvTextColor(R.color.white)
@@ -117,11 +123,10 @@ class CardStackAdapter(private val activity: Activity) :
                     cvParent.setCardBackgroundColor(resources.getColor(R.color.white)) //todo: try to find out why this is removing the radius for the card
                 }
 
-//            itemView.tvCardTitle.setOnClickListener {
-//                callback?.onClickCallback(card, itemView, position)
-//            }
-
-                callback?.onClickCallback(card, itemView, position)
+//                isFlipped = true
+                if (isFlipped) {
+                    flipAnimation(cvParent, card)
+                }
 
                 cvParent.setOnClickListener { v ->
                     flipAnimation(v, card)
@@ -132,7 +137,6 @@ class CardStackAdapter(private val activity: Activity) :
 
             }
         }
-
     }
 
     interface AdapterCallback {

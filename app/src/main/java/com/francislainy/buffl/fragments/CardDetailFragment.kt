@@ -49,14 +49,8 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
         this.position = position
     }
 
-    override fun onCardDisappeared(view: View?, position: Int) {
-
-//        activity?.toast()
-    }
-
-    override fun onCardDragging(direction: Direction?, ratio: Float) {
-    }
-
+    override fun onCardDisappeared(view: View?, position: Int) {}
+    override fun onCardDragging(direction: Direction?, ratio: Float) {}
     override fun onCardSwiped(direction: Direction?) {
 
         btnFlip.visible()
@@ -76,14 +70,8 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
     }
 
     override fun onCardCanceled() {}
-
-    override fun onCardAppeared(view: View?, position: Int) {
-
-        onClickCallback(itemModel!!, itemView!!, position)
-    }
-
-    override fun onCardRewound() {
-    }
+    override fun onCardAppeared(view: View?, position: Int) {}
+    override fun onCardRewound() {}
 
     private var objectTitle: String? = null
     private val sharedPref by lazy { activity!!.getSharedPreferences(DARK_THEME, PRIVATE_MODE) }
@@ -97,7 +85,7 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
     private var setString: String? = null
     private var cardList: List<Card>? = null
     private val manager by lazy { CardStackLayoutManager(activity as CardDetailActivity, this) }
-    private val adapter by lazy { CardStackAdapter(activity as CardDetailActivity) }
+    private val adapter by lazy { CardStackAdapter() }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -106,6 +94,7 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
 
         if (sharedPref.getBoolean(DARK_THEME, true)) {
             updateUIDarkMode()
@@ -135,6 +124,7 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
 
     private fun listeners() {
         val listOfClickables = listOf<View>(
+            cvStar,
             cvSettingsOpen, cvSettingsClosed, cvEdit,
             cvDarkMode, cvDelete, cvYes, cvNo, btnFlip
         )
@@ -147,6 +137,11 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
     private val onClickBottomItems = View.OnClickListener {
 
         when (it) {
+
+            cvStar -> {
+                ivStar.setTintImageView(R.color.red)
+            }
+
             cvSettingsOpen -> {
                 // When it's opened we click to close it
 
@@ -167,10 +162,11 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
 
                 activity?.toast(stringTest ?: "")
 
-                val intent = Intent(activity as CardDetailActivity, NewCardActivity::class.java)
-                intent.putExtra("edit", "edit")
-                intent.putExtra("setString", setString)
-                intent.putExtra("cardString", objectToStringJson(itemModel as Card))
+                val intent = Intent(activity as CardDetailActivity, NewCardActivity::class.java).apply {
+                    putExtra("edit", "edit")
+                    putExtra("setString", setString)
+                    putExtra("cardString", objectToStringJson(itemModel as Card))
+                }
                 activity!!.startActivity(intent)
             }
             cvDarkMode -> {
@@ -186,9 +182,11 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
 
                 editor.apply()
 
-                val intent = Intent((activity as CardDetailActivity), (activity as CardDetailActivity)::class.java)
-                intent.putExtra("setString", setString)
-                intent.putExtra("objectTitle", objectTitle)
+                val intent =
+                    Intent((activity as CardDetailActivity), (activity as CardDetailActivity)::class.java).apply {
+                        putExtra("setString", setString)
+                        putExtra("objectTitle", objectTitle)
+                    }
                 startActivity(intent)
                 activity?.finish()
 
@@ -206,11 +204,10 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
                 btnFlip.invisible()
                 clYesNo.visible()
 
-                onClickCallback(itemModel!!, itemView!!, position!!)
-
-                adapter.flipAnimation(this.itemView!!, this.itemModel!!)
+                adapter.flip(0)
             }
         }
+
     }
 
     private fun updateUIDarkMode() {
@@ -292,11 +289,14 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
             setSwipeableMethod(SwipeableMethod.AutomaticAndManual)
             setOverlayInterpolator(LinearInterpolator())
         }
-        cardStackView.layoutManager = manager
+
         cardStackView.adapter = adapter
-        cardStackView.itemAnimator.apply {
-            if (this is DefaultItemAnimator) {
-                supportsChangeAnimations = false
+        cardStackView.apply {
+            layoutManager = manager
+            itemAnimator.apply {
+                if (this is DefaultItemAnimator) {
+                    supportsChangeAnimations = false
+                }
             }
         }
     }
