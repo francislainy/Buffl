@@ -67,6 +67,8 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
                     position = cardList!!.size - 1
                 }
 
+                cardList!![position].guessed = true
+
             }
             Direction.Right -> {
 
@@ -76,8 +78,14 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
                 } else {
                     position = 0
                 }
+
+                cardList!![position].guessed = false
             }
         }
+
+
+        updateToFirebase(cardList!![position])
+
 
         setColorIfFavourite()
 
@@ -233,12 +241,12 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
 
             }
             cvYes -> {
-                itemModel?.guessed = true
-                updateToFirebase(itemModel!!)
+                cardList!![position].guessed = true
+                updateToFirebase(cardList!![position])
             }
             cvNo -> {
-                itemModel?.guessed = false
-                updateToFirebase(itemModel!!)
+                cardList!![position].guessed = false
+                updateToFirebase(cardList!![position])
             }
             btnFlip -> {
 
@@ -308,8 +316,7 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
         myRef.child("guessed").setValue(card.guessed)
             .addOnSuccessListener {
 
-                activity?.toast("card updated")
-                activity?.finish()
+                Timber.d("card guess status updated")
             }
             .addOnFailureListener {
                 activity?.toast("failure")
@@ -336,8 +343,7 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
         myRef.child("boxNumber").setValue(card.boxNumber)
             .addOnSuccessListener {
 
-                activity?.toast("card updated")
-                activity?.finish()
+                Timber.d("card box number updated")
             }
             .addOnFailureListener {
                 activity?.toast("failure")
