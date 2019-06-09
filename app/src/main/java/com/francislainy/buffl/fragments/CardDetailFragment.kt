@@ -287,6 +287,36 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
             .addOnFailureListener {
                 activity?.toast("failure")
             }
+
+        var boxNumber = card.boxNumber
+
+        if (card.guessed) {
+
+            if (boxNumber < FAVOURITE_BOX_NUMBER-1) { // exclude last box for favourite only and the one before that which is the final one
+
+                boxNumber++
+            }
+        }
+        else {
+
+            if (boxNumber > 1) {
+                boxNumber--
+            }
+
+        }
+
+        card.boxNumber = boxNumber
+
+        myRef.child("boxNumber").setValue(card.boxNumber)
+            .addOnSuccessListener {
+
+                activity?.toast("card updated")
+                activity?.finish()
+            }
+            .addOnFailureListener {
+                activity?.toast("failure")
+            }
+
     }
 
     private fun updateFavouriteToFirebase(card: Card) {
