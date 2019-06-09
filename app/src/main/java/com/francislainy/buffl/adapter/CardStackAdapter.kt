@@ -18,18 +18,18 @@ import com.francislainy.buffl.utils.*
 import kotlinx.android.synthetic.main.row_swipe_card_item.view.*
 import java.util.ArrayList
 
-class CardStackAdapter() :
+class CardStackAdapter :
     RecyclerView.Adapter<CardStackAdapter.ViewHolder>() {
 
     private val cardList = ArrayList<Card>()
     private var callback: AdapterCallback? = null
-    private var isFlipped: Boolean = false
+    private var isFlipped = false
+    private var position = 0
 
     fun addItem(item: Card, adapterCallback: AdapterCallback) {
 
         cardList.add(item)
         callback = adapterCallback
-        isFlipped = false
         notifyDataSetChanged()
     }
 
@@ -39,7 +39,6 @@ class CardStackAdapter() :
     }
 
     fun flip(position: Int) {
-        cardList[position].isFlipped = true
         isFlipped = true
 
         notifyItemChanged(position)
@@ -56,6 +55,7 @@ class CardStackAdapter() :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
+        this.position = position
         holder.bind(position)
     }
 
@@ -123,7 +123,6 @@ class CardStackAdapter() :
                     cvParent.setCardBackgroundColor(resources.getColor(R.color.white)) //todo: try to find out why this is removing the radius for the card
                 }
 
-//                isFlipped = true
                 if (isFlipped) {
                     flipAnimation(cvParent, card)
                 }

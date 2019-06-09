@@ -139,7 +139,7 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
         when (it) {
 
             cvStar -> {
-                ivStar.setTintImageView(R.color.red)
+                ivStar.setTintImageView(R.color.red) //todo: have item set as favourite when image clicked - 08/06/19
             }
 
             cvSettingsOpen -> {
@@ -204,7 +204,7 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
                 btnFlip.invisible()
                 clYesNo.visible()
 
-                adapter.flip(0)
+                adapter.flip(0) //todo: dynamic position - 09/06/19
             }
         }
 
