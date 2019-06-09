@@ -60,14 +60,25 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
         when (direction) {
             Direction.Left -> {
 
+                if (position < cardList!!.size - 2) {
+
+                    position++
+                } else {
+                    position = cardList!!.size - 1
+                }
+
             }
             Direction.Right -> {
 
+                if (position >= 1) {
+
+                    position--
+                } else {
+                    position = 0
+                }
             }
         }
-//        itemView?.tvCardTitle?.performClick()
-//
-//        adapter.flipAnimation(this.itemView!!, this.itemModel!!)
+        
     }
 
     override fun onCardCanceled() {}
@@ -80,7 +91,7 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
 
     private var itemModel: Card? = null
     private var itemView: View? = null
-    private var position: Int? = 0
+    private var position: Int = 0
 
     private var stringTest: String? = null
     private var setString: String? = null
@@ -122,14 +133,18 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
         llBottomItems.visible()
         clBottomItems.invisible()
 
-        isFavourite = cardList!![0].favourite
+        setColorIfFavourite()
+
+        listeners()
+    }
+
+    private fun setColorIfFavourite() {
+        isFavourite = cardList!![position].favourite
         if (!isFavourite) {
             ivStar.setTintImageView(R.color.dark_grey_aaa)
         } else {
             ivStar.setTintImageView(R.color.colorAccent)
         }
-
-        listeners()
     }
 
     private fun listeners() {
@@ -163,8 +178,8 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
                     ivStar.setTintImageView(R.color.colorAccent)
                 }
 
-                cardList!![0].favourite = isFavourite
-                updateFavouriteToFirebase(cardList!![0])
+                cardList!![position].favourite = isFavourite
+                updateFavouriteToFirebase(cardList!![position])
             }
 
             cvSettingsOpen -> {
