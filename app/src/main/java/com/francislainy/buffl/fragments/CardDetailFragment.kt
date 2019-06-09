@@ -78,7 +78,9 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
                 }
             }
         }
-        
+
+        setColorIfFavourite()
+
     }
 
     override fun onCardCanceled() {}
@@ -168,16 +170,15 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
 
                 if (isFavourite) {
                     isFavourite = false
-                    adapter.favouriteItem(0, cardList!![0])
 
                     ivStar.setTintImageView(R.color.dark_grey_aaa)
                 } else {
                     isFavourite = true
-                    adapter.favouriteItem(0, cardList!![0])
 
                     ivStar.setTintImageView(R.color.colorAccent)
                 }
 
+                adapter.favouriteItem(position, cardList!![position])
                 cardList!![position].favourite = isFavourite
                 updateFavouriteToFirebase(cardList!![position])
             }
@@ -244,7 +245,7 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
                 btnFlip.invisible()
                 clYesNo.visible()
 
-                adapter.flip(0) //todo: dynamic position - 09/06/19
+                adapter.flip(position)
             }
         }
 

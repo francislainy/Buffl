@@ -24,7 +24,6 @@ class CardStackAdapter :
     private val cardList = ArrayList<Card>()
     private var callback: AdapterCallback? = null
     private var isFlipped = false
-    private var isFavourite = false
     private var position = 0
 
     fun addItem(item: Card, adapterCallback: AdapterCallback) {
@@ -136,8 +135,6 @@ class CardStackAdapter :
                 if (isFlipped) {
                     flipAnimation(cvParent, card)
                 }
-
-                card.favourite = isFavourite
 
                 cvParent.setOnClickListener { v ->
                     flipAnimation(v, card)
