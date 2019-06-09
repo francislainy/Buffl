@@ -39,6 +39,7 @@ import kotlinx.android.synthetic.main.fragment_card_detail.ivSettingsClosed
 import kotlinx.android.synthetic.main.fragment_card_detail.ivSettingsOpen
 import kotlinx.android.synthetic.main.fragment_card_detail.ivStar
 import kotlinx.android.synthetic.main.fragment_card_detail.llBottomItems
+import timber.log.Timber
 
 @SuppressLint("CommitPrefEdits")
 class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.AdapterCallback {
@@ -86,6 +87,8 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
     private var cardList: List<Card>? = null
     private val manager by lazy { CardStackLayoutManager(activity as CardDetailActivity, this) }
     private val adapter by lazy { CardStackAdapter() }
+
+    private var isFavourite = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -139,7 +142,18 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
         when (it) {
 
             cvStar -> {
-                ivStar.setTintImageView(R.color.red) //todo: have item set as favourite when image clicked - 08/06/19
+                ivStar.colorFilter = null
+
+                if (isFavourite) {
+                    isFavourite = false
+                    (itemModel as Card).favourite = false
+                    ivStar.setTintImageView(R.color.dark_grey_aaa)
+                } else {
+                    isFavourite = true
+                    (itemModel as Card).favourite = true
+                    ivStar.setTintImageView(R.color.colorAccent)
+                }
+                updateFavouriteToFirebase(itemModel as Card)
             }
 
             cvSettingsOpen -> {
@@ -274,6 +288,38 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
                 activity?.toast("failure")
             }
     }
+
+    private fun updateFavouriteToFirebase(card: Card) {
+
+        val user = FirebaseAuth.getInstance().currentUser!!
+        val userId = user.uid
+
+        val database = FirebaseDatabase.getInstance()
+        val myRef = database.reference.child(userId).child(DATA_CARDS).child(card.cardId)
+
+        myRef.child("favourite").setValue(card.favourite)
+            .addOnSuccessListener {
+                Timber.d("card favourite status updated")
+            }
+            .addOnFailureListener {
+                activity?.toast("failure")
+            }
+
+
+        myRef.child("boxNumber").setValue(
+            when (card.favourite) {
+                true -> FAVOURITE_BOX_NUMBER
+                false -> FIRST_BOX_NUMBER
+            }
+        )
+            .addOnSuccessListener {
+                Timber.d("card box number updated")
+            }
+            .addOnFailureListener {
+                activity?.toast("failure")
+            }
+    }
+
 
     private fun setUpCardStackView() {
         manager.apply {

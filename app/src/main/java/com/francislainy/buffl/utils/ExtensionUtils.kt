@@ -44,7 +44,7 @@ fun TextView.setTvTextColor(colorId: Int) {
 }
 
 fun ImageView.setTintImageView(colorId: Int) {
-    this.setColorFilter(ContextCompat.getColor(context, colorId), android.graphics.PorterDuff.Mode.MULTIPLY)
+    this.setColorFilter(ContextCompat.getColor(context, colorId), android.graphics.PorterDuff.Mode.SRC_IN)
 }
 
 fun View.setBackgroundTint(colorId: Int) {

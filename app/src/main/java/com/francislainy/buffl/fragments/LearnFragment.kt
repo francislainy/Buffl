@@ -147,14 +147,15 @@ class LearnFragment : Fragment() {
 
                 for (i in m) {
 
-                    val boxText = when (i.key.size) {
-                        1 -> "${i.key.size} ${resources.getString(R.string.row_box_tv_box_text_singular)}"
+                    val size = i.key.size
+                    val boxText = when (size) {
+                        1 -> "$size ${resources.getString(R.string.row_box_tv_box_text_singular)}"
                         else -> {
-                            "${i.key.size} ${resources.getString(R.string.row_box_tv_box_text)}"
+                            "$size ${resources.getString(R.string.row_box_tv_box_text)}"
                         }
                     }
 
-                    when (i.key.size) {
+                    when (size) {
                         0 -> tvBoxText.setTvTextColor(R.color.dark_grey_aaa)
                         else -> tvBoxText.setTvTextColor(R.color.colorPrimary)
                     }
@@ -163,7 +164,16 @@ class LearnFragment : Fragment() {
 
                     when (i.value) {
 
-                        5 -> { // Last box (completion)
+                        (size-1) -> { // Last box (completion)
+
+                            ivTick.colorFilter = null
+
+                            if(size > 0) {
+                                ivTick.setTintImageView(R.color.colorPrimary)
+                            } else {
+                                ivTick.setTintImageView(R.color.dark_grey_aaa)
+                            }
+
                             ivTick.visible()
                             tvBoxNumber.invisible()
                         }
@@ -183,7 +193,7 @@ class LearnFragment : Fragment() {
                         putExtra("objectTitle", objectTitle)
                     }
 
-                    if (list.size > 0) {
+                    if (list.isNotEmpty()) {
                         context.startActivity(intent)
                     }
                 }
