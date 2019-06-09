@@ -122,6 +122,13 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
         llBottomItems.visible()
         clBottomItems.invisible()
 
+        isFavourite = cardList!![0].favourite
+        if (!isFavourite) {
+            ivStar.setTintImageView(R.color.dark_grey_aaa)
+        } else {
+            ivStar.setTintImageView(R.color.colorAccent)
+        }
+
         listeners()
     }
 
@@ -146,14 +153,18 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
 
                 if (isFavourite) {
                     isFavourite = false
-                    (itemModel as Card).favourite = false
+                    adapter.favouriteItem(0, cardList!![0])
+
                     ivStar.setTintImageView(R.color.dark_grey_aaa)
                 } else {
                     isFavourite = true
-                    (itemModel as Card).favourite = true
+                    adapter.favouriteItem(0, cardList!![0])
+
                     ivStar.setTintImageView(R.color.colorAccent)
                 }
-                updateFavouriteToFirebase(itemModel as Card)
+
+                cardList!![0].favourite = isFavourite
+                updateFavouriteToFirebase(cardList!![0])
             }
 
             cvSettingsOpen -> {
@@ -292,12 +303,11 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
 
         if (card.guessed) {
 
-            if (boxNumber < FAVOURITE_BOX_NUMBER-1) { // exclude last box for favourite only and the one before that which is the final one
+            if (boxNumber < FAVOURITE_BOX_NUMBER - 1) { // exclude last box for favourite only and the one before that which is the final one
 
                 boxNumber++
             }
-        }
-        else {
+        } else {
 
             if (boxNumber > 1) {
                 boxNumber--
@@ -334,7 +344,6 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
             .addOnFailureListener {
                 activity?.toast("failure")
             }
-
 
         myRef.child("boxNumber").setValue(
             when (card.favourite) {

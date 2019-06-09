@@ -24,6 +24,7 @@ class CardStackAdapter :
     private val cardList = ArrayList<Card>()
     private var callback: AdapterCallback? = null
     private var isFlipped = false
+    private var isFavourite = false
     private var position = 0
 
     fun addItem(item: Card, adapterCallback: AdapterCallback) {
@@ -42,6 +43,15 @@ class CardStackAdapter :
         isFlipped = true
 
         notifyItemChanged(position)
+    }
+
+    fun favouriteItem(position: Int, card: Card): Boolean {
+
+        card.favourite = !card.favourite
+
+        notifyItemChanged(position)
+
+        return card.favourite
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -126,6 +136,8 @@ class CardStackAdapter :
                 if (isFlipped) {
                     flipAnimation(cvParent, card)
                 }
+
+                card.favourite = isFavourite
 
                 cvParent.setOnClickListener { v ->
                     flipAnimation(v, card)

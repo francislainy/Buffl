@@ -164,7 +164,7 @@ class LearnFragment : Fragment() {
 
                     when (i.value) {
 
-                        (size-1) -> { // Last box (completion)
+                        (FAVOURITE_BOX_NUMBER - 1) -> { // Last box (completion)
 
                             ivTick.colorFilter = null
 
@@ -206,10 +206,11 @@ class LearnFragment : Fragment() {
 
     private fun donutProgressAnimation() {
         activity!!.runOnUiThread {
-            val anim = ObjectAnimator.ofFloat(donutProgress, "progress", 0f, percentageProgressed.toFloat())
-            anim.interpolator = DecelerateInterpolator()
-            anim.duration = 2000
-            anim.start()
+            val anim = ObjectAnimator.ofFloat(donutProgress, "progress", 0f, percentageProgressed.toFloat()).apply {
+                interpolator = DecelerateInterpolator()
+                duration = 2000
+                start()
+            }
 
             val listObjectAnimator = ArrayList<ObjectAnimator>()
             listObjectAnimator.add(anim)
