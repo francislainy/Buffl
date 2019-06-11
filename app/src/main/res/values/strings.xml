@@ -24,4 +24,6 @@
     <string name="drawer_menu_header">Menu</string>
     <string name="card_detail_button_flip">Flip</string>
     <string name="btn_logout">Logout</string>
+    <string name="card_detail_no_more_cards_tv">No more cards to study on this box</string>
+    <string name="card_detail_you_are_done_tv">You\'re done</string>
 </resources>

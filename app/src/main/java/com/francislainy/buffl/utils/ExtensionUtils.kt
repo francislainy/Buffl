@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.francislainy.buffl.App
 import com.francislainy.buffl.R
+import com.francislainy.buffl.fragments.SetListFragment
 import kotlinx.android.synthetic.main.fragment_card_detail.*
 
 fun RecyclerView.setVerticalLayout() {
@@ -61,11 +62,11 @@ inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> Unit) {
     fragmentTransaction.commit()
 }
 
-fun AppCompatActivity.addFragment(fragment: Fragment, frameId: Int, backStackTag: String? = null) {
-    supportFragmentManager.inTransaction {
-        add(frameId, fragment)
-        backStackTag?.let { addToBackStack(fragment.javaClass.name) }
-    }
+fun AppCompatActivity.addFragment(fragment: Fragment, frameId: Int) {
+
+    supportFragmentManager.beginTransaction()
+        .add(frameId, fragment).commit()
+
 }
 
 fun AppCompatActivity.replaceFragment(fragment: Fragment, frameId: Int, backStackTag: String? = null) {

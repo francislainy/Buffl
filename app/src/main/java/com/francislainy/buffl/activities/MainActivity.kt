@@ -184,10 +184,13 @@ class MainActivity : AppCompatActivity(), FragmentDrawer.FragmentDrawerListener 
                     val map = it.value
                     courseString = objectToStringJson(map!!)
 
-                    val course = objectFromJsonString(courseString, Course::class.java) // todo: find why this is getting back to false - 18/05
+                    val course = objectFromJsonString(
+                        courseString,
+                        Course::class.java
+                    ) // todo: find why this is getting back to false - 18/05
 
 //                    if (course.mostRecent) {
-                        addFragment(SetListFragment.newInstance(courseString!!), R.id.container_body_main)
+                    addFragment(SetListFragment.newInstance(courseString!!), R.id.container_body_main)
 //                        return@forEach
 //                    }
                 }

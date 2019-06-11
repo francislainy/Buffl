@@ -41,7 +41,6 @@ import kotlinx.android.synthetic.main.fragment_card_detail.ivStar
 import kotlinx.android.synthetic.main.fragment_card_detail.llBottomItems
 import timber.log.Timber
 
-@SuppressLint("CommitPrefEdits")
 class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.AdapterCallback {
     override fun onClickCallback(itemModel: Card, itemView: View, position: Int) {
         stringTest = itemModel.cardQuestion
@@ -51,11 +50,14 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
     }
 
     override fun onCardDisappeared(view: View?, position: Int) {}
+
     override fun onCardDragging(direction: Direction?, ratio: Float) {}
+
     override fun onCardSwiped(direction: Direction?) {
 
         btnFlip.visible()
         clYesNo.invisible()
+        countSwipping++
 
         when (direction) {
             Direction.Left -> {
@@ -83,16 +85,21 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
             }
         }
 
+        if (countSwipping == cardListSize) {
+            cvNoMoreCards.visible()
+            cardStackView.gone()
+            frameBottomItems.gone()
+        }
 
         updateToFirebase(cardList!![position])
 
-
         setColorIfFavourite()
-
     }
 
     override fun onCardCanceled() {}
+
     override fun onCardAppeared(view: View?, position: Int) {}
+
     override fun onCardRewound() {}
 
     private var objectTitle: String? = null
@@ -110,6 +117,8 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
     private val adapter by lazy { CardStackAdapter() }
 
     private var isFavourite = false
+    private var countSwipping = 0
+    private var cardListSize = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -119,11 +128,11 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         if (sharedPref.getBoolean(DARK_THEME, true)) {
             updateUIDarkMode()
         }
 
+        //todo: get box number from click that brings to this fragment and update position with it
         setString = arguments?.getString("setString")
         objectTitle = arguments?.getString("objectTitle")
 
@@ -137,6 +146,8 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
         for (i in cardList!!) {
             adapter.addItem(i, this)
         }
+
+        cardListSize = cardList!!.size
 
         setUpCardStackView()
 
@@ -281,6 +292,10 @@ class CardDetailFragment : Fragment(), CardStackListener, CardStackAdapter.Adapt
         ivNotSure.setTintImageView(R.color.blue_dark_theme_exterior)
         cvSettingsOpen.setBackgroundTint(R.color.blue_dark_theme_inside_image)
         ivSettingsOpen.setTintImageView(R.color.blue_dark_theme_exterior)
+
+        tvYouAreDone.setTvTextColor(R.color.white)
+        tvNoMoreCards.setTvTextColor(R.color.light_grey_ddd)
+        ivBox.setTintImageView(R.color.material_blue_grey_800)
     }
 
     private fun deleteFromFirebase(): Boolean {
